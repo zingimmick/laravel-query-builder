@@ -14,12 +14,12 @@ class FiltersPartial extends FiltersExact
             return $query->where(
                 function ($query) use ($value, $property) {
                     foreach ($value as $partialValue) {
-                        $query->orWhere($property, 'like', $partialValue);
+                        $query->orWhere($property, 'like', "%${partialValue}%");
                     }
                 }
             );
         }
 
-        return $query->where($property, 'like', $value);
+        return $query->where($property, 'like', "%${value}%");
     }
 }
