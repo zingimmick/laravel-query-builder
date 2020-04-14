@@ -2,7 +2,6 @@
 
 namespace Zing\QueryBuilder\Tests;
 
-use Illuminate\Database\Eloquent\Model;
 use Zing\QueryBuilder\QueryBuilder;
 
 class BuilderTest extends TestCase
@@ -26,13 +25,5 @@ class BuilderTest extends TestCase
             })
             ->toSql();
         self::assertSame($expected, $actual);
-    }
-}
-
-class User extends Model
-{
-    public function d()
-    {
-        return $this->belongsTo(self::class);
     }
 }
