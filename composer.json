@@ -1,0 +1,57 @@
+{
+    "name": "zing/laravel-query-builder",
+    "description": "Build Eloquent query from request.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zingimmick",
+            "email": "zingimmick@outlook.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/database": "^6.0|^7.0|^8.0",
+        "illuminate/http": "^6.0|^7.0|^8.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.2.3",
+        "orchestra/testbench": "^4.0|^5.0",
+        "phpunit/phpunit": "^8.0|^9.0",
+        "roave/security-advisories": "dev-master",
+        "symplify/easy-coding-standard": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zing\\QueryBuilder\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zing\\QueryBuilder\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zing\\QueryBuilder\\ServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "ecs:test": "ecs check --ansi",
+        "phpunit:test": "phpunit --color=always",
+        "test": [
+            "@ecs:test",
+            "@phpunit:test"
+        ],
+        "fix": [
+            "@ecs:test --fix"
+        ]
+    }
+}
