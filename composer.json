@@ -36,13 +36,6 @@
         "sort-packages": true,
         "preferred-install": "dist"
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Zing\\QueryBuilder\\ServiceProvider"
-            ]
-        }
-    },
     "scripts": {
         "ecs:test": "ecs check --ansi",
         "phpunit:test": "phpunit --color=always",
