@@ -24,4 +24,6 @@ coding_style:
         spaces:
             around_operators:
                 concatenation: true
+            before_parentheses:
+                closure_definition: true
 
