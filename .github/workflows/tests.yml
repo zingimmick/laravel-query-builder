@@ -38,5 +38,8 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      - name: Execute code standard tests
+        run: composer run-script ecs:test
+
       - name: Execute tests
-        run: composer run-script test
+        run: composer run-script phpunit:test -- --coverage-clover coverage.xml
