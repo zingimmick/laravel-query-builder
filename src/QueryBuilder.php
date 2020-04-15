@@ -14,12 +14,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Zing\QueryBuilder\Concerns\Castable;
-use Zing\QueryBuilder\Concerns\FiltersQuery;
 
 class QueryBuilder extends Builder
 {
     use Castable;
-    use FiltersQuery;
 
     public const CAST_INTEGER = 'integer';
 
@@ -39,6 +37,7 @@ class QueryBuilder extends Builder
     }
 
     /**
+     * @param Builder|string $baseQuery
      * @param \Illuminate\Http\Request $request
      *
      * @return \Zing\QueryBuilder\QueryBuilder
@@ -52,46 +51,15 @@ class QueryBuilder extends Builder
         return new static($baseQuery, $request);
     }
 
-    protected function addFiltersToQuery()
-    {
-    }
-
-    /**
-     * @param \Illuminate\Database\Query\Builder|\Jenssegers\Mongodb\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Jenssegers\Mongodb\Eloquent\Builder $model
-     * @param \App\Modules\Foundation\Repositories\Repository $repository
-     *
-     * @return mixed
-     */
-    public function build($model, $repository)
-    {
-        $inputs = $this->request->all();
-        $searchable = $repository->getSearchable();
-        $isUnsortable = $repository->isUnsortable();
-        $this->casts = $repository->getFilterableCasts();
-        $filters = $repository->getFilters();
-        $sorts = $repository->getSorts();
-
-        if (! $isUnsortable) {
-            $model = $this->applySort($model, $inputs, $sorts);
-        }
-
-        $model = $this->applySearch($model, $inputs, $searchable, $repository);
-
-        $model = $this->addFilters($model, $inputs, $filters, $repository);
-
-        return $repository->mixedScope($model, $inputs);
-    }
-
     /**
      * 排序逻辑.
      *
-     * @param \Illuminate\Database\Query\Builder|\Jenssegers\Mongodb\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Jenssegers\Mongodb\Eloquent\Builder $model
      * @param array $inputs
      * @param array $sorts
      *
      * @return mixed
      */
-    private function applySort($model, $inputs, $sorts)
+    protected function applySort($inputs, $sorts)
     {
         foreach (['desc', 'asc'] as $direction) {
             $this->when(
