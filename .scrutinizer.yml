@@ -10,10 +10,15 @@ build:
                     -
                         command: phpcs-run
                         use_website_config: true
-                    - command: 'vendor/bin/phpunit --coverage-clover=coverage.clover'
-                      coverage:
-                          file: 'coverage.clover'
-                          format: 'clover'
+        tests: true
+        coverage:
+            tests:
+                override:
+                    -
+                        command: 'vendor/bin/phpunit --coverage-clover=coverage.clover'
+                        coverage:
+                            file: 'coverage.clover'
+                            format: 'clover'
 filter:
     excluded_paths:
         - 'tests/*'
@@ -25,5 +30,6 @@ coding_style:
             around_operators:
                 concatenation: true
             before_parentheses:
+                function_declaration: false
                 closure_definition: true
 
