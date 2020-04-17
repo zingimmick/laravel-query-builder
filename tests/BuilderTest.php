@@ -139,6 +139,32 @@ class BuilderTest extends TestCase
         self::assertSame(1, $actual);
     }
 
+    public function test_scope()
+    {
+        factory(User::class)->times(2)->create([
+            'is_visible' => true,
+        ]);
+        factory(User::class)->times(3)->create([
+            'is_visible' => false,
+        ]);
+        request()->merge(['is_visible' => 'true']);
+        $actual = QueryBuilder::for(User::class, request())
+            ->withCasts([
+                'is_visible' => QueryBuilder::CAST_BOOLEAN,
+            ])
+            ->addFilters(Filter::scope('is_visible', 'visible'))
+            ->count();
+        self::assertSame(2, $actual);
+        request()->merge(['is_visible' => 'false']);
+        $actual = QueryBuilder::for(User::class, request())
+            ->withCasts([
+                'is_visible' => QueryBuilder::CAST_BOOLEAN,
+            ])
+            ->addFilters(Filter::scope('is_visible', 'visible'))
+            ->count();
+        self::assertSame(3, $actual);
+    }
+
     public function test_exact_array()
     {
         request()->merge(['name' => '1,2']);
@@ -203,5 +229,25 @@ class BuilderTest extends TestCase
             ->searchable('user.name')
             ->count();
         self::assertSame(2, $actual);
+    }
+
+    public function test_custom()
+    {
+        factory(Order::class)->times(3)->create();
+        request()->merge(['id' => 3]);
+        $actual = QueryBuilder::for(Order::class, request())
+            ->addFilters([
+                Filter::custom('id', new LessThan()),
+            ])
+            ->count();
+        self::assertSame(2, $actual);
+    }
+}
+
+class LessThan implements \Zing\QueryBuilder\Contracts\Filter
+{
+    public function apply($query, $value, string $property)
+    {
+        return $query->where($property, '<', $value);
     }
 }

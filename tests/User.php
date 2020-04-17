@@ -10,4 +10,9 @@ class User extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function scopeVisible($query, $visible = true)
+    {
+        return $query->where('is_visible', $visible);
+    }
 }
