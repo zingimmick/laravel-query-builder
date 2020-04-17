@@ -10,6 +10,6 @@ $factory->define(Order::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(User::class)->create()->getKey();
         },
-        'number' => $faker->bankAccountNumber,
+        'number' => $faker->randomNumber(),
     ];
 });
