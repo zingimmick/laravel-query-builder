@@ -32,7 +32,7 @@ class Filter
             return $model;
         }
 
-        return $this->filter->apply($model, $value, $this->getProperty());
+        return $this->filter->apply($model, $value, $this->column);
     }
 
     /**
@@ -83,7 +83,7 @@ class Filter
      *
      * @return \Zing\QueryBuilder\Filter
      */
-    public static function custom(string $property, \Zing\QueryBuilder\Contracts\Filter $filterClass, $column = null): self
+    public static function custom(string $property, Contracts\Filter $filterClass, $column = null): self
     {
         return new static($property, $filterClass, $column);
     }

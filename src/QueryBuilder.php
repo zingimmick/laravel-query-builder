@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Zing\QueryBuilder\Concerns\Castable;
+use Zing\QueryBuilder\Concerns\WithCasts;
 
 class QueryBuilder extends Builder
 {
-    use Castable;
+    use WithCasts;
 
     public const CAST_INTEGER = 'integer';
 
@@ -110,6 +110,14 @@ class QueryBuilder extends Builder
 
                 return $value;
             case self::CAST_BOOLEAN:
+                if ($value === 'true') {
+                    return true;
+                }
+
+                if ($value === 'false') {
+                    return false;
+                }
+
                 return (bool) $value;
         }
 

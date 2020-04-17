@@ -2,7 +2,7 @@
 
 namespace Zing\QueryBuilder\Concerns;
 
-trait Castable
+trait WithCasts
 {
     /**
      * The attributes that should be cast to native types.
@@ -48,6 +48,18 @@ trait Castable
     protected function getCastType($key)
     {
         return $this->getCasts()[$key];
+    }
+
+    public function mergeCasts($casts)
+    {
+        $this->casts = array_merge($this->casts, $casts);
+    }
+
+    public function withCasts($casts)
+    {
+        $this->mergeCasts($casts);
+
+        return $this;
     }
 
     abstract protected function castAttribute($key, $value);

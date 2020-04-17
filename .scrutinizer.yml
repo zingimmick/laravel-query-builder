@@ -32,4 +32,3 @@ coding_style:
             before_parentheses:
                 function_declaration: false
                 closure_definition: true
-

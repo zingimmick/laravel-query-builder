@@ -4,10 +4,10 @@ namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Order extends Model
 {
-    public function orders()
+    public function user()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(User::class);
     }
 }
