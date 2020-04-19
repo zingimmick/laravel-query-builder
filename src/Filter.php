@@ -2,6 +2,10 @@
 
 namespace Zing\QueryBuilder;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Filters\FiltersCallback;
 use Zing\QueryBuilder\Filters\FiltersExact;
 use Zing\QueryBuilder\Filters\FiltersPartial;
 use Zing\QueryBuilder\Filters\FiltersScope;
@@ -17,22 +21,29 @@ class Filter
     /** @var string */
     protected $column;
 
+    /** @var \Illuminate\Support\Collection */
+    protected $ignored;
+
+    /** @var mixed */
+    protected $default;
+
     public function __construct(string $property, $filter, $column = null)
     {
         $this->property = $property;
 
         $this->filter = $filter;
-
+        $this->ignored = collect();
         $this->column = $column ?? $property;
     }
 
-    public function filter($model, $value)
+    public function filter($query, $value)
     {
-        if ($value === null) {
-            return $model;
+        $value = $this->resolveValueForFiltering($value);
+        if ($value === null || $value === '') {
+            return $query;
         }
 
-        return $this->filter->apply($model, $value, $this->column);
+        return $this->filter->apply($query, $value, $this->column);
     }
 
     /**
@@ -59,6 +70,11 @@ class Filter
     public static function partial(string $property, $column = null): self
     {
         return new static($property, new FiltersPartial(), $column);
+    }
+
+    public static function callback(string $property, $callback, $column = null): self
+    {
+        return new static($property, new FiltersCallback($callback), $column);
     }
 
     /**
@@ -101,5 +117,97 @@ class Filter
     public function getColumn(): string
     {
         return $this->column;
+    }
+
+    protected $cast;
+
+    protected function castValue($value)
+    {
+        switch ($this->getCast()) {
+            case CastType::CAST_BOOLEAN:
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            case CastType::CAST_INTEGER:
+                return filter_var($value, FILTER_VALIDATE_INT);
+            case CastType::CAST_ARRAY:
+                if (is_string($value) && Str::contains($value, ',')) {
+                    return explode(',', $value);
+                }
+
+                return $value;
+
+            default:
+                if (is_string($value) && Str::contains($value, ',')) {
+                    return explode(',', $value);
+                }
+                if ($value === 'true') {
+                    return true;
+                }
+
+                if ($value === 'false') {
+                    return false;
+                }
+
+                return $value;
+        }
+    }
+
+    public function withCast($cast)
+    {
+        $this->cast = $cast;
+
+        return $this;
+    }
+
+    public function hasCast(): bool
+    {
+        return isset($this->cast);
+    }
+
+    public function getCast()
+    {
+        return $this->cast;
+    }
+
+    public function ignore(...$values): self
+    {
+        $this->ignored = $this->ignored
+            ->merge($values)
+            ->flatten();
+
+        return $this;
+    }
+
+    public function getIgnored(): Collection
+    {
+        return $this->ignored;
+    }
+
+    public function default($value): self
+    {
+        $this->default = $value;
+
+        return $this;
+    }
+
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    public function hasDefault(): bool
+    {
+        return isset($this->default);
+    }
+
+    protected function resolveValueForFiltering($value)
+    {
+        $value = $this->castValue($value);
+        if (is_array($value)) {
+            $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
+
+            return ! empty($remainingProperties) ? $remainingProperties : null;
+        }
+
+        return ! $this->getIgnored()->contains($value) ? $value : null;
     }
 }
