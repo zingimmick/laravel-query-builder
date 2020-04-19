@@ -43,6 +43,18 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function test_deprecated()
+    {
+        request()->merge(['name' => '2']);
+        $actual = QueryBuilder::for(User::class, request())
+            ->addFilters(Filter::exact('name'))
+            ->toSql();
+        $expected = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('name'))
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
     public function test_cast()
     {
         factory(User::class)->times(2)->create([
@@ -145,8 +157,10 @@ class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
+
         self::assertSame(3, $actual);
     }
+
 
     public function test_exact_array()
     {
