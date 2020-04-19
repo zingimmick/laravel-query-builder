@@ -17,20 +17,6 @@ trait WithFilters
         return $this;
     }
 
-    /**
-     * 自定义过滤器逻辑.
-     *
-     * @param \Zing\QueryBuilder\Filter[]|mixed $filters
-     *
-     * @return $this
-     *
-     * @deprecated use enableFilters instead
-     */
-    public function addFilters($filters): self
-    {
-        return $this->enableFilters(is_array($filters) ? $filters : func_get_args());
-    }
-
     protected function formatFilters($filters)
     {
         return collect($filters)->map(function ($filter) {

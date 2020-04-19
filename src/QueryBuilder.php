@@ -38,19 +38,6 @@ class QueryBuilder extends Builder
      * @param \Illuminate\Http\Request $request
      *
      * @return \Zing\QueryBuilder\QueryBuilder
-     *
-     * @deprecated use fromBuilder instead
-     */
-    public static function for($baseQuery, Request $request)
-    {
-        return self::fromBuilder($baseQuery, $request);
-    }
-
-    /**
-     * @param Builder|string $baseQuery
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Zing\QueryBuilder\QueryBuilder
      */
     public static function fromBuilder($baseQuery, Request $request)
     {
