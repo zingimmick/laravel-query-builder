@@ -161,7 +161,6 @@ class BuilderTest extends TestCase
         self::assertSame(3, $actual);
     }
 
-
     public function test_exact_array()
     {
         request()->merge(['name' => '1,2']);
