@@ -134,7 +134,6 @@ class Filter
                 }
 
                 return $value;
-
             default:
                 if (is_string($value) && Str::contains($value, ',')) {
                     return explode(',', $value);

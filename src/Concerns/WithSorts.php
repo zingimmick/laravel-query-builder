@@ -18,7 +18,8 @@ trait WithSorts
     protected function applySort($inputs, $sorts)
     {
         foreach (['desc', 'asc'] as $direction) {
-            $this->when($this->request->input($direction),
+            $this->when(
+                $this->request->input($direction),
                 function (Builder $query, $descAttribute) use ($sorts, $direction) {
                     if (array_key_exists($descAttribute, $sorts)) {
                         $descAttribute = Arr::get($sorts, $descAttribute);

@@ -20,7 +20,9 @@ class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        config()->set('database', [
+        config()->set(
+            'database',
+            [
             'default' => 'testing',
             'connections' => [
                 'testing' => [

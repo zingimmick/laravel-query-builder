@@ -18,8 +18,8 @@ class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('search'), function ($query, $search) {
                 return $query->where(function ($query) use ($search) {
-                    return $query->orWhere('b', 'like', "%${search}%")
-                        ->orWhere('c', 'like', "%${search}%");
+                    return $query->orWhere('b', 'like', "%{$search}%")
+                        ->orWhere('c', 'like', "%{$search}%");
                 });
             })
             ->when(request()->input('a'), function ($query, $value) {
@@ -84,7 +84,7 @@ class BuilderTest extends TestCase
             ->toSql();
         $expected = User::query()
             ->when(request()->input('name'), function ($query, $value) {
-                return $query->where('name', 'like', "%${value}%");
+                return $query->where('name', 'like', "%{$value}%");
             })
             ->toSql();
         self::assertSame($expected, $actual);
@@ -98,7 +98,7 @@ class BuilderTest extends TestCase
             ->toSql();
         $expected = User::query()
             ->when(request()->input('name'), function ($query, $value) {
-                return $query->where('name', 'like', "%${value}%");
+                return $query->where('name', 'like', "%{$value}%");
             })
             ->toSql();
         self::assertSame($expected, $actual);
@@ -177,7 +177,7 @@ class BuilderTest extends TestCase
 
                 return $query->where(function ($query) use ($value) {
                     collect($value)->each(function ($item) use ($query) {
-                        $query->orWhere('name', 'like', "%${item}%");
+                        $query->orWhere('name', 'like', "%{$item}%");
                     });
 
                     return $query;
