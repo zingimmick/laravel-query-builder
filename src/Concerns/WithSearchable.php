@@ -8,27 +8,6 @@ use Illuminate\Support\Str;
 
 trait WithSearchable
 {
-    /**
-     * @param string $field
-     * @param array $results
-     *
-     * @return array
-     */
-    private function addNestedRelation($field, array $results)
-    {
-        [$relation, $property] = collect(explode('.', $field))
-            ->pipe(function (Collection $parts) {
-                return [
-                    $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
-                    $parts->last(),
-                ];
-            });
-
-        $results[$relation][] = $property;
-
-        return $results;
-    }
-
     public function searchable($searchable)
     {
         $searchable = is_array($searchable) ? $searchable : func_get_args();
@@ -67,5 +46,26 @@ trait WithSearchable
             );
         }//end if
         return $this;
+    }
+
+    /**
+     * @param string $field
+     * @param array $results
+     *
+     * @return array
+     */
+    private function addNestedRelation($field, array $results)
+    {
+        [$relation, $property] = collect(explode('.', $field))
+            ->pipe(function (Collection $parts) {
+                return [
+                    $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
+                    $parts->last(),
+                ];
+            });
+
+        $results[$relation][] = $property;
+
+        return $results;
     }
 }

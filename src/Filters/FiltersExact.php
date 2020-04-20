@@ -26,7 +26,7 @@ class FiltersExact implements Filter
 
     protected function isRelationProperty(Builder $query, string $property): bool
     {
-        if (! Str::contains($property, '.')) {
+        if ( ! Str::contains($property, '.')) {
             return false;
         }
 

@@ -27,6 +27,8 @@ class Filter
     /** @var mixed */
     protected $default;
 
+    protected $cast;
+
     public function __construct(string $property, $filter, $column = null)
     {
         $this->property = $property;
@@ -119,37 +121,6 @@ class Filter
         return $this->column;
     }
 
-    protected $cast;
-
-    protected function castValue($value)
-    {
-        switch ($this->getCast()) {
-            case CastType::CAST_BOOLEAN:
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            case CastType::CAST_INTEGER:
-                return filter_var($value, FILTER_VALIDATE_INT);
-            case CastType::CAST_ARRAY:
-                if (is_string($value) && Str::contains($value, ',')) {
-                    return explode(',', $value);
-                }
-
-                return $value;
-            default:
-                if (is_string($value) && Str::contains($value, ',')) {
-                    return explode(',', $value);
-                }
-                if ($value === 'true') {
-                    return true;
-                }
-
-                if ($value === 'false') {
-                    return false;
-                }
-
-                return $value;
-        }
-    }
-
     public function withCast($cast)
     {
         $this->cast = $cast;
@@ -196,6 +167,35 @@ class Filter
     public function hasDefault(): bool
     {
         return isset($this->default);
+    }
+
+    protected function castValue($value)
+    {
+        switch ($this->getCast()) {
+            case CastType::CAST_BOOLEAN:
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            case CastType::CAST_INTEGER:
+                return filter_var($value, FILTER_VALIDATE_INT);
+            case CastType::CAST_ARRAY:
+                if (is_string($value) && Str::contains($value, ',')) {
+                    return explode(',', $value);
+                }
+
+                return $value;
+            default:
+                if (is_string($value) && Str::contains($value, ',')) {
+                    return explode(',', $value);
+                }
+                if ($value === 'true') {
+                    return true;
+                }
+
+                if ($value === 'false') {
+                    return false;
+                }
+
+                return $value;
+        }
     }
 
     protected function resolveValueForFiltering($value)

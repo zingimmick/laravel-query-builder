@@ -36,6 +36,7 @@ trait WithFilters
 
                 return;
             }
+
             if ($filter->hasDefault()) {
                 $filter->filter($this, $filter->getDefault());
 
