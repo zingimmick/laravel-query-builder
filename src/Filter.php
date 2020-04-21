@@ -188,6 +188,7 @@ class Filter
                 if (is_string($value) && Str::contains($value, ',')) {
                     return explode(',', $value);
                 }
+
                 if ($value === 'true') {
                     return true;
                 }
@@ -197,7 +198,7 @@ class Filter
                 }
 
                 return $value;
-        }
+        }//end switch
     }
 
     protected function resolveValueForFiltering($value)

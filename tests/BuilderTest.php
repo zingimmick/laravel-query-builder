@@ -18,15 +18,23 @@ class BuilderTest extends TestCase
             ->enableFilters('a')
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('search'), function ($query, $search) {
-                return $query->where(function ($query) use ($search) {
-                    return $query->orWhere('b', 'like', "%{$search}%")
-                        ->orWhere('c', 'like', "%{$search}%");
-                });
-            })
-            ->when(request()->input('a'), function ($query, $value) {
-                return $query->where('a', $value);
-            })
+            ->when(
+                request()->input('search'),
+                function ($query, $search) {
+                    return $query->where(
+                        function ($query) use ($search) {
+                            return $query->orWhere('b', 'like', "%{$search}%")
+                                ->orWhere('c', 'like', "%{$search}%");
+                        }
+                    );
+                }
+            )
+            ->when(
+                request()->input('a'),
+                function ($query, $value) {
+                    return $query->where('a', $value);
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -38,21 +46,28 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
-                return $query->where('name', $value);
-            })
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    return $query->where('name', $value);
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
 
     public function test_cast(): void
     {
-        factory(User::class)->times(2)->create([
-            'is_visible' => true,
-        ]);
-        factory(User::class)->times(3)->create([
-            'is_visible' => false,
-        ]);
+        factory(User::class)->times(2)->create(
+            [
+                'is_visible' => true,
+            ]
+        );
+        factory(User::class)->times(3)->create(
+            [
+                'is_visible' => false,
+            ]
+        );
         request()->merge(['is_visible' => 'true']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
@@ -85,9 +100,12 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
-                return $query->where('name', 'like', "%{$value}%");
-            })
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    return $query->where('name', 'like', "%{$value}%");
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -99,9 +117,12 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
-                return $query->where('name', 'like', "%{$value}%");
-            })
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    return $query->where('name', 'like', "%{$value}%");
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -110,9 +131,11 @@ class BuilderTest extends TestCase
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create([
-            'user_id' => $user->getKey(),
-        ]);
+        factory(Order::class)->times(2)->create(
+            [
+                'user_id' => $user->getKey(),
+            ]
+        );
         request()->merge(['name' => $user->name]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::exact('name', 'user.name'))
@@ -132,12 +155,16 @@ class BuilderTest extends TestCase
 
     public function test_scope(): void
     {
-        factory(User::class)->times(2)->create([
-            'is_visible' => true,
-        ]);
-        factory(User::class)->times(3)->create([
-            'is_visible' => false,
-        ]);
+        factory(User::class)->times(2)->create(
+            [
+                'is_visible' => true,
+            ]
+        );
+        factory(User::class)->times(3)->create(
+            [
+                'is_visible' => false,
+            ]
+        );
         request()->merge(['is_visible' => 'true']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
@@ -158,11 +185,14 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
-                $value = explode(',', $value);
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    $value = explode(',', $value);
 
-                return $query->whereIn('name', $value);
-            })
+                    return $query->whereIn('name', $value);
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -174,17 +204,24 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
-                $value = explode(',', $value);
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    $value = explode(',', $value);
 
-                return $query->where(function ($query) use ($value) {
-                    collect($value)->each(function ($item) use ($query): void {
-                        $query->orWhere('name', 'like', "%{$item}%");
-                    });
+                    return $query->where(
+                        function ($query) use ($value) {
+                            collect($value)->each(
+                                function ($item) use ($query): void {
+                                    $query->orWhere('name', 'like', "%{$item}%");
+                                }
+                            );
 
-                    return $query;
-                });
-            })
+                            return $query;
+                        }
+                    );
+                }
+            )
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -193,9 +230,11 @@ class BuilderTest extends TestCase
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create([
-            'user_id' => $user->getKey(),
-        ]);
+        factory(Order::class)->times(2)->create(
+            [
+                'user_id' => $user->getKey(),
+            ]
+        );
         request()->merge(['name' => $user->name]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::partial('name', 'user.name'))
@@ -207,9 +246,11 @@ class BuilderTest extends TestCase
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create([
-            'user_id' => $user->getKey(),
-        ]);
+        factory(Order::class)->times(2)->create(
+            [
+                'user_id' => $user->getKey(),
+            ]
+        );
         request()->merge(['search' => $user->name]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
@@ -222,9 +263,11 @@ class BuilderTest extends TestCase
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => 3]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters([
-                Filter::custom('id', new LessThan()),
-            ])
+            ->enableFilters(
+                [
+                    Filter::custom('id', new LessThan()),
+                ]
+            )
             ->count();
         self::assertSame(2, $actual);
     }
@@ -233,9 +276,11 @@ class BuilderTest extends TestCase
     {
         factory(Order::class)->times(3)->create();
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters([
-                Filter::custom('id', new LessThan())->default(3),
-            ])
+            ->enableFilters(
+                [
+                    Filter::custom('id', new LessThan())->default(3),
+                ]
+            )
             ->count();
         self::assertSame(2, $actual);
     }
@@ -245,16 +290,20 @@ class BuilderTest extends TestCase
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => [1, 2, 3]]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters([
-                Filter::exact('id'),
-            ])
+            ->enableFilters(
+                [
+                    Filter::exact('id'),
+                ]
+            )
             ->count();
         self::assertSame(3, $actual);
         request()->merge(['id' => [1, 2, 3]]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters([
-                Filter::exact('id')->ignore(1),
-            ])
+            ->enableFilters(
+                [
+                    Filter::exact('id')->ignore(1),
+                ]
+            )
             ->count();
         self::assertSame(2, $actual);
     }
@@ -264,20 +313,17 @@ class BuilderTest extends TestCase
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => 3]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters([
-                Filter::callback('id', function ($query, $value, string $property) {
-                    return $query->where($property, '<', $value);
-                }),
-            ])
+            ->enableFilters(
+                [
+                    Filter::callback(
+                        'id',
+                        function ($query, $value, string $property) {
+                            return $query->where($property, '<', $value);
+                        }
+                    ),
+                ]
+            )
             ->count();
         self::assertSame(2, $actual);
-    }
-}
-
-class LessThan implements \Zing\QueryBuilder\Contracts\Filter
-{
-    public function apply($query, $value, string $property)
-    {
-        return $query->where($property, '<', $value);
     }
 }

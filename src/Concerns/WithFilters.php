@@ -21,30 +21,34 @@ trait WithFilters
 
     protected function formatFilters($filters)
     {
-        return collect($filters)->map(function ($filter) {
-            if ($filter instanceof Filter) {
-                return $filter;
-            }
+        return collect($filters)->map(
+            function ($filter) {
+                if ($filter instanceof Filter) {
+                    return $filter;
+                }
 
-            return Filter::exact($filter);
-        });
+                return Filter::exact($filter);
+            }
+        );
     }
 
     protected function applyFilters(): void
     {
-        $this->filters->each(function (Filter $filter): void {
-            if ($this->isRequestedFilter($filter)) {
-                $filter->filter($this, $this->getFilterValue($filter));
+        $this->filters->each(
+            function (Filter $filter): void {
+                if ($this->isRequestedFilter($filter)) {
+                    $filter->filter($this, $this->getFilterValue($filter));
 
-                return;
+                    return;
+                }
+
+                if ($filter->hasDefault()) {
+                    $filter->filter($this, $filter->getDefault());
+
+                    return;
+                }
             }
-
-            if ($filter->hasDefault()) {
-                $filter->filter($this, $filter->getDefault());
-
-                return;
-            }
-        });
+        );
     }
 
     protected function isRequestedFilter(Filter $filter)

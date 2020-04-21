@@ -13,7 +13,7 @@ class FiltersExact implements Filter
 {
     protected $relationConstraints = [];
 
-    public function apply($query, $value, string $property)
+    public function apply($query, $value, string $property): Builder
     {
         if ($this->isRelationProperty($query, $property)) {
             return $this->withRelationConstraint($query, $value, $property);

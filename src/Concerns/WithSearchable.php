@@ -25,6 +25,7 @@ trait WithSearchable
                             $results[] = $field;
                         }
                     }
+
                     foreach ($results as $key => $value) {
                         if (is_numeric($key)) {
                             $query->orWhere($value, 'like', "%{$search}%");
@@ -47,6 +48,7 @@ trait WithSearchable
                 }
             );
         }//end if
+
         return $this;
     }
 
@@ -59,12 +61,14 @@ trait WithSearchable
     private function addNestedRelation($field, array $results)
     {
         [$relation, $property] = collect(explode('.', $field))
-            ->pipe(function (Collection $parts) {
-                return [
-                    $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
-                    $parts->last(),
-                ];
-            });
+            ->pipe(
+                function (Collection $parts) {
+                    return [
+                        $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
+                        $parts->last(),
+                    ];
+                }
+            );
 
         $results[$relation][] = $property;
 

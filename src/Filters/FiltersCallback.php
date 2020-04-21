@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Contracts\Filter;
 
 class FiltersCallback implements Filter
@@ -15,7 +16,7 @@ class FiltersCallback implements Filter
         $this->callback = $callback;
     }
 
-    public function apply($query, $value, string $property)
+    public function apply($query, $value, string $property): Builder
     {
         return call_user_func($this->callback, $query, $value, $property);
     }

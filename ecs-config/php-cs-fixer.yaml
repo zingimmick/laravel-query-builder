@@ -1,0 +1,42 @@
+imports:
+  - { resource: 'php-cs-fixer/default.yaml' }
+
+services:
+  PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer: ~
+  PhpCsFixer\Fixer\Semicolon\MultilineWhitespaceBeforeSemicolonsFixer: ~
+  PhpCsFixer\Fixer\ReturnNotation\SimplifiedNullReturnFixer: ~
+  PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer: ~
+  PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
+    spacing: one
+  PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer:
+    align: left
+  PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
+    syntax: short
+  PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
+    elements:
+      - 'property'
+      - 'method'
+      - 'const'
+  PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer:
+    order:
+      - 'use_trait'
+      - 'constant_public'
+      - 'constant_protected'
+      - 'constant_private'
+  PhpCsFixer\Fixer\PhpUnit\PhpUnitMethodCasingFixer:
+    case: snake_case
+  PhpCsFixer\Fixer\Operator\IncrementStyleFixer:
+    style: post
+
+parameters:
+  skip:
+    PhpCsFixer\Fixer\Phpdoc\PhpdocSummaryFixer: ~
+    PhpCsFixer\Fixer\Phpdoc\PhpdocToCommentFixer: ~
+    PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer: ~
+    PhpCsFixer\Fixer\Phpdoc\PhpdocNoAliasTagFixer: ~
+    PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer: ~
+    PhpCsFixer\Fixer\Phpdoc\PhpdocTypesOrderFixer: ~
+    PhpCsFixer\Fixer\PhpUnit\PhpUnitTestClassRequiresCoversFixer: ~
+    PhpCsFixer\Fixer\PhpUnit\PhpUnitInternalClassFixer: ~
+    PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer: ~
+    PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~

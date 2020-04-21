@@ -1,39 +1,29 @@
+imports:
+  - { resource: 'ecs-config/php-cs-fixer.yaml' }
+  - { resource: 'ecs-config/php_codesniffer.yaml' }
 services:
-  PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
-    spacing: one
-  PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer:
-    align: left
-  PhpCsFixer\Fixer\ArrayNotation\ArraySyntaxFixer:
-    syntax: short
-  PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer:
-    elements:
-      - 'property'
-      - 'method'
-      - 'const'
-  PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer:
-    order:
-      - 'use_trait'
-      - 'constant_public'
-      - 'constant_protected'
-      - 'constant_private'
-  PhpCsFixer\Fixer\PhpUnit\PhpUnitMethodCasingFixer:
-    case: snake_case
-  PhpCsFixer\Fixer\Operator\IncrementStyleFixer:
-    style: post
+  PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
+    lineLimit: 80
+    absoluteLineLimit: 2000
+    ignoreComments: true
+  PHP_CodeSniffer\Standards\PSR12\Sniffs\ControlStructures\ControlStructureSpacingSniff: ~
 
 parameters:
   sets:
-    - psr12
-    - symfony
-    - common
-    - clean-code
-    - dead-code
-    - php70
-    - php71
+    - 'psr12'
+    - 'php70'
+    - 'php71'
+    - 'dead-code'
+    - 'clean-code'
+    - 'common'
   skip:
-    PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
-    PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer: ~
-    PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer: ~
+    Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenStaticFunctionSniff: ~
+    SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff: ~
+    PhpCsFixer\Fixer\Strict\StrictComparisonFixer: ~
+    PhpCsFixer\Fixer\Strict\StrictParamFixer: ~
+    SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff.ReferencedGeneralException: ~
+    PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff.Incorrect: ~
+    PHP_CodeSniffer\Standards\PSR12\Sniffs\Traits\UseDeclarationSniff.UseAfterBrace: ~
   paths:
     - config
     - src

@@ -38,7 +38,7 @@ class QueryBuilder extends Builder
     }
 
     /**
-     * @param Builder|string $baseQuery
+     * @param \Illuminate\Database\Eloquent\Builder|string $baseQuery
      * @param \Illuminate\Http\Request $request
      *
      * @return \Zing\QueryBuilder\QueryBuilder
