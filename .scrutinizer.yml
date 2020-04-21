@@ -29,7 +29,7 @@ coding_style:
         spaces:
             around_operators:
                 concatenation: true
-                negation: true
+                negation: false
             before_parentheses:
                 function_declaration: false
                 closure_definition: true
