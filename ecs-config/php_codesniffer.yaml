@@ -181,6 +181,8 @@ parameters:
     SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff.UselessAnnotation: ~
     SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff.MissingTraversableTypeHintSpecification: ~
     SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff.MissingAnyTypeHint: ~
+    SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff.MissingNativeTypeHint: ~
+    SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff.UselessAnnotation: ~
     PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.DoubleArrowNotAligned: ~
     PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.NoKeySpecified: ~
     PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays\ArrayDeclarationSniff.KeySpecified: ~
