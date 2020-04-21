@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
@@ -18,7 +20,7 @@ class TestCase extends BaseTestCase
         $this->withFactories(__DIR__ . '/factories');
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         config()->set(
             'database',
@@ -35,15 +37,15 @@ class TestCase extends BaseTestCase
         );
     }
 
-    protected function setUpDatabase()
+    protected function setUpDatabase(): void
     {
-        DB::connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
+        DB::connection()->getSchemaBuilder()->create('users', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
-        DB::connection()->getSchemaBuilder()->create('orders', function (Blueprint $table) {
+        DB::connection()->getSchemaBuilder()->create('orders', function (Blueprint $table): void {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index();
             $table->string('number');

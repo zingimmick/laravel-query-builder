@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zing\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -51,7 +53,7 @@ class FiltersExact implements Filter
 
         return $query->whereHas(
             $relation,
-            function ($query) use ($value, $property) {
+            function ($query) use ($value, $property): void {
                 $this->relationConstraints[] = $property = $query->getModel()->getTable() . '.' . $property;
 
                 $this->apply($query, $value, $property);

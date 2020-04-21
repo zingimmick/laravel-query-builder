@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zing\QueryBuilder\Filters;
 
 class FiltersPartial extends FiltersExact
@@ -12,7 +14,7 @@ class FiltersPartial extends FiltersExact
 
         if (is_array($value)) {
             return $query->where(
-                function ($query) use ($value, $property) {
+                function ($query) use ($value, $property): void {
                     foreach ($value as $partialValue) {
                         $query->orWhere($property, 'like', "%{$partialValue}%");
                     }

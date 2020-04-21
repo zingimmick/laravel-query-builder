@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zing\QueryBuilder\Concerns;
 
 use Zing\QueryBuilder\Filter;
@@ -28,9 +30,9 @@ trait WithFilters
         });
     }
 
-    protected function applyFilters()
+    protected function applyFilters(): void
     {
-        $this->filters->each(function (Filter $filter) {
+        $this->filters->each(function (Filter $filter): void {
             if ($this->isRequestedFilter($filter)) {
                 $filter->filter($this, $this->getFilterValue($filter));
 

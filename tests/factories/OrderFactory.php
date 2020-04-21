@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Faker\Generator as Faker;
 use Zing\QueryBuilder\Tests\Order;
 use Zing\QueryBuilder\Tests\User;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zing\QueryBuilder\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +16,7 @@ trait WithSearchable
         $search = $this->request->input('search');
         if ($search) {
             $this->where(
-                function (Builder $query) use ($search, $searchable) {
+                function (Builder $query) use ($search, $searchable): void {
                     $results = [];
                     foreach ($searchable as $field) {
                         if (Str::contains($field, '.')) {
@@ -29,10 +31,10 @@ trait WithSearchable
                         } else {
                             $query->orWhereHas(
                                 $key,
-                                function ($query) use ($value, $search) {
+                                function ($query) use ($value, $search): void {
                                     /** @var \Illuminate\Database\Query\Builder $query */
                                     $query->where(
-                                        function (Builder $query) use ($value, $search) {
+                                        function (Builder $query) use ($value, $search): void {
                                             foreach ($value as $field) {
                                                 $query->orWhere($field, 'like', "%{$search}%");
                                             }

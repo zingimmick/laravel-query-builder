@@ -27,6 +27,9 @@ parameters:
     - symfony
     - common
     - clean-code
+    - dead-code
+    - php70
+    - php71
   skip:
     PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
     PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer: ~

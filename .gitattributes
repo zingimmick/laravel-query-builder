@@ -7,3 +7,4 @@
 .scrutinizer.yml export-ignore
 ecs.yaml export-ignore
 phpunit.xml.dist export-ignore
+rector.yaml export-ignore
