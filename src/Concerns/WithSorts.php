@@ -12,12 +12,11 @@ trait WithSorts
     /**
      * 排序逻辑.
      *
-     * @param array $inputs
      * @param array $sorts
      *
      * @return mixed
      */
-    protected function applySort($inputs, $sorts)
+    protected function applySort($sorts)
     {
         foreach (['desc', 'asc'] as $direction) {
             $this->when(

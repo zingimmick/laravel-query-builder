@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Zing\QueryBuilder\Concerns\WithFilters;
 use Zing\QueryBuilder\Concerns\WithSearchable;
@@ -44,7 +45,7 @@ class QueryBuilder extends Builder
      */
     public static function fromBuilder($baseQuery, Request $request)
     {
-        if (is_string($baseQuery)) {
+        if (is_subclass_of($baseQuery, Model::class)) {
             $baseQuery = $baseQuery::query();
         }
 
