@@ -14,7 +14,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->setUpDatabase($this->app);
+        $this->setUpDatabase();
         $this->withFactories(__DIR__ . '/factories');
     }
 
@@ -23,19 +23,19 @@ class TestCase extends BaseTestCase
         config()->set(
             'database',
             [
-            'default' => 'testing',
-            'connections' => [
-                'testing' => [
-                    'driver' => 'sqlite',
-                    'database' => ':memory:',
-                    'foreign_key_constraints' => false,
+                'default' => 'testing',
+                'connections' => [
+                    'testing' => [
+                        'driver' => 'sqlite',
+                        'database' => ':memory:',
+                        'foreign_key_constraints' => false,
+                    ],
                 ],
-            ],
-        ]
+            ]
         );
     }
 
-    protected function setUpDatabase($app)
+    protected function setUpDatabase()
     {
         DB::connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
             $table->bigIncrements('id');

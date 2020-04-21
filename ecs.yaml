@@ -1,4 +1,5 @@
 services:
+  PhpCsFixer\Fixer\Operator\NotOperatorWithSpaceFixer: ~
   PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
     spacing: one
   PhpCsFixer\Fixer\Phpdoc\PhpdocAlignFixer:

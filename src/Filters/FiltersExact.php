@@ -34,11 +34,7 @@ class FiltersExact implements Filter
             return false;
         }
 
-        if (Str::startsWith($property, $query->getModel()->getTable() . '.')) {
-            return false;
-        }
-
-        return true;
+        return ! Str::startsWith($property, $query->getModel()->getTable() . '.');
     }
 
     protected function withRelationConstraint($query, $value, string $property)
