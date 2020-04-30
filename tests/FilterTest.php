@@ -9,7 +9,7 @@ use Zing\QueryBuilder\Filter;
 
 class FilterTest extends TestCase
 {
-    public function test_filter(): void
+    public function testFilter(): void
     {
         $filter = Filter::exact('order_number', 'number')->withCast(CastType::CAST_BOOLEAN);
         self::assertTrue($filter->hasCast());
