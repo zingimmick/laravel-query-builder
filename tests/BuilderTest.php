@@ -10,7 +10,7 @@ use Zing\QueryBuilder\QueryBuilder;
 
 class BuilderTest extends TestCase
 {
-    public function test_searchable(): void
+    public function testSearchable(): void
     {
         request()->merge(['search' => '1', 'a' => '2']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -39,7 +39,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_exact(): void
+    public function testExact(): void
     {
         request()->merge(['name' => '2']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -56,7 +56,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_cast(): void
+    public function testCast(): void
     {
         factory(User::class)->times(2)->create(
             [
@@ -93,7 +93,7 @@ class BuilderTest extends TestCase
         self::assertSame(3, $actual);
     }
 
-    public function test_partial(): void
+    public function testPartial(): void
     {
         request()->merge(['name' => '2']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -110,7 +110,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_partial_null(): void
+    public function testPartialNull(): void
     {
         request()->merge(['name' => null]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -127,7 +127,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_exact_relation(): void
+    public function testExactRelation(): void
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
@@ -143,7 +143,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_exact_qualified(): void
+    public function testExactQualified(): void
     {
         $user = factory(User::class)->create();
         request()->merge(['name' => $user->name]);
@@ -153,7 +153,7 @@ class BuilderTest extends TestCase
         self::assertSame(1, $actual);
     }
 
-    public function test_scope(): void
+    public function testScope(): void
     {
         factory(User::class)->times(2)->create(
             [
@@ -178,7 +178,7 @@ class BuilderTest extends TestCase
         self::assertSame(3, $actual);
     }
 
-    public function test_exact_array(): void
+    public function testExactArray(): void
     {
         request()->merge(['name' => '1,2']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -197,7 +197,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_partial_array(): void
+    public function testPartialArray(): void
     {
         request()->merge(['name' => '1,2']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -226,7 +226,7 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function test_partial_relation(): void
+    public function testPartialRelation(): void
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
@@ -242,7 +242,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_searchable_relation(): void
+    public function testSearchableRelation(): void
     {
         factory(Order::class)->times(3)->create();
         $user = factory(User::class)->create();
@@ -258,7 +258,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_custom(): void
+    public function testCustom(): void
     {
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => 3]);
@@ -272,7 +272,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_custom_default(): void
+    public function testCustomDefault(): void
     {
         factory(Order::class)->times(3)->create();
         $actual = QueryBuilder::fromBuilder(Order::class, request())
@@ -285,7 +285,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_ignore(): void
+    public function testIgnore(): void
     {
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => [1, 2, 3]]);
@@ -308,7 +308,7 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    public function test_callback(): void
+    public function testCallback(): void
     {
         factory(Order::class)->times(3)->create();
         request()->merge(['id' => 3]);

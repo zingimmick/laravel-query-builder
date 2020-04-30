@@ -1,12 +1,5 @@
 imports:
-  - { resource: 'ecs-config/php-cs-fixer.yaml' }
-  - { resource: 'ecs-config/php_codesniffer.yaml' }
-services:
-  PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff:
-    lineLimit: 80
-    absoluteLineLimit: 2000
-    ignoreComments: true
-  PHP_CodeSniffer\Standards\PSR12\Sniffs\ControlStructures\ControlStructureSpacingSniff: ~
+  - { resource: 'vendor/zing/coding-standard/config/config.yaml' }
 
 parameters:
   sets:
@@ -16,14 +9,6 @@ parameters:
     - 'dead-code'
     - 'clean-code'
     - 'common'
-  skip:
-    Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenStaticFunctionSniff: ~
-    SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff: ~
-    PhpCsFixer\Fixer\Strict\StrictComparisonFixer: ~
-    PhpCsFixer\Fixer\Strict\StrictParamFixer: ~
-    SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff.ReferencedGeneralException: ~
-    PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace\ObjectOperatorIndentSniff.Incorrect: ~
-    PHP_CodeSniffer\Standards\PSR12\Sniffs\Traits\UseDeclarationSniff.UseAfterBrace: ~
   paths:
     - config
     - src
