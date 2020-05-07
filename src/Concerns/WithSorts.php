@@ -16,7 +16,7 @@ trait WithSorts
      *
      * @return mixed
      */
-    protected function applySort($sorts)
+    public function enableSorts($sorts)
     {
         foreach (['desc', 'asc'] as $direction) {
             $this->when(

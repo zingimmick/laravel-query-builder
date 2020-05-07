@@ -74,9 +74,20 @@ class BuilderTest extends TestCase
             ->count();
 
         self::assertSame(2, $actual);
+        request()->merge(['is_visible' => 'true']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible'))
+            ->count();
+
+        self::assertSame(2, $actual);
         request()->merge(['is_visible' => 'false']);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+            ->count();
+        self::assertSame(3, $actual);
+        request()->merge(['is_visible' => 'false']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible'))
             ->count();
         self::assertSame(3, $actual);
 
@@ -226,6 +237,62 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testPartialCastArray(): void
+    {
+        request()->merge(['name' => [1, 2]]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    return $query->where(
+                        function ($query) use ($value) {
+                            collect($value)->each(
+                                function ($item) use ($query): void {
+                                    $query->orWhere('name', 'like', "%{$item}%");
+                                }
+                            );
+
+                            return $query;
+                        }
+                    );
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
+    public function testPartialCastStringToArray(): void
+    {
+        request()->merge(['name' => '1,2']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    $value = explode(',', $value);
+
+                    return $query->where(
+                        function ($query) use ($value) {
+                            collect($value)->each(
+                                function ($item) use ($query): void {
+                                    $query->orWhere('name', 'like', "%{$item}%");
+                                }
+                            );
+
+                            return $query;
+                        }
+                    );
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
     public function testPartialRelation(): void
     {
         factory(Order::class)->times(3)->create();
@@ -325,5 +392,47 @@ class BuilderTest extends TestCase
             )
             ->count();
         self::assertSame(2, $actual);
+    }
+
+    public function testCastInteger(): void
+    {
+        $filter = Filter::scope('name')->withCast(CastType::CAST_INTEGER);
+        $method = (new \ReflectionClass($filter))->getMethod('resolveValueForFiltering');
+        $method->setAccessible(true);
+        self::assertSame(1, $method->invokeArgs($filter, ['1']));
+    }
+
+    public function testSort(): void
+    {
+        request()->merge(['asc' => 'name']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts(['name'])
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('asc'),
+                function ($query, $value) {
+                    return $query->orderBy('name');
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
+    public function testSortCustom(): void
+    {
+        request()->merge(['asc' => 'custom_name']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts(['custom_name' => 'name'])
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('asc'),
+                function ($query, $value) {
+                    return $query->orderBy('name');
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
     }
 }
