@@ -14,19 +14,29 @@ use Zing\QueryBuilder\Filters\FiltersScope;
 
 class Filter
 {
-    /** @var \Zing\QueryBuilder\Contracts\Filter */
+    /**
+     * @var \Zing\QueryBuilder\Contracts\Filter
+     */
     protected $filter;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $property;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $column;
 
-    /** @var \Illuminate\Support\Collection */
+    /**
+     * @var \Illuminate\Support\Collection
+     */
     protected $ignored;
 
-    /** @var mixed */
+    /**
+     * @var mixed
+     */
     protected $default;
 
     protected $cast;

@@ -24,7 +24,9 @@ class QueryBuilder extends Builder
     use WithSearchable;
     use WithSorts;
 
-    /** @var \Illuminate\Http\Request */
+    /**
+     * @var \Illuminate\Http\Request
+     */
     protected $request;
 
     public function __construct(Builder $builder, $request)
