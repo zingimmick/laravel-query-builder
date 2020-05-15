@@ -53,4 +53,11 @@ class QueryBuilder extends Builder
 
         return new static($baseQuery, $request);
     }
+
+    public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        $perPage = $perPage ?: $this->request->input(config('query-builder.per_page.key', 'per_page'), config('query-builder.per_page.value', $this->model->getPerPage()));
+
+        return parent::paginate($perPage, $columns, $pageName, $page);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
@@ -394,10 +395,13 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function testCastInteger(): void
     {
         $filter = Filter::scope('name')->withCast(CastType::CAST_INTEGER);
-        $method = (new \ReflectionClass($filter))->getMethod('resolveValueForFiltering');
+        $method = (new ReflectionClass($filter))->getMethod('resolveValueForFiltering');
         $method->setAccessible(true);
         self::assertSame(1, $method->invokeArgs($filter, ['1']));
     }
@@ -411,7 +415,7 @@ class BuilderTest extends TestCase
         $expected = User::query()
             ->when(
                 request()->input('asc'),
-                function ($query, $value) {
+                function ($query) {
                     return $query->orderBy('name');
                 }
             )
@@ -428,11 +432,19 @@ class BuilderTest extends TestCase
         $expected = User::query()
             ->when(
                 request()->input('asc'),
-                function ($query, $value) {
+                function ($query) {
                     return $query->orderBy('name');
                 }
             )
             ->toSql();
         self::assertSame($expected, $actual);
+    }
+
+    public function testPerPage(): void
+    {
+        $perPage = 10;
+        request()->merge(['per_page' => $perPage]);
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame($perPage, $builder->paginate()->perPage());
     }
 }
