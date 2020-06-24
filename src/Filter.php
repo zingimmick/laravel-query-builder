@@ -195,7 +195,7 @@ class Filter
                     return explode(',', $value);
                 }
 
-                if (in_array(strtolower($value), ['true', 'false'])) {
+                if (in_array(strtolower($value), ['true', 'false'], true)) {
                     return filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 }
 
@@ -208,6 +208,7 @@ class Filter
         if (is_string($value)) {
             $value = $this->castValue($value);
         }
+
         if (is_array($value)) {
             $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
 
