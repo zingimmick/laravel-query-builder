@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Zing\QueryBuilder\Contracts\Filter;
@@ -13,8 +14,12 @@ class FiltersExact implements Filter
 {
     protected $relationConstraints = [];
 
-    public function apply($query, $value, string $property): Builder
+    public function apply(Builder $query, $value, $property): Builder
     {
+        if ($property instanceof Expression) {
+            return $query->where($property, '=', $value);
+        }
+
         if ($this->isRelationProperty($query, $property)) {
             return $this->withRelationConstraint($query, $value, $property);
         }

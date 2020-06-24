@@ -351,6 +351,14 @@ class BuilderTest extends TestCase
             )
             ->count();
         self::assertSame(2, $actual);
+        $actual = QueryBuilder::fromBuilder(Order::class, request()->merge(['id' => 2]))
+            ->enableFilters(
+                [
+                    Filter::custom('id', new LessThan())->default(3),
+                ]
+            )
+            ->count();
+        self::assertSame(1, $actual);
     }
 
     public function testIgnore(): void

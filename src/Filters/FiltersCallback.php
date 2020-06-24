@@ -16,7 +16,7 @@ class FiltersCallback implements Filter
         $this->callback = $callback;
     }
 
-    public function apply($query, $value, string $property): Builder
+    public function apply(Builder $query, $value, string $property): Builder
     {
         return call_user_func($this->callback, $query, $value, $property);
     }

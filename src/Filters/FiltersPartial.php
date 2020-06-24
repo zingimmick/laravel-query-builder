@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class FiltersPartial extends FiltersExact
 {
-    public function apply($query, $value, string $property): Builder
+    public function apply(Builder $query, $value, $property): Builder
     {
         if ($this->isRelationProperty($query, $property)) {
             return $this->withRelationConstraint($query, $value, $property);
