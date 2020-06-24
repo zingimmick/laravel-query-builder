@@ -189,22 +189,14 @@ class Filter
             case CastType::CAST_INTEGER:
                 return filter_var($value, FILTER_VALIDATE_INT);
             case CastType::CAST_ARRAY:
-                if (is_string($value) && Str::contains($value, ',')) {
-                    return explode(',', $value);
-                }
-
-                return $value;
+                return explode(',', $value);
             default:
-                if (is_string($value) && Str::contains($value, ',')) {
+                if (Str::contains($value, ',')) {
                     return explode(',', $value);
                 }
 
-                if ($value === 'true') {
-                    return true;
-                }
-
-                if ($value === 'false') {
-                    return false;
+                if (in_array(strtolower($value), ['true', 'false'])) {
+                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 }
 
                 return $value;
@@ -213,7 +205,9 @@ class Filter
 
     protected function resolveValueForFiltering($value)
     {
-        $value = $this->castValue($value);
+        if (is_string($value)) {
+            $value = $this->castValue($value);
+        }
         if (is_array($value)) {
             $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
 

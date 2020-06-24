@@ -17,13 +17,18 @@ class FiltersExact implements Filter
     public function apply(Builder $query, $value, $property): Builder
     {
         if ($property instanceof Expression) {
-            return $query->where($property, '=', $value);
+            return $this->withPropertyConstraint($query, $value, $property);
         }
 
         if ($this->isRelationProperty($query, $property)) {
             return $this->withRelationConstraint($query, $value, $property);
         }
 
+        return $this->withPropertyConstraint($query, $value, $property);
+    }
+
+    protected function withPropertyConstraint(Builder $query, $value, $property)
+    {
         if (is_array($value)) {
             return $query->whereIn($property, $value);
         }
