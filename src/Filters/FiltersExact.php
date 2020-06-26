@@ -6,12 +6,14 @@ namespace Zing\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Zing\QueryBuilder\Concerns\NestedRelation;
 use Zing\QueryBuilder\Contracts\Filter;
 
 class FiltersExact implements Filter
 {
+    use NestedRelation;
+
     protected $relationConstraints = [];
 
     public function apply(Builder $query, $value, $property): Builder
@@ -51,15 +53,7 @@ class FiltersExact implements Filter
 
     protected function withRelationConstraint($query, $value, string $property)
     {
-        [$relation, $property] = collect(explode('.', $property))
-            ->pipe(
-                function (Collection $parts) {
-                    return [
-                        $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
-                        $parts->last(),
-                    ];
-                }
-            );
+        [$relation, $property] = $this->resolveNestedRelation($property);
 
         return $query->whereHas(
             $relation,

@@ -191,12 +191,12 @@ class Filter
             case CastType::CAST_ARRAY:
                 return explode(',', $value);
             default:
-                if (Str::contains($value, ',')) {
-                    $value = explode(',', $value);
-                }
-
                 if (in_array(strtolower($value), ['true', 'false'], true)) {
                     $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                }
+
+                if (Str::contains($value, ',')) {
+                    $value = explode(',', $value);
                 }
 
                 return $value;

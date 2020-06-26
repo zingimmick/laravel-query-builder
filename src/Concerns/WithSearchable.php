@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 trait WithSearchable
 {
+    use NestedRelation;
+
     public function searchable($searchable)
     {
         $searchable = is_array($searchable) ? $searchable : func_get_args();
@@ -64,15 +65,7 @@ trait WithSearchable
      */
     private function addNestedRelation($field, array $results)
     {
-        [$relation, $property] = collect(explode('.', $field))
-            ->pipe(
-                function (Collection $parts) {
-                    return [
-                        $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
-                        $parts->last(),
-                    ];
-                }
-            );
+        [$relation, $property] = $this->resolveNestedRelation($field);
 
         $results[$relation][] = $property;
 
