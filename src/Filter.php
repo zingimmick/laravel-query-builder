@@ -192,11 +192,11 @@ class Filter
                 return explode(',', $value);
             default:
                 if (Str::contains($value, ',')) {
-                    return explode(',', $value);
+                    $value = explode(',', $value);
                 }
 
                 if (in_array(strtolower($value), ['true', 'false'], true)) {
-                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 }
 
                 return $value;
