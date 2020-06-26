@@ -29,7 +29,7 @@ class FiltersExact implements Filter
         return $this->withPropertyConstraint($query, $value, $property);
     }
 
-    protected function withPropertyConstraint(Builder $query, $value, $property)
+    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (is_array($value)) {
             return $query->whereIn($property, $value);
@@ -51,7 +51,7 @@ class FiltersExact implements Filter
         return ! Str::startsWith($property, $query->getModel()->getTable() . '.');
     }
 
-    protected function withRelationConstraint($query, $value, string $property)
+    protected function withRelationConstraint(Builder $query, $value, string $property): Builder
     {
         [$relation, $property] = $this->resolveNestedRelation($property);
 

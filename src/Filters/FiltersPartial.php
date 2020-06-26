@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class FiltersPartial extends FiltersExact
 {
-    protected function withPropertyConstraint(Builder $query, $value, $property)
+    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (is_array($value)) {
             return $query->where(
