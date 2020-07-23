@@ -32,6 +32,7 @@ class QueryBuilder extends Builder
     public function __construct(Builder $builder, $request)
     {
         parent::__construct($builder->getQuery());
+
         $this->setModel($builder->getModel())->setEagerLoads($builder->getEagerLoads());
         $this->scopes = $builder->scopes;
         $this->localMacros = $builder->localMacros;
