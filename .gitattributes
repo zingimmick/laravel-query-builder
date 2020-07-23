@@ -6,6 +6,6 @@
 .gitignore export-ignore
 .scrutinizer.yml export-ignore
 .styleci.yml export-ignore
-ecs.yaml export-ignore
+ecs.php export-ignore
 phpunit.xml.dist export-ignore
-rector.yaml export-ignore
+rector.php export-ignore
