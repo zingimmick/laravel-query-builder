@@ -39,7 +39,7 @@
     },
     "scripts": {
         "lint:rector": "@fix:rector --dry-run",
-        "lint:ecs": "ecs check --ansi",
+        "lint:ecs": "ecs check --ansi --clear-cache",
         "fix:rector": "rector process --ansi",
         "fix:ecs": "@lint:ecs --fix",
         "test:phpunit": "phpunit --colors=always",
