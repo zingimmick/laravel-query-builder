@@ -1,10 +1,8 @@
-name: Coding Standards
+name: lint
 
 on:
   pull_request:
   push:
-    branches:
-      - master
 
 jobs:
   ecs:
@@ -30,10 +28,9 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
 
       - name: Install dependencies
         run: composer update --prefer-stable --prefer-dist --no-interaction
 
       - name: Execute code standard tests
-        run: composer run-script ecs:test
+        run: composer run-script lint
