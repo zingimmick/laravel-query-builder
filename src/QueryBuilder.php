@@ -32,6 +32,7 @@ class QueryBuilder extends Builder
     public function __construct(Builder $builder, $request)
     {
         parent::__construct($builder->getQuery());
+
         $this->setModel($builder->getModel())->setEagerLoads($builder->getEagerLoads());
         $this->scopes = $builder->scopes;
         $this->localMacros = $builder->localMacros;
@@ -48,7 +49,7 @@ class QueryBuilder extends Builder
     public static function fromBuilder($baseQuery, Request $request)
     {
         if (is_subclass_of($baseQuery, Model::class)) {
-            $baseQuery = $baseQuery::query();
+            $baseQuery = forward_static_call([$baseQuery, 'query']);
         }
 
         return new static($baseQuery, $request);

@@ -16,6 +16,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->setUpDatabase();
         $this->withFactories(__DIR__ . '/factories');
     }
