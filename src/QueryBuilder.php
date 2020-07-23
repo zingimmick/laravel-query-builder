@@ -48,7 +48,7 @@ class QueryBuilder extends Builder
     public static function fromBuilder($baseQuery, Request $request)
     {
         if (is_subclass_of($baseQuery, Model::class)) {
-            $baseQuery = $baseQuery::query();
+            $baseQuery = forward_static_call([$baseQuery, 'query']);
         }
 
         return new static($baseQuery, $request);
