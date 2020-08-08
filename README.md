@@ -1,4 +1,4 @@
-# laravel-query-builder
+# Laravel Query Builder
 
 <p align="center">
 <a href=""><img src="https://github.com/zingimmick/laravel-query-builder/workflows/tests/badge.svg" alt="Build Status"></a>
@@ -13,5 +13,16 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder.svg?type=shield"/></a>
 </p>
 
+> **Requires [PHP 7.2.0+](https://php.net/releases/)**
+
+Require Laravel Query Builder using [Composer](https://getcomposer.org):
+
+```bash
+composer require zing/laravel-query-builder --dev
+```
+
 ## License
+
+Laravel Query Builder is an open-sourced software licensed under the [MIT license](LICENSE).
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder?ref=badge_large)
