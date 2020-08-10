@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use Illuminate\Support\Carbon;
 use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 
@@ -409,5 +411,118 @@ class BuilderTest extends TestCase
         request()->merge(['per_page' => $perPage]);
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame($perPage, $builder->paginate()->perPage());
+    }
+
+    public function testBetween(): void
+    {
+        request()->merge(['id' => '2,3']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::between('id'))
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('id'),
+                function ($query, $value) {
+                    return $query->whereBetween('id', explode(',', $value));
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
+    public function testBetweenException(): void
+    {
+        request()->merge(['id' => '2']);
+        self::expectException(ParameterException::class);
+        QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::between('id'))
+            ->toSql();
+    }
+
+    public function testBetweenRelation(): void
+    {
+        request()->merge(['user_id' => '2,3']);
+        $actual = QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::between('user_id', 'user.id'))
+            ->toSql();
+        $expected = Order::query()
+            ->whereHas(
+                'user',
+                function ($query) {
+                    return $query->when(
+                        request()->input('user_id'),
+                        function ($query, $value) {
+                            return $query->whereBetween((new User())->getModel()->qualifyColumn('id'), explode(',', $value));
+                        }
+                    );
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
+    public function testBetweenDateTime(): void
+    {
+        request()->merge(['created_between' => '2020-01-02,2020-03-04']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::betweenDateTime('created_between', 'created_at'));
+        $expected = User::query()
+            ->when(
+                request()->input('created_between'),
+                function ($query, $value) {
+                    [$min,$max] = explode(',', $value);
+                    if (is_string($min)) {
+                        $startAt = Carbon::parse($min);
+                        if ($startAt->toDateString() === $min) {
+                            $startAt->startOfDay();
+                        }
+                    }
+
+                    if (is_string($max)) {
+                        $endAt = Carbon::parse($max);
+                        if ($endAt->toDateString() === $max) {
+                            $endAt->endOfDay();
+                        }
+                    }
+
+                    return $query->whereBetween('created_at', [$startAt, $endAt]);
+                }
+            );
+        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        self::assertSame($expected->toSql(), $actual->toSql());
+    }
+
+    public function testBetweenDate(): void
+    {
+        request()->merge(['created_between' => '2020-01-02,2020-03-04']);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
+        $expected = User::query()
+            ->when(
+                request()->input('created_between'),
+                function ($query, $value) {
+                    $value = explode(',', $value);
+
+                    return $query->whereBetween(
+                        'created_at',
+                        array_map(
+                            function ($dateTime) {
+                                if (is_string($dateTime)) {
+                                    return Carbon::parse($dateTime)->format('Y-m-d');
+                                }
+
+                                if ($dateTime instanceof \DateTimeInterface) {
+                                    return $dateTime->format('Y-m-d');
+                                }
+
+                                return $dateTime;
+                            },
+                            $value
+                        )
+                    );
+                }
+            );
+        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        self::assertSame($expected->toSql(), $actual->toSql());
     }
 }

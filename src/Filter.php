@@ -7,6 +7,9 @@ namespace Zing\QueryBuilder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Filters\FiltersBetween;
+use Zing\QueryBuilder\Filters\FiltersBetweenDate;
+use Zing\QueryBuilder\Filters\FiltersBetweenDateTime;
 use Zing\QueryBuilder\Filters\FiltersCallback;
 use Zing\QueryBuilder\Filters\FiltersExact;
 use Zing\QueryBuilder\Filters\FiltersPartial;
@@ -89,6 +92,21 @@ class Filter
     public static function callback(string $property, $callback, $column = null): self
     {
         return new static($property, new FiltersCallback($callback), $column);
+    }
+
+    public static function between(string $property, $column = null): self
+    {
+        return new static($property, new FiltersBetween(), $column);
+    }
+
+    public static function betweenDateTime(string $property, $column = null): self
+    {
+        return new static($property, new FiltersBetweenDateTime(), $column);
+    }
+
+    public static function betweenDate(string $property, $column = null): self
+    {
+        return new static($property, new FiltersBetweenDate(), $column);
     }
 
     /**
