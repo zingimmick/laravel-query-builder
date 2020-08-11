@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
-use Illuminate\Database\Eloquent\Builder;
-use Zing\QueryBuilder\Concerns\Queryable;
-
-class QueryBuilder extends Builder
+/**
+ * @deprecated use Zing\QueryBuilder\Builders\QueryBuilder
+ */
+class QueryBuilder extends Builders\QueryBuilder
 {
-    use Queryable;
 }
