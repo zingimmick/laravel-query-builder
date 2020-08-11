@@ -6,6 +6,7 @@ use Rector\Core\Configuration\Option;
 use Rector\DeadCode\Rector\Function_\RemoveUnusedFunctionRector;
 use Rector\PHPStan\Rector\Cast\RecastingRemovalRector;
 use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
+use Rector\Renaming\Rector\Class_\RenameClassRector;
 use Rector\Set\ValueObject\SetList;
 use Rector\SOLID\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\SOLID\Rector\Class_\RepeatedLiteralToClassConstantRector;
@@ -13,6 +14,18 @@ use Rector\SOLID\Rector\ClassMethod\ChangeReadOnlyVariableWithDefaultValueToCons
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    $services = $containerConfigurator->services();
+    $services->set(RenameClassRector::class)
+        ->call(
+            'configure',
+            [
+                [
+                    RenameClassRector::OLD_TO_NEW_CLASSES => [
+                        'Zing\QueryBuilder\QueryBuilder' => \Zing\QueryBuilder\Builders\QueryBuilder::class,
+                    ],
+                ],
+            ]
+        );
     $parameters = $containerConfigurator->parameters();
     $parameters->set(
         Option::SETS,
