@@ -34,7 +34,7 @@ trait Queryable
      * @param \Illuminate\Database\Eloquent\Builder|string $baseQuery
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Zing\QueryBuilder\QueryBuilder
+     * @return \Zing\QueryBuilder\Builders\QueryBuilder
      */
     public static function fromBuilder($baseQuery, Request $request)
     {

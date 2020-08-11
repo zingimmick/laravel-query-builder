@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use DateTimeInterface;
 use Illuminate\Support\Carbon;
 use ReflectionClass;
+use Zing\QueryBuilder\Builders\QueryBuilder;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\Order;
+use Zing\QueryBuilder\Tests\Models\User;
 
 class BuilderTest extends TestCase
 {
@@ -546,7 +549,7 @@ class BuilderTest extends TestCase
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
 
-                                if ($dateTime instanceof \DateTimeInterface) {
+                                if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
 
@@ -578,7 +581,7 @@ class BuilderTest extends TestCase
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
 
-                                if ($dateTime instanceof \DateTimeInterface) {
+                                if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
 
@@ -610,7 +613,7 @@ class BuilderTest extends TestCase
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
 
-                                if ($dateTime instanceof \DateTimeInterface) {
+                                if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
 
