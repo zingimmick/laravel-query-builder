@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests;
 
 use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\Order;
+use Zing\QueryBuilder\Tests\Models\User;
 
 class SearchableTest extends TestCase
 {
