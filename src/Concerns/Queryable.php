@@ -49,6 +49,6 @@ trait Queryable
     {
         $perPage = $perPage ?: $this->request->input(config('query-builder.per_page.key', 'per_page'), config('query-builder.per_page.value', $this->model->getPerPage()));
 
-        return parent::paginate($perPage, $columns, $pageName, $page);
+        return parent::paginate((int) $perPage, $columns, $pageName, $page);
     }
 }

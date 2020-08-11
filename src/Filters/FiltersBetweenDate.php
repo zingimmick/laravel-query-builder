@@ -12,23 +12,21 @@ class FiltersBetweenDate extends FiltersBetween
 {
     public function apply(Builder $query, $value, $property): Builder
     {
-        return parent::apply(
-            $query,
-            array_map(
-                function ($dateTime) {
-                    if (is_string($dateTime)) {
-                        return Carbon::parse($dateTime)->format('Y-m-d');
-                    }
+        $value = array_map(
+            function ($dateTime) {
+                if (is_string($dateTime)) {
+                    return Carbon::parse($dateTime)->format('Y-m-d');
+                }
 
-                    if ($dateTime instanceof DateTimeInterface) {
-                        return $dateTime->format('Y-m-d');
-                    }
+                if ($dateTime instanceof DateTimeInterface) {
+                    return $dateTime->format('Y-m-d');
+                }
 
-                    return $dateTime;
-                },
-                $value
-            ),
-            $property
+                return $dateTime;
+            },
+            $value
         );
+
+        return parent::apply($query, $value, $property);
     }
 }
