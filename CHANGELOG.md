@@ -10,6 +10,13 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 ## Unreleased
 
+### Changed
+
+- [#29] Compatible with custom builder
+
+
+## [0.1.6] - 2020-08-10
+
 - [#27] Improve doc
 - [#23] Configure Renovate
 - [#24] Configure Kodiak
@@ -97,3 +104,5 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [0.1.5]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.2...0.1.5
 [0.1.2]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/zingimmick/laravel-query-builder/compare/0.0.7...0.1.1
+[#29]: https://github.com/zingimmick/laravel-query-builder/pull/29
+[0.1.6]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.5...0.1.6
