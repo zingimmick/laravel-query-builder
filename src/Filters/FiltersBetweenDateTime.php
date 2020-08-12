@@ -13,22 +13,14 @@ class FiltersBetweenDateTime extends FiltersBetween
     {
         $min = head($value);
         $max = last($value);
-        if (is_string($min)) {
-            $startAt = Carbon::parse($min);
-            if ($startAt->toDateString() === $min) {
-                $startAt->startOfDay();
-            }
-        } else {
-            $startAt = $min;
+        $startAt = Carbon::parse($min);
+        if ($startAt->toDateString() === $min) {
+            $startAt->startOfDay();
         }
 
-        if (is_string($max)) {
-            $endAt = Carbon::parse($max);
-            if ($endAt->toDateString() === $max) {
-                $endAt->endOfDay();
-            }
-        } else {
-            $endAt = $max;
+        $endAt = Carbon::parse($max);
+        if ($endAt->toDateString() === $max) {
+            $endAt->endOfDay();
         }
 
         return parent::apply($query, [$startAt, $endAt], $property);
