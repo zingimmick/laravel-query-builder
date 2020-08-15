@@ -10,6 +10,20 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 ## Unreleased
 
+### Added
+
+- [#30] Add builder factory
+
+### Changed
+
+- [#31] Builder factory
+
+### Fixed
+
+- [#32] Fix code smell issues
+
+## [0.1.7] - 2020-07-17
+
 ### Changed
 
 - [#29] Compatible with custom builder
@@ -106,3 +120,6 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [0.1.1]: https://github.com/zingimmick/laravel-query-builder/compare/0.0.7...0.1.1
 [#29]: https://github.com/zingimmick/laravel-query-builder/pull/29
 [0.1.6]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.5...0.1.6
+[#32]: https://github.com/zingimmick/laravel-query-builder/pull/32
+[#31]: https://github.com/zingimmick/laravel-query-builder/pull/31
+[#30]: https://github.com/zingimmick/laravel-query-builder/pull/30
