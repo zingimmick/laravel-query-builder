@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.2, 7.3, 7.4]
+        php: [7.2, 7.3, 7.4, 8.0]
         stability: [prefer-lowest, prefer-stable]
 
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
@@ -33,9 +33,15 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           coverage: true
+          extensions: mongodb-1.8.0
 
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+        if: "matrix.php < 8"
+
+      - name: Install dependencies
+        run: composer update --prefer-stable --prefer-dist --no-interaction --ignore-platform-reqs
+        if: "matrix.php >= 8"
 
       - name: Execute tests
         run: composer run-script test:phpunit -- --coverage-clover coverage.xml
