@@ -14,6 +14,10 @@ class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
 
+    private const DATABASE = 'database';
+
+    private const TESTING = 'testing';
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,19 +34,19 @@ class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app): void
     {
         config()->set(
-            'database',
+            self::DATABASE,
             [
-                'default' => 'testing',
+                'default' => self::TESTING,
                 'connections' => [
-                    'testing' => [
+                    self::TESTING => [
                         'driver' => 'sqlite',
-                        'database' => ':memory:',
+                        self::DATABASE => ':memory:',
                         'foreign_key_constraints' => false,
                     ],
                     'mongodb' => [
                         'driver' => 'mongodb',
                         'host' => 'localhost',
-                        'database' => 'testing',
+                        self::DATABASE => self::TESTING,
                     ],
                 ],
             ]
