@@ -36,13 +36,13 @@ trait Queryable
      *
      * @return \Zing\QueryBuilder\Builders\QueryBuilder
      */
-    public static function fromBuilder($baseQuery, Request $request)
+    public static function fromBuilder($baseQuery, Request $request): self
     {
         if (is_subclass_of($baseQuery, Model::class)) {
             $baseQuery = forward_static_call([$baseQuery, 'query']);
         }
 
-        return new static($baseQuery, $request);
+        return new self($baseQuery, $request);
     }
 
     public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)

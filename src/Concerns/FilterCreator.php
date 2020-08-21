@@ -57,11 +57,11 @@ trait FilterCreator
      * @param string $property
      * @param \Illuminate\Database\Query\Expression|string|null $column
      *
-     * @return static
+     * @return self
      */
-    public static function exact(string $property, $column = null)
+    public static function exact(string $property, $column = null): self
     {
-        return new static($property, new FiltersExact(), $column);
+        return new self($property, new FiltersExact(), $column);
     }
 
     /**
@@ -70,11 +70,11 @@ trait FilterCreator
      * @param string $property
      * @param string|null $column
      *
-     * @return static
+     * @return self
      */
     public static function partial(string $property, $column = null): self
     {
-        return new static($property, new FiltersPartial(), $column);
+        return new self($property, new FiltersPartial(), $column);
     }
 
     /**
@@ -87,7 +87,7 @@ trait FilterCreator
      */
     public static function scope(string $property, $column = null): self
     {
-        return new static($property, new FiltersScope(), $column);
+        return new self($property, new FiltersScope(), $column);
     }
 
     /**
@@ -101,26 +101,26 @@ trait FilterCreator
      */
     public static function custom(string $property, Filter $filterClass, $column = null): self
     {
-        return new static($property, $filterClass, $column);
+        return new self($property, $filterClass, $column);
     }
 
     public static function callback(string $property, $callback, $column = null): self
     {
-        return new static($property, new FiltersCallback($callback), $column);
+        return new self($property, new FiltersCallback($callback), $column);
     }
 
     public static function between(string $property, $column = null): self
     {
-        return new static($property, new FiltersBetween(), $column);
+        return new self($property, new FiltersBetween(), $column);
     }
 
     public static function betweenDateTime(string $property, $column = null): self
     {
-        return new static($property, new FiltersBetweenDateTime(), $column);
+        return new self($property, new FiltersBetweenDateTime(), $column);
     }
 
     public static function betweenDate(string $property, $column = null): self
     {
-        return new static($property, new FiltersBetweenDate(), $column);
+        return new self($property, new FiltersBetweenDate(), $column);
     }
 }
