@@ -8,6 +8,6 @@ class ParameterException extends Exception
 {
     public static function tooFewElementsForBetweenExpression()
     {
-        return new static('Too few elements for between expression, at least 2 elements expected');
+        return new self('Too few elements for between expression, at least 2 elements expected');
     }
 }
