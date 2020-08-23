@@ -10,6 +10,14 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 ## Unreleased
 
+### Changed
+
+- [#36] Safely instantiate class
+- [#35] Improve coding standard config
+- [#33] Bump codecov/codecov-action from v1.0.12 to v1.0.13
+
+## [0.2.0] - 2020-07-17
+
 ### Added
 
 - [#30] Add builder factory
@@ -123,3 +131,8 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#32]: https://github.com/zingimmick/laravel-query-builder/pull/32
 [#31]: https://github.com/zingimmick/laravel-query-builder/pull/31
 [#30]: https://github.com/zingimmick/laravel-query-builder/pull/30
+[#36]: https://github.com/zingimmick/laravel-query-builder/pull/36
+[#35]: https://github.com/zingimmick/laravel-query-builder/pull/35
+[#33]: https://github.com/zingimmick/laravel-query-builder/pull/33
+[0.1.7]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.6...0.1.7
+[0.2.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.7...0.2.0
