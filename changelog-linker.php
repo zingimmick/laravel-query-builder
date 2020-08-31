@@ -17,4 +17,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'renovate[bot]',
         ]
     );
+
+    $parameters->set('repository_url', 'https://github.com/zingimmick/laravel-query-builder');
 };
