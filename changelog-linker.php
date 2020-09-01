@@ -18,5 +18,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ]
     );
 
-    $parameters->set('repository_url', 'https://github.com/zingimmick/laravel-query-builder');
+    $parameters->set(Option::REPOSITORY_URL, 'https://github.com/zingimmick/laravel-query-builder');
 };
