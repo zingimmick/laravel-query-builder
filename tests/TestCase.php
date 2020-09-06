@@ -7,7 +7,6 @@ namespace Zing\QueryBuilder\Tests;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Mongodb\MongodbServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -24,11 +23,6 @@ class TestCase extends BaseTestCase
 
         $this->setUpDatabase();
         $this->withFactories(__DIR__ . '/factories');
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [MongodbServiceProvider::class];
     }
 
     protected function getEnvironmentSetUp($app): void
