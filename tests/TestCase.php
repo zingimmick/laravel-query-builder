@@ -8,6 +8,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Zing\QueryBuilder\QueryBuilderServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -23,6 +24,11 @@ class TestCase extends BaseTestCase
 
         $this->setUpDatabase();
         $this->withFactories(__DIR__ . '/factories');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [QueryBuilderServiceProvider::class];
     }
 
     protected function getEnvironmentSetUp($app): void

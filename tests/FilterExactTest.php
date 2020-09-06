@@ -7,8 +7,8 @@ namespace Zing\QueryBuilder\Tests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
-use Zing\QueryBuilder\Builders\QueryBuilder;
 use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 
 class FilterExactTest extends TestCase

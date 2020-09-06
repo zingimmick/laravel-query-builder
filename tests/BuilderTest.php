@@ -7,10 +7,10 @@ namespace Zing\QueryBuilder\Tests;
 use DateTimeInterface;
 use Illuminate\Support\Carbon;
 use ReflectionClass;
-use Zing\QueryBuilder\Builders\QueryBuilder;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
