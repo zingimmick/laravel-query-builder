@@ -17,12 +17,12 @@ class FilterExactTest extends TestCase
 
     public function testExpression(): void
     {
-        factory(Order::class)->times(2)->create(
+        Order::factory()->times(2)->create(
             [
                 'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
             ]
         );
-        factory(Order::class)->times(3)->create(
+        Order::factory()->times(3)->create(
             [
                 'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
             ]

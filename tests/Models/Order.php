@@ -6,9 +6,12 @@ namespace Zing\QueryBuilder\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Zing\QueryBuilder\Tests\Builders\OrderBuilder;
+use Zing\QueryBuilder\Tests\Concerns\HasFactory;
 
 class Order extends Model
 {
+    use HasFactory;
+
     protected $connection = 'testing';
 
     public function user()

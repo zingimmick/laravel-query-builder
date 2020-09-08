@@ -23,7 +23,7 @@ class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->setUpDatabase();
-        $this->withFactories(__DIR__ . '/factories');
+        Factory::useNamespace('');
     }
 
     protected function getPackageProviders($app)

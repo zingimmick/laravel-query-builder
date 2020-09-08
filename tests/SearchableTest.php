@@ -41,9 +41,9 @@ class SearchableTest extends TestCase
 
     public function testSearchableRelation(): void
     {
-        factory(Order::class)->times(3)->create();
-        $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create(
+        Order::factory()->times(3)->create();
+        $user = User::factory()->create();
+        Order::factory()->times(2)->create(
             [
                 'user_id' => $user->getKey(),
             ]
@@ -57,9 +57,9 @@ class SearchableTest extends TestCase
 
     public function testSearchableForBlank(): void
     {
-        factory(Order::class)->times(3)->create();
-        $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create(
+        Order::factory()->times(3)->create();
+        $user = User::factory()->create();
+        Order::factory()->times(2)->create(
             [
                 'user_id' => $user->getKey(),
             ]
