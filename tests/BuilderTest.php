@@ -35,12 +35,12 @@ class BuilderTest extends TestCase
 
     public function testCast(): void
     {
-        factory(User::class)->times(2)->create(
+        User::factory()->times(2)->create(
             [
                 'is_visible' => true,
             ]
         );
-        factory(User::class)->times(3)->create(
+        User::factory()->times(3)->create(
             [
                 'is_visible' => false,
             ]
@@ -117,9 +117,9 @@ class BuilderTest extends TestCase
 
     public function testExactRelation(): void
     {
-        factory(Order::class)->times(3)->create();
-        $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create(
+        Order::factory()->times(3)->create();
+        $user = User::factory()->create();
+        Order::factory()->times(2)->create(
             [
                 'user_id' => $user->getKey(),
             ]
@@ -133,7 +133,7 @@ class BuilderTest extends TestCase
 
     public function testExactQualified(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         request()->merge(['name' => $user->name]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name', 'users.name'))
@@ -143,12 +143,12 @@ class BuilderTest extends TestCase
 
     public function testScope(): void
     {
-        factory(User::class)->times(2)->create(
+        User::factory()->times(2)->create(
             [
                 'is_visible' => true,
             ]
         );
-        factory(User::class)->times(3)->create(
+        User::factory()->times(3)->create(
             [
                 'is_visible' => false,
             ]
@@ -272,9 +272,9 @@ class BuilderTest extends TestCase
 
     public function testPartialRelation(): void
     {
-        factory(Order::class)->times(3)->create();
-        $user = factory(User::class)->create();
-        factory(Order::class)->times(2)->create(
+        Order::factory()->times(3)->create();
+        $user = User::factory()->create();
+        Order::factory()->times(2)->create(
             [
                 'user_id' => $user->getKey(),
             ]
@@ -288,7 +288,7 @@ class BuilderTest extends TestCase
 
     public function testCustom(): void
     {
-        factory(Order::class)->times(3)->create();
+        Order::factory()->times(3)->create();
         request()->merge(['id' => 3]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
@@ -302,7 +302,7 @@ class BuilderTest extends TestCase
 
     public function testCustomDefault(): void
     {
-        factory(Order::class)->times(3)->create();
+        Order::factory()->times(3)->create();
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -323,7 +323,7 @@ class BuilderTest extends TestCase
 
     public function testIgnore(): void
     {
-        factory(Order::class)->times(3)->create();
+        Order::factory()->times(3)->create();
         request()->merge(['id' => [1, 2, 3]]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
@@ -346,7 +346,7 @@ class BuilderTest extends TestCase
 
     public function testCallback(): void
     {
-        factory(Order::class)->times(3)->create();
+        Order::factory()->times(3)->create();
         request()->merge(['id' => 3]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
