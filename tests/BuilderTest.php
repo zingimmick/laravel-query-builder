@@ -18,7 +18,11 @@ class BuilderTest extends TestCase
 {
     public function testExact(): void
     {
-        request()->merge(['name' => '2']);
+        request()->merge(
+            [
+                'name' => '2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name'))
             ->toSql();
@@ -45,36 +49,60 @@ class BuilderTest extends TestCase
                 'is_visible' => false,
             ]
         );
-        request()->merge(['is_visible' => 'true']);
+        request()->merge(
+            [
+                'is_visible' => 'true',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(['is_visible' => 'true']);
+        request()->merge(
+            [
+                'is_visible' => 'true',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(['is_visible' => 'false']);
+        request()->merge(
+            [
+                'is_visible' => 'false',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
         self::assertSame(3, $actual);
-        request()->merge(['is_visible' => 'false']);
+        request()->merge(
+            [
+                'is_visible' => 'false',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
         self::assertSame(3, $actual);
 
-        request()->merge(['is_visible' => '1']);
+        request()->merge(
+            [
+                'is_visible' => '1',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(['is_visible' => '0']);
+        request()->merge(
+            [
+                'is_visible' => '0',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
@@ -83,7 +111,11 @@ class BuilderTest extends TestCase
 
     public function testPartial(): void
     {
-        request()->merge(['name' => '2']);
+        request()->merge(
+            [
+                'name' => '2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
@@ -100,7 +132,11 @@ class BuilderTest extends TestCase
 
     public function testPartialNull(): void
     {
-        request()->merge(['name' => null]);
+        request()->merge(
+            [
+                'name' => null,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
@@ -124,7 +160,11 @@ class BuilderTest extends TestCase
                 'user_id' => $user->getKey(),
             ]
         );
-        request()->merge(['name' => $user->name]);
+        request()->merge(
+            [
+                'name' => $user->name,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::exact('name', 'user.name'))
             ->count();
@@ -134,7 +174,11 @@ class BuilderTest extends TestCase
     public function testExactQualified(): void
     {
         $user = User::factory()->create();
-        request()->merge(['name' => $user->name]);
+        request()->merge(
+            [
+                'name' => $user->name,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name', 'users.name'))
             ->count();
@@ -153,12 +197,20 @@ class BuilderTest extends TestCase
                 'is_visible' => false,
             ]
         );
-        request()->merge(['is_visible' => 'true']);
+        request()->merge(
+            [
+                'is_visible' => 'true',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
         self::assertSame(2, $actual);
-        request()->merge(['is_visible' => 'false']);
+        request()->merge(
+            [
+                'is_visible' => 'false',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
             ->count();
@@ -168,7 +220,11 @@ class BuilderTest extends TestCase
 
     public function testExactArray(): void
     {
-        request()->merge(['name' => '1,2']);
+        request()->merge(
+            [
+                'name' => '1,2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name'))
             ->toSql();
@@ -187,7 +243,11 @@ class BuilderTest extends TestCase
 
     public function testPartialArray(): void
     {
-        request()->merge(['name' => '1,2']);
+        request()->merge(
+            [
+                'name' => '1,2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
@@ -216,7 +276,11 @@ class BuilderTest extends TestCase
 
     public function testPartialCastArray(): void
     {
-        request()->merge(['name' => [1, 2]]);
+        request()->merge(
+            [
+                'name' => [1, 2],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
             ->toSql();
@@ -243,7 +307,11 @@ class BuilderTest extends TestCase
 
     public function testPartialCastStringToArray(): void
     {
-        request()->merge(['name' => '1,2']);
+        request()->merge(
+            [
+                'name' => '1,2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
             ->toSql();
@@ -279,7 +347,11 @@ class BuilderTest extends TestCase
                 'user_id' => $user->getKey(),
             ]
         );
-        request()->merge(['name' => $user->name]);
+        request()->merge(
+            [
+                'name' => $user->name,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::partial('name', 'user.name'))
             ->count();
@@ -289,7 +361,11 @@ class BuilderTest extends TestCase
     public function testCustom(): void
     {
         Order::factory()->times(3)->create();
-        request()->merge(['id' => 3]);
+        request()->merge(
+            [
+                'id' => 3,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -311,7 +387,14 @@ class BuilderTest extends TestCase
             )
             ->count();
         self::assertSame(2, $actual);
-        $actual = QueryBuilder::fromBuilder(Order::class, request()->merge(['id' => 2]))
+        $actual = QueryBuilder::fromBuilder(
+            Order::class,
+            request()->merge(
+                [
+                    'id' => 2,
+                ]
+            )
+        )
             ->enableFilters(
                 [
                     Filter::custom('id', new LessThan())->default(3),
@@ -324,7 +407,11 @@ class BuilderTest extends TestCase
     public function testIgnore(): void
     {
         Order::factory()->times(3)->create();
-        request()->merge(['id' => [1, 2, 3]]);
+        request()->merge(
+            [
+                'id' => [1, 2, 3],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -333,7 +420,11 @@ class BuilderTest extends TestCase
             )
             ->count();
         self::assertSame(3, $actual);
-        request()->merge(['id' => [1, 2, 3]]);
+        request()->merge(
+            [
+                'id' => [1, 2, 3],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -347,7 +438,11 @@ class BuilderTest extends TestCase
     public function testCallback(): void
     {
         Order::factory()->times(3)->create();
-        request()->merge(['id' => 3]);
+        request()->merge(
+            [
+                'id' => 3,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -376,7 +471,11 @@ class BuilderTest extends TestCase
 
     public function testSort(): void
     {
-        request()->merge(['asc' => 'name']);
+        request()->merge(
+            [
+                'asc' => 'name',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableSorts(['name'])
             ->toSql();
@@ -393,9 +492,17 @@ class BuilderTest extends TestCase
 
     public function testSortCustom(): void
     {
-        request()->merge(['asc' => 'custom_name']);
+        request()->merge(
+            [
+                'asc' => 'custom_name',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableSorts(['custom_name' => 'name'])
+            ->enableSorts(
+                [
+                    'custom_name' => 'name',
+                ]
+            )
             ->toSql();
         $expected = User::query()
             ->when(
@@ -411,14 +518,22 @@ class BuilderTest extends TestCase
     public function testPerPage(): void
     {
         $perPage = 10;
-        request()->merge(['per_page' => $perPage]);
+        request()->merge(
+            [
+                'per_page' => $perPage,
+            ]
+        );
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame($perPage, $builder->paginate()->perPage());
     }
 
     public function testBetween(): void
     {
-        request()->merge(['id' => '2,3']);
+        request()->merge(
+            [
+                'id' => '2,3',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::between('id'))
             ->toSql();
@@ -435,7 +550,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenException(): void
     {
-        request()->merge(['id' => '2']);
+        request()->merge(
+            [
+                'id' => '2',
+            ]
+        );
         self::expectException(ParameterException::class);
         QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::between('id'))
@@ -444,7 +563,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenRelation(): void
     {
-        request()->merge(['user_id' => '2,3']);
+        request()->merge(
+            [
+                'user_id' => '2,3',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::between('user_id', 'user.id'))
             ->toSql();
@@ -466,7 +589,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateTime(): void
     {
-        request()->merge(['created_between' => '2020-01-02,2020-03-04']);
+        request()->merge(
+            [
+                'created_between' => '2020-01-02,2020-03-04',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDateTime('created_between', 'created_at'));
         $expected = User::query()
@@ -497,7 +624,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateTimeInstance(): void
     {
-        request()->merge(['created_between' => [Carbon::yesterday(), Carbon::today()]]);
+        request()->merge(
+            [
+                'created_between' => [Carbon::yesterday(), Carbon::today()],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDateTime('created_between', 'created_at'));
         $expected = User::query()
@@ -532,7 +663,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenDate(): void
     {
-        request()->merge(['created_between' => '2020-01-02,2020-03-04']);
+        request()->merge(
+            [
+                'created_between' => '2020-01-02,2020-03-04',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()
@@ -566,7 +701,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateMixed(): void
     {
-        request()->merge(['created_between' => [Carbon::yesterday()->getTimestamp(), Carbon::now()->getTimestamp()]]);
+        request()->merge(
+            [
+                'created_between' => [Carbon::yesterday()->getTimestamp(), Carbon::now()->getTimestamp()],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()
@@ -598,7 +737,11 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateInstance(): void
     {
-        request()->merge(['created_between' => [Carbon::yesterday(), Carbon::now()]]);
+        request()->merge(
+            [
+                'created_between' => [Carbon::yesterday(), Carbon::now()],
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()

@@ -453,7 +453,11 @@ abstract class Factory
      */
     public function afterMaking(Closure $callback)
     {
-        return $this->newInstance(['afterMaking' => $this->afterMaking->concat([$callback])]);
+        return $this->newInstance(
+            [
+                'afterMaking' => $this->afterMaking->concat([$callback]),
+            ]
+        );
     }
 
     /**
@@ -465,7 +469,11 @@ abstract class Factory
      */
     public function afterCreating(Closure $callback)
     {
-        return $this->newInstance(['afterCreating' => $this->afterCreating->concat([$callback])]);
+        return $this->newInstance(
+            [
+                'afterCreating' => $this->afterCreating->concat([$callback]),
+            ]
+        );
     }
 
     /**
@@ -518,7 +526,11 @@ abstract class Factory
      */
     public function count(?int $count)
     {
-        return $this->newInstance(['count' => $count]);
+        return $this->newInstance(
+            [
+                'count' => $count,
+            ]
+        );
     }
 
     /**
@@ -530,7 +542,11 @@ abstract class Factory
      */
     public function connection(string $connection)
     {
-        return $this->newInstance(['connection' => $connection]);
+        return $this->newInstance(
+            [
+                'connection' => $connection,
+            ]
+        );
     }
 
     /**

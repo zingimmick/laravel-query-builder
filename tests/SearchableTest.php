@@ -12,7 +12,12 @@ class SearchableTest extends TestCase
 {
     public function testSearchable(): void
     {
-        request()->merge(['search' => '1', 'a' => '2']);
+        request()->merge(
+            [
+                'search' => '1',
+                'a' => '2',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->searchable(['b', 'c'])
             ->enableFilters('a')
@@ -48,7 +53,11 @@ class SearchableTest extends TestCase
                 'user_id' => $user->getKey(),
             ]
         );
-        request()->merge(['search' => $user->name]);
+        request()->merge(
+            [
+                'search' => $user->name,
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
@@ -64,7 +73,11 @@ class SearchableTest extends TestCase
                 'user_id' => $user->getKey(),
             ]
         );
-        request()->merge(['search' => '']);
+        request()->merge(
+            [
+                'search' => '',
+            ]
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
