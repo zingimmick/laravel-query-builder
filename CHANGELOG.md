@@ -10,6 +10,19 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 ## Unreleased
 
+## [0.3.0] - 2020-09-10
+
+### Changed
+
+- [#40] Support for Laravel 8
+- [#38] Make Builder Factory macroable
+
+### Removed
+
+- [#37] Remove mongo extension
+
+## [0.2.1] - 2020-08-23
+
 ### Changed
 
 - [#36] Safely instantiate class
@@ -136,3 +149,7 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#33]: https://github.com/zingimmick/laravel-query-builder/pull/33
 [0.1.7]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.6...0.1.7
 [0.2.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.1.7...0.2.0
+[#40]: https://github.com/zingimmick/laravel-query-builder/pull/40
+[#38]: https://github.com/zingimmick/laravel-query-builder/pull/38
+[#37]: https://github.com/zingimmick/laravel-query-builder/pull/37
+[0.3.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.2.0...0.3.0
