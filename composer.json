@@ -20,6 +20,9 @@
         "roave/security-advisories": "dev-master",
         "zing/coding-standard": "^2.6"
     },
+    "conflict": {
+        "phpstan/phpstan": ">=0.12.46"
+    },
     "autoload": {
         "psr-4": {
             "Zing\\QueryBuilder\\": "src"
