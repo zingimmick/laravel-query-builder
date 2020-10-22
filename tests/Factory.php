@@ -224,7 +224,7 @@ abstract class Factory
     {
         $results->each(
             function ($model): void {
-                if (! isset($this->connection)) {
+                if ($this->connection === null) {
                     $model->setConnection($model->newQueryWithoutScopes()->getConnection()->getName());
                 }
 
@@ -322,7 +322,7 @@ abstract class Factory
                 return tap(
                     $this->newModel($this->getExpandedAttributes($parent)),
                     function ($instance): void {
-                        if (isset($this->connection)) {
+                        if ($this->connection !== null) {
                             $instance->setConnection($this->connection);
                         }
                     }

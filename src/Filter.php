@@ -47,7 +47,7 @@ class Filter
 
     public function hasCast(): bool
     {
-        return isset($this->cast);
+        return $this->cast !== null;
     }
 
     public function getCast()
@@ -83,7 +83,7 @@ class Filter
 
     public function hasDefault(): bool
     {
-        return isset($this->default);
+        return $this->default !== null;
     }
 
     protected function castValue($value)
