@@ -517,6 +517,8 @@ class BuilderTest extends TestCase
 
     public function testPerPage(): void
     {
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
         $perPage = 10;
         request()->merge(
             [
@@ -525,6 +527,20 @@ class BuilderTest extends TestCase
         );
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame($perPage, $builder->paginate()->perPage());
+    }
+
+    public function testSimplePaginate(): void
+    {
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame(config('query-builder.per_page.default'), $builder->simplePaginate()->perPage());
+        $perPage = 10;
+        request()->merge(
+            [
+                'per_page' => $perPage,
+            ]
+        );
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame($perPage, $builder->simplePaginate()->perPage());
     }
 
     public function testBetween(): void

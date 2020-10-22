@@ -47,8 +47,20 @@ trait Queryable
 
     public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
     {
-        $perPage = $perPage ?: $this->request->input(config('query-builder.per_page.key', 'per_page'), config('query-builder.per_page.value', $this->model->getPerPage()));
+        $perPage = $perPage ?: $this->resolvePerPage();
 
         return parent::paginate((int) $perPage, $columns, $pageName, $page);
+    }
+
+    public function simplePaginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        $perPage = $perPage ?: $this->resolvePerPage();
+
+        return parent::simplePaginate((int) $perPage, $columns, $pageName, $page);
+    }
+
+    protected function resolvePerPage()
+    {
+        return $this->request->input(config('query-builder.per_page.key', 'per_page'), config('query-builder.per_page.value', $this->model->getPerPage()));
     }
 }
