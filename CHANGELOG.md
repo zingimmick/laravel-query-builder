@@ -10,6 +10,21 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 ## Unreleased
 
+### Added
+
+- [#49] Add simplePaginate method for custom per_page
+
+### Changed
+
+- [#47] Update actions/checkout action to v2
+- [#46] Bump codecov/codecov-action from v1.0.13 to v1.0.14
+- [#45] Bump paambaati/codeclimate-action from v2.7.1 to v2.7.4
+- [#41] Bump paambaati/codeclimate-action from v2.6.0 to v2.7.1
+
+### Fixed
+
+- [#48] Fix "Carbon\Traits\Localization" could not be found
+
 ## [0.3.0] - 2020-09-10
 
 ### Changed
@@ -153,3 +168,10 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#38]: https://github.com/zingimmick/laravel-query-builder/pull/38
 [#37]: https://github.com/zingimmick/laravel-query-builder/pull/37
 [0.3.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.2.0...0.3.0
+[#49]: https://github.com/zingimmick/laravel-query-builder/pull/49
+[#48]: https://github.com/zingimmick/laravel-query-builder/pull/48
+[#47]: https://github.com/zingimmick/laravel-query-builder/pull/47
+[#46]: https://github.com/zingimmick/laravel-query-builder/pull/46
+[#45]: https://github.com/zingimmick/laravel-query-builder/pull/45
+[#41]: https://github.com/zingimmick/laravel-query-builder/pull/41
+[0.2.1]: https://github.com/zingimmick/laravel-query-builder/compare/0.2.0...0.2.1
