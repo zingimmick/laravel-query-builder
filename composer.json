@@ -59,7 +59,7 @@
     "extra": {
         "patches": {
             "nesbot/carbon": [
-                "patches/nesbot-carbon-src-carbon-traits-localization-php.patch"
+                "./patches/nesbot-carbon-src-carbon-traits-localization-php.patch"
             ]
         }
     }
