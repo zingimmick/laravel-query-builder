@@ -8,7 +8,17 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 <!-- changelog-linker -->
 
-## Unreleased
+## [0.4.2] - 2020-11-07
+
+### Added
+
+- [#51] Add Date Filter
+
+### Changed
+
+- [#50] Provisional support for PHP 8.0
+
+## [0.4.0] - 2020-10-22
 
 ### Added
 
@@ -175,3 +185,6 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#45]: https://github.com/zingimmick/laravel-query-builder/pull/45
 [#41]: https://github.com/zingimmick/laravel-query-builder/pull/41
 [0.2.1]: https://github.com/zingimmick/laravel-query-builder/compare/0.2.0...0.2.1
+[#51]: https://github.com/zingimmick/laravel-query-builder/pull/51
+[#50]: https://github.com/zingimmick/laravel-query-builder/pull/50
+[0.4.2]: https://github.com/zingimmick/laravel-query-builder/compare/0.3.0...0.4.2
