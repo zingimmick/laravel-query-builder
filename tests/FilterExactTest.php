@@ -39,4 +39,51 @@ class FilterExactTest extends TestCase
                 ->count()
         );
     }
+
+    public function testDate(): void
+    {
+        Order::factory()->times(2)->create(
+            [
+                'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
+            ]
+        );
+        Order::factory()->times(3)->create(
+            [
+                'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
+            ]
+        );
+        request()->merge(
+            [
+                'created_date' => Carbon::yesterday()->toDateString(),
+            ]
+        );
+        self::assertSame(
+            2,
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->enableFilters(Filter::date('created_date', 'created_at'))
+                ->count()
+        );
+        request()->merge(
+            [
+                'created_date' => Carbon::yesterday(),
+            ]
+        );
+        self::assertSame(
+            2,
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->enableFilters(Filter::date('created_date', 'created_at'))
+                ->count()
+        );
+        request()->merge(
+            [
+                'created_date' => [Carbon::yesterday(), today()->toDateString()],
+            ]
+        );
+        self::assertSame(
+            3,
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->enableFilters(Filter::date('created_date', 'created_at'))
+                ->count()
+        );
+    }
 }
