@@ -9,6 +9,7 @@ use Zing\QueryBuilder\Filters\FiltersBetween;
 use Zing\QueryBuilder\Filters\FiltersBetweenDate;
 use Zing\QueryBuilder\Filters\FiltersBetweenDateTime;
 use Zing\QueryBuilder\Filters\FiltersCallback;
+use Zing\QueryBuilder\Filters\FiltersDate;
 use Zing\QueryBuilder\Filters\FiltersExact;
 use Zing\QueryBuilder\Filters\FiltersPartial;
 use Zing\QueryBuilder\Filters\FiltersScope;
@@ -122,5 +123,10 @@ trait FilterCreator
     public static function betweenDate(string $property, $column = null): self
     {
         return new self($property, new FiltersBetweenDate(), $column);
+    }
+
+    public static function date(string $property, $column = null): self
+    {
+        return new self($property, new FiltersDate(), $column);
     }
 }
