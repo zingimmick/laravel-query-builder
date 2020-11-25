@@ -21,6 +21,35 @@ Require Laravel Query Builder using [Composer](https://getcomposer.org):
 composer require zing/laravel-query-builder --dev
 ```
 
+## Basic usage
+
+```php
+// /api/users?name=Harry
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Filter;
+
+QueryBuilder::fromBuilder(User::class, request())
+    ->enableFilters([
+        Filter::partial('name')
+    ])
+    ->simplePaginate();
+
+// /api/users?status=1,2,3
+QueryBuilder::fromBuilder(User::class, request())
+    ->enableFilters([
+        Filter::exact('status')
+    ])
+    ->simplePaginate();
+
+// /api/users?visible=1
+QueryBuilder::fromBuilder(User::class, request())
+    ->enableFilters([
+        Filter::scope('visible')
+    ])
+    ->simplePaginate();
+```
+
 ## License
 
 Laravel Query Builder is an open-sourced software licensed under the [MIT license](LICENSE).
