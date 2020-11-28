@@ -45,7 +45,7 @@ QueryBuilder::fromBuilder(User::class, request())
 // /api/users?visible=1
 QueryBuilder::fromBuilder(User::class, request())
     ->enableFilters([
-        Filter::scope('visible')
+        Filter::scope('visible')->default(true)
     ])
     ->simplePaginate();
 ```
