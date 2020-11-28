@@ -338,6 +338,27 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testSkipCastStringToArray(): void
+    {
+        request()->merge(
+            [
+                'name' => '1,2',
+            ]
+        );
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_STRING))
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('name'),
+                function ($query, $value) {
+                    return $query->where('name', 'like', "%{$value}%");
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
     public function testPartialRelation(): void
     {
         Order::factory()->times(3)->create();
@@ -616,7 +637,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()->input('created_between'),
                 function ($query, $value) {
-                    [$min,$max] = explode(',', $value);
+                    [$min, $max] = explode(',', $value);
                     if (is_string($min)) {
                         $startAt = Carbon::parse($min);
                         if ($startAt->toDateString() === $min) {
@@ -651,7 +672,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()->input('created_between'),
                 function ($query, $value) {
-                    [$min,$max] = $value;
+                    [$min, $max] = $value;
                     if (is_string($min)) {
                         $startAt = Carbon::parse($min);
                         if ($startAt->toDateString() === $min) {
