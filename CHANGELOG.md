@@ -8,6 +8,14 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 
 <!-- changelog-linker -->
 
+## Unreleased
+
+### Changed
+
+- [#54] Skip cast string to array
+- [#53] Update codecov/codecov-action action to v1.0.15
+- [#52] Update dependency migrify/vendor-patches to ^0.4.0
+
 ## [0.4.2] - 2020-11-07
 
 ### Added
@@ -188,3 +196,7 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#51]: https://github.com/zingimmick/laravel-query-builder/pull/51
 [#50]: https://github.com/zingimmick/laravel-query-builder/pull/50
 [0.4.2]: https://github.com/zingimmick/laravel-query-builder/compare/0.3.0...0.4.2
+[#54]: https://github.com/zingimmick/laravel-query-builder/pull/54
+[#53]: https://github.com/zingimmick/laravel-query-builder/pull/53
+[#52]: https://github.com/zingimmick/laravel-query-builder/pull/52
+[0.4.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.3.0...0.4.0
