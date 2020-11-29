@@ -6,6 +6,8 @@ namespace Zing\QueryBuilder\Enums;
 
 class CastType
 {
+    public const CAST_STRING = 'string';
+
     public const CAST_BOOLEAN = 'boolean';
 
     public const CAST_ARRAY = 'array';

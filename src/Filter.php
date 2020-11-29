@@ -89,6 +89,8 @@ class Filter
     protected function castValue($value)
     {
         switch ($this->getCast()) {
+            case CastType::CAST_STRING:
+                return $value;
             case CastType::CAST_BOOLEAN:
                 return filter_var($value, FILTER_VALIDATE_BOOLEAN);
             case CastType::CAST_INTEGER:

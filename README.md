@@ -24,11 +24,11 @@ composer require zing/laravel-query-builder --dev
 ## Basic usage
 
 ```php
-// /api/users?name=Harry
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 use Zing\QueryBuilder\Filter;
 
+// /api/users?name=Harry
 QueryBuilder::fromBuilder(User::class, request())
     ->enableFilters([
         Filter::partial('name')
@@ -48,6 +48,26 @@ QueryBuilder::fromBuilder(User::class, request())
         Filter::scope('visible')
     ])
     ->simplePaginate();
+```
+
+### Cast Input(Skip auto cast)
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Tests\Models\Order;
+
+// /api/users?is_visible=true
+QueryBuilder::fromBuilder(User::class, request())
+    ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+    ->count();
+
+// /api/orders?content=code,and
+QueryBuilder::fromBuilder(Order::class, request())
+    ->enableFilters(Filter::partial('content')->withCast(CastType::CAST_STRING))
+    ->count();
 ```
 
 ## License
