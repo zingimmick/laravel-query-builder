@@ -11,7 +11,7 @@ class FilterTest extends TestCase
 {
     public function testFilter(): void
     {
-        $filter = Filter::exact('order_number', 'number')->withCast(CastType::CAST_BOOLEAN);
+        $filter = Filter::exact('order_number', 'number')->withCast(CastType::BOOLEAN);
         self::assertTrue($filter->hasCast());
         self::assertTrue($filter->isForProperty('order_number'));
         self::assertSame('number', $filter->getColumn());

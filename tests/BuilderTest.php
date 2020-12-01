@@ -55,7 +55,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
@@ -75,7 +75,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
         self::assertSame(3, $actual);
         request()->merge(
@@ -94,7 +94,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
@@ -104,7 +104,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
         self::assertSame(3, $actual);
     }
@@ -203,7 +203,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
         self::assertSame(2, $actual);
         request()->merge(
@@ -212,7 +212,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::CAST_BOOLEAN))
+            ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
 
         self::assertSame(3, $actual);
@@ -282,7 +282,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
+            ->enableFilters(Filter::partial('name')->withCast(CastType::ARRAY))
             ->toSql();
         $expected = User::query()
             ->when(
@@ -313,7 +313,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_ARRAY))
+            ->enableFilters(Filter::partial('name')->withCast(CastType::ARRAY))
             ->toSql();
         $expected = User::query()
             ->when(
@@ -346,7 +346,7 @@ class BuilderTest extends TestCase
             ]
         );
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::partial('name')->withCast(CastType::CAST_STRING))
+            ->enableFilters(Filter::partial('name')->withCast(CastType::STRING))
             ->toSql();
         $expected = User::query()
             ->when(
@@ -484,7 +484,7 @@ class BuilderTest extends TestCase
      */
     public function testCastInteger(): void
     {
-        $filter = Filter::scope('name')->withCast(CastType::CAST_INTEGER);
+        $filter = Filter::scope('name')->withCast(CastType::INTEGER);
         $method = (new ReflectionClass($filter))->getMethod('resolveValueForFiltering');
         $method->setAccessible(true);
         self::assertSame(1, $method->invokeArgs($filter, ['1']));

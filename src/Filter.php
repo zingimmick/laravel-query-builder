@@ -89,13 +89,13 @@ class Filter
     protected function castValue($value)
     {
         switch ($this->getCast()) {
-            case CastType::CAST_STRING:
+            case CastType::STRING:
                 return $value;
-            case CastType::CAST_BOOLEAN:
+            case CastType::BOOLEAN:
                 return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            case CastType::CAST_INTEGER:
+            case CastType::INTEGER:
                 return filter_var($value, FILTER_VALIDATE_INT);
-            case CastType::CAST_ARRAY:
+            case CastType::ARRAY:
                 return explode(',', $value);
             default:
                 if (in_array(strtolower($value), ['true', 'false'], true)) {

@@ -61,12 +61,12 @@ use Zing\QueryBuilder\Tests\Models\Order;
 
 // /api/users?is_visible=true
 QueryBuilder::fromBuilder(User::class, request())
-    ->enableFilters(Filter::exact('is_visible')->withCast(CastType::CAST_BOOLEAN))
+    ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
     ->count();
 
 // /api/orders?content=code,and
 QueryBuilder::fromBuilder(Order::class, request())
-    ->enableFilters(Filter::partial('content')->withCast(CastType::CAST_STRING))
+    ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
     ->count();
 ```
 
