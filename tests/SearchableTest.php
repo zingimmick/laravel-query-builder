@@ -51,24 +51,32 @@ class SearchableTest extends TestCase
     {
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 3)
         );
-        $user = User::query()->create([
-            'name' => $this->faker->name,
-        ]);
+        $user = User::query()->create(
+            [
+                'name' => $this->faker->name,
+            ]
+        );
         array_map(
             function () use ($user): void {
-                Order::query()->create([
-                    'user_id' => $user->getKey(),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => $user->getKey(),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 2)
         );
@@ -87,25 +95,33 @@ class SearchableTest extends TestCase
     {
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 3)
         );
-        $user = User::query()->create([
-            'name' => $this->faker->name,
-        ]);
+        $user = User::query()->create(
+            [
+                'name' => $this->faker->name,
+            ]
+        );
 
         array_map(
             function () use ($user): void {
-                Order::query()->create([
-                    'user_id' => $user->getKey(),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => $user->getKey(),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 2)
         );

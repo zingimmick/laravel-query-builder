@@ -20,25 +20,33 @@ class FilterExactTest extends TestCase
     {
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 2)
         );
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 3)
         );
@@ -59,26 +67,34 @@ class FilterExactTest extends TestCase
     {
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 2)
         );
 
         array_map(
             function (): void {
-                Order::query()->create([
-                    'user_id' => User::query()->create([
-                        'name' => $this->faker->name,
-                    ]),
-                    'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
-                    'number' => $this->faker->randomNumber(),
-                ]);
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
             },
             range(1, 3)
         );
