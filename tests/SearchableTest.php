@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use Illuminate\Foundation\Testing\WithFaker;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
 class SearchableTest extends TestCase
 {
+    use WithFaker;
+
     public function testSearchable(): void
     {
         request()->merge(
@@ -46,12 +49,28 @@ class SearchableTest extends TestCase
 
     public function testSearchableRelation(): void
     {
-        Order::factory()->times(3)->create();
-        $user = User::factory()->create();
-        Order::factory()->times(2)->create(
-            [
-                'user_id' => $user->getKey(),
-            ]
+        array_map(
+            function (): void {
+                Order::query()->create([
+                    'user_id' => User::query()->create([
+                        'name' => $this->faker->name,
+                    ]),
+                    'number' => $this->faker->randomNumber(),
+                ]);
+            },
+            range(1, 3)
+        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
+        array_map(
+            function () use ($user): void {
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
+            },
+            range(1, 2)
         );
         request()->merge(
             [
@@ -66,12 +85,29 @@ class SearchableTest extends TestCase
 
     public function testSearchableForBlank(): void
     {
-        Order::factory()->times(3)->create();
-        $user = User::factory()->create();
-        Order::factory()->times(2)->create(
-            [
-                'user_id' => $user->getKey(),
-            ]
+        array_map(
+            function (): void {
+                Order::query()->create([
+                    'user_id' => User::query()->create([
+                        'name' => $this->faker->name,
+                    ]),
+                    'number' => $this->faker->randomNumber(),
+                ]);
+            },
+            range(1, 3)
+        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
+
+        array_map(
+            function () use ($user): void {
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
+            },
+            range(1, 2)
         );
         request()->merge(
             [
