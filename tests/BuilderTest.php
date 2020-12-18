@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests;
 
 use DateTimeInterface;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
 use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
@@ -16,6 +17,8 @@ use Zing\QueryBuilder\Tests\Models\User;
 
 class BuilderTest extends TestCase
 {
+    use WithFaker;
+
     public function testExact(): void
     {
         request()->merge(
@@ -39,15 +42,27 @@ class BuilderTest extends TestCase
 
     public function testCast(): void
     {
-        User::factory()->times(2)->create(
-            [
-                'is_visible' => true,
-            ]
+        array_map(
+            function (): void {
+                User::query()->create(
+                    [
+                        'name' => $this->faker->name,
+                        'is_visible' => true,
+                    ]
+                );
+            },
+            range(1, 2)
         );
-        User::factory()->times(3)->create(
-            [
-                'is_visible' => false,
-            ]
+        array_map(
+            function (): void {
+                User::query()->create(
+                    [
+                        'name' => $this->faker->name,
+                        'is_visible' => false,
+                    ]
+                );
+            },
+            range(1, 3)
         );
         request()->merge(
             [
@@ -153,12 +168,37 @@ class BuilderTest extends TestCase
 
     public function testExactRelation(): void
     {
-        Order::factory()->times(3)->create();
-        $user = User::factory()->create();
-        Order::factory()->times(2)->create(
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
+        $user = User::query()->create(
             [
-                'user_id' => $user->getKey(),
+                'name' => $this->faker->name,
             ]
+        );
+
+        array_map(
+            function () use ($user): void {
+                Order::query()->create(
+                    [
+                        'user_id' => $user->getKey(),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 2)
         );
         request()->merge(
             [
@@ -173,7 +213,11 @@ class BuilderTest extends TestCase
 
     public function testExactQualified(): void
     {
-        $user = User::factory()->create();
+        $user = User::query()->create(
+            [
+                'name' => $this->faker->name,
+            ]
+        );
         request()->merge(
             [
                 'name' => $user->name,
@@ -187,15 +231,27 @@ class BuilderTest extends TestCase
 
     public function testScope(): void
     {
-        User::factory()->times(2)->create(
-            [
-                'is_visible' => true,
-            ]
+        array_map(
+            function (): void {
+                User::query()->create(
+                    [
+                        'name' => $this->faker->name,
+                        'is_visible' => true,
+                    ]
+                );
+            },
+            range(1, 2)
         );
-        User::factory()->times(3)->create(
-            [
-                'is_visible' => false,
-            ]
+        array_map(
+            function (): void {
+                User::query()->create(
+                    [
+                        'name' => $this->faker->name,
+                        'is_visible' => false,
+                    ]
+                );
+            },
+            range(1, 3)
         );
         request()->merge(
             [
@@ -361,12 +417,37 @@ class BuilderTest extends TestCase
 
     public function testPartialRelation(): void
     {
-        Order::factory()->times(3)->create();
-        $user = User::factory()->create();
-        Order::factory()->times(2)->create(
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
+        $user = User::query()->create(
             [
-                'user_id' => $user->getKey(),
+                'name' => $this->faker->name,
             ]
+        );
+
+        array_map(
+            function () use ($user): void {
+                Order::query()->create(
+                    [
+                        'user_id' => $user->getKey(),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 2)
         );
         request()->merge(
             [
@@ -381,7 +462,21 @@ class BuilderTest extends TestCase
 
     public function testCustom(): void
     {
-        Order::factory()->times(3)->create();
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
         request()->merge(
             [
                 'id' => 3,
@@ -399,7 +494,21 @@ class BuilderTest extends TestCase
 
     public function testCustomDefault(): void
     {
-        Order::factory()->times(3)->create();
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -427,7 +536,21 @@ class BuilderTest extends TestCase
 
     public function testIgnore(): void
     {
-        Order::factory()->times(3)->create();
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
         request()->merge(
             [
                 'id' => [1, 2, 3],
@@ -458,7 +581,21 @@ class BuilderTest extends TestCase
 
     public function testCallback(): void
     {
-        Order::factory()->times(3)->create();
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create(
+                            [
+                                'name' => $this->faker->name,
+                            ]
+                        ),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
         request()->merge(
             [
                 'id' => 3,

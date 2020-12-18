@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Zing\QueryBuilder\Tests\Concerns\HasFactory;
 
 class User extends Model
 {
-    use HasFactory;
+    protected $guarded = [];
 
     protected $connection = 'testing';
 
