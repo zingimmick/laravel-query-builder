@@ -119,9 +119,9 @@ class Filter
         if (is_array($value)) {
             $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
 
-            return ! empty($remainingProperties) ? $remainingProperties : null;
+            return empty($remainingProperties) ? null : $remainingProperties;
         }
 
-        return ! $this->getIgnored()->contains($value) ? $value : null;
+        return $this->getIgnored()->contains($value) ? null : $value;
     }
 }

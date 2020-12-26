@@ -58,7 +58,8 @@ class FiltersExact implements Filter
         return $query->whereHas(
             $relation,
             function ($query) use ($value, $property): void {
-                $this->relationConstraints[] = $property = $query->getModel()->getTable() . '.' . $property;
+                $property = $query->getModel()->getTable() . '.' . $property;
+                $this->relationConstraints[] = $property;
 
                 $this->apply($query, $value, $property);
             }
