@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Concerns;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Arr;
+use Zing\QueryBuilder\Sort;
 
 trait WithSorts
 {
@@ -18,19 +17,53 @@ trait WithSorts
      */
     public function enableSorts($sorts)
     {
-        foreach (['desc', 'asc'] as $direction) {
-            $this->when(
-                $this->request->input($direction),
-                function (Builder $query, $descAttribute) use ($sorts, $direction) {
-                    if (array_key_exists($descAttribute, $sorts)) {
-                        $descAttribute = Arr::get($sorts, $descAttribute);
-                    }
+        $this->formatSorts($sorts)->each(
+            function (Sort $sort): void {
+                if ($this->isRequestedSort($sort)) {
+                    $sort->sort($this, $this->getSortValue($sort));
 
-                    return $query->orderBy($descAttribute, $direction);
+                    return;
                 }
-            );
-        }
+
+                if ($sort->hasDefaultDirection()) {
+                    $sort->sort($this, $sort->getDefaultDirection());
+
+                    return;
+                }
+            }
+        );
 
         return $this;
+    }
+
+    protected function isRequestedSort(Sort $sort)
+    {
+        return $this->request->input('asc') === $sort->getProperty() || $this->request->input('desc') === $sort->getProperty();
+    }
+
+    protected function getSortValue(Sort $sort)
+    {
+        if ($this->request->input('desc') === $sort->getProperty()) {
+            return 'desc';
+        }
+
+        return 'asc';
+    }
+
+    public function formatSorts($sorts)
+    {
+        return collect($sorts)->map(
+            function ($sort, $key) {
+                if ($sort instanceof Sort) {
+                    return $sort;
+                }
+
+                if (is_string($key)) {
+                    return Sort::field($key, $sort);
+                }
+
+                return Sort::field($sort);
+            }
+        );
     }
 }

@@ -12,6 +12,7 @@ use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
@@ -648,6 +649,58 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testSortWithDefault(): void
+    {
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts([Sort::field('name')->asc()])
+            ->toSql();
+        $expected = User::query()
+            ->orderBy('name')
+            ->toSql();
+        self::assertSame($expected, $actual);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts([Sort::field('name')->desc()])
+            ->toSql();
+        $expected = User::query()
+            ->orderByDesc('name')
+            ->toSql();
+        self::assertSame($expected, $actual);
+        request()->merge(
+            [
+                'asc' => 'name',
+            ]
+        );
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts(['name'])
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('asc'),
+                function ($query) {
+                    return $query->orderBy('name');
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+        request()->merge(
+            [
+                'desc' => 'name',
+            ]
+        );
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableSorts(['name'])
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()->input('desc'),
+                function ($query) {
+                    return $query->orderBy('name', 'desc');
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
     public function testSortCustom(): void
     {
         request()->merge(
@@ -729,7 +782,7 @@ class BuilderTest extends TestCase
                 'id' => '2',
             ]
         );
-        self::expectException(ParameterException::class);
+        $this->expectException(ParameterException::class);
         QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::between('id'))
             ->toSql();
@@ -752,7 +805,7 @@ class BuilderTest extends TestCase
                     return $query->when(
                         request()->input('user_id'),
                         function ($query, $value) {
-                            return $query->whereBetween((new User())->getModel()->qualifyColumn('id'), explode(',', $value));
+                            return $query->whereBetween(User::query()->getModel()->qualifyColumn('id'), explode(',', $value));
                         }
                     );
                 }
