@@ -573,7 +573,7 @@ class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
-                    Filter::exact('id')->ignore(1),
+                    Filter::exact('id')->ignore([1]),
                 ]
             )
             ->count();
