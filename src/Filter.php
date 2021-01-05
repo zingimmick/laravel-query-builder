@@ -55,7 +55,7 @@ class Filter
         return $this->cast;
     }
 
-    public function ignore(...$values): self
+    public function ignore(array $values): self
     {
         $this->ignored = $this->ignored
             ->merge($values)
