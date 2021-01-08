@@ -11,6 +11,23 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 ## Unreleased
 
 ### Changed
+- [#70] Update codecov/codecov-action action to v1.2.1
+- [#67] Bump codecov/codecov-action from v1.1.1 to v1.2.0
+- [#65] Sort with default direction
+- [#64] Update zing/coding-standard requirement from ^2.6 || ^3.1 to ^2.6 || ^3.1 || ^3.0
+- [#63] Update codecov/codecov-action action to v1.1.1
+- [#61] Full support for PHP 8.0
+- [#59] Update codecov/codecov-action action to v1.1.0
+- [#58] Bump paambaati/codeclimate-action from v2.7.4 to v2.7.5
+- [#56] Update dependency migrify/vendor-patches to v9
+
+### Removed
+- [#69] Remove spread operator
+- [#60] Remove model factory
+
+## [0.4.3] - 2020-11-30
+
+### Changed
 
 - [#54] Skip cast string to array
 - [#53] Update codecov/codecov-action action to v1.0.15
@@ -200,3 +217,15 @@ PRs and issues are linked, so you can find more about it. Thanks to [ChangelogLi
 [#53]: https://github.com/zingimmick/laravel-query-builder/pull/53
 [#52]: https://github.com/zingimmick/laravel-query-builder/pull/52
 [0.4.0]: https://github.com/zingimmick/laravel-query-builder/compare/0.3.0...0.4.0
+[#70]: https://github.com/zingimmick/laravel-query-builder/pull/70
+[#69]: https://github.com/zingimmick/laravel-query-builder/pull/69
+[#67]: https://github.com/zingimmick/laravel-query-builder/pull/67
+[#65]: https://github.com/zingimmick/laravel-query-builder/pull/65
+[#64]: https://github.com/zingimmick/laravel-query-builder/pull/64
+[#63]: https://github.com/zingimmick/laravel-query-builder/pull/63
+[#61]: https://github.com/zingimmick/laravel-query-builder/pull/61
+[#60]: https://github.com/zingimmick/laravel-query-builder/pull/60
+[#59]: https://github.com/zingimmick/laravel-query-builder/pull/59
+[#58]: https://github.com/zingimmick/laravel-query-builder/pull/58
+[#56]: https://github.com/zingimmick/laravel-query-builder/pull/56
+[0.4.3]: https://github.com/zingimmick/laravel-query-builder/compare/0.4.2...0.4.3
