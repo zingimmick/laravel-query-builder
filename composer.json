@@ -30,8 +30,6 @@
             "Zing\\QueryBuilder\\Tests\\": "tests"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "config": {
         "sort-packages": true,
         "preferred-install": "dist"
@@ -53,5 +51,7 @@
         "test": [
             "@test:phpunit"
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
