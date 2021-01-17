@@ -21,6 +21,9 @@ class Sort
 
     protected $column;
 
+    /**
+     * @var string
+     */
     protected $defaultDirection;
 
     /**
@@ -56,14 +59,14 @@ class Sort
         return $this->column;
     }
 
-    public function asc()
+    public function asc(): self
     {
         $this->defaultDirection = 'asc';
 
         return $this;
     }
 
-    public function desc()
+    public function desc(): self
     {
         $this->defaultDirection = 'desc';
 
@@ -75,7 +78,7 @@ class Sort
         return $this->defaultDirection !== null;
     }
 
-    public function getDefaultDirection()
+    public function getDefaultDirection(): string
     {
         return $this->defaultDirection;
     }
