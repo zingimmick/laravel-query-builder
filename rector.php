@@ -13,6 +13,7 @@ use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\Privatization\Rector\Class_\ChangeReadOnlyVariableWithDefaultValueToConstantRector;
 use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\Privatization\Rector\Class_\RepeatedLiteralToClassConstantRector;
+use Rector\Privatization\Rector\ClassMethod\MakeOnlyUsedByChildrenProtectedRector;
 use Rector\Privatization\Rector\ClassMethod\PrivatizeLocalOnlyMethodRector;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
 use Rector\Privatization\Rector\Property\PrivatizeLocalPropertyToPrivatePropertyRector;
@@ -56,6 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             PrivatizeLocalGetterToPropertyRector::class,
             ChangeAndIfToEarlyReturnRector::class,
             VarConstantCommentRector::class,
+            MakeOnlyUsedByChildrenProtectedRector::class,
         ]
     );
     $parameters->set(
