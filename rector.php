@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\Core\Configuration\Option;
+use Rector\DeadCode\Rector\Class_\RemoveEmptyAbstractClassRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfReturnToEarlyReturnRector;
 use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
@@ -58,6 +59,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ChangeAndIfToEarlyReturnRector::class,
             VarConstantCommentRector::class,
             MakeOnlyUsedByChildrenProtectedRector::class,
+            RemoveEmptyAbstractClassRector::class,
         ]
     );
     $parameters->set(
