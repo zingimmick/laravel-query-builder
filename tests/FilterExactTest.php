@@ -22,11 +22,9 @@ class FilterExactTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -38,11 +36,9 @@ class FilterExactTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -50,11 +46,10 @@ class FilterExactTest extends TestCase
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'created_date' => Carbon::yesterday()->toDateString(),
-            ]
-        );
+            ]);
         self::assertSame(
             2,
             QueryBuilder::fromBuilder(Order::class, request())
@@ -69,11 +64,9 @@ class FilterExactTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -86,11 +79,9 @@ class FilterExactTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -98,33 +89,30 @@ class FilterExactTest extends TestCase
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'created_date' => Carbon::yesterday()->toDateString(),
-            ]
-        );
+            ]);
         self::assertSame(
             2,
             QueryBuilder::fromBuilder(Order::class, request())
                 ->enableFilters(Filter::date('created_date', 'created_at'))
                 ->count()
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'created_date' => Carbon::yesterday(),
-            ]
-        );
+            ]);
         self::assertSame(
             2,
             QueryBuilder::fromBuilder(Order::class, request())
                 ->enableFilters(Filter::date('created_date', 'created_at'))
                 ->count()
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'created_date' => [Carbon::yesterday(), today()->toDateString()],
-            ]
-        );
+            ]);
         self::assertSame(
             3,
             QueryBuilder::fromBuilder(Order::class, request())

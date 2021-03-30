@@ -59,7 +59,8 @@ class TestCase extends BaseTestCase
             function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('name');
-                $table->boolean('is_visible')->default(true);
+                $table->boolean('is_visible')
+                    ->default(true);
                 $table->timestamps();
             }
         );
@@ -67,7 +68,8 @@ class TestCase extends BaseTestCase
             'orders',
             function (Blueprint $table): void {
                 $table->bigIncrements('id');
-                $table->unsignedBigInteger('user_id')->index();
+                $table->unsignedBigInteger('user_id')
+                    ->index();
                 $table->string('number');
                 $table->timestamps();
             }
