@@ -23,9 +23,7 @@ class FactoryTest extends TestCase
 
     public function provideBuilders()
     {
-        return [
-            [QueryBuilder::class],
-        ];
+        return [[QueryBuilder::class]];
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Rector\CodingStyle\Rector\ClassConst\VarConstantCommentRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\Core\Configuration\Option;
+use Rector\DeadCode\Rector\Assign\RemoveUnusedVariableAssignRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessParamTagRector;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUselessReturnTagRector;
 use Rector\EarlyReturn\Rector\If_\ChangeAndIfToEarlyReturnRector;
@@ -56,6 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             VarConstantCommentRector::class,
             RemoveUselessParamTagRector::class,
             RemoveUselessReturnTagRector::class,
+            RemoveUnusedVariableAssignRector::class,
         ]
     );
     $parameters->set(

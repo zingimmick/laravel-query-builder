@@ -15,19 +15,18 @@ class SearchableTest extends TestCase
 
     public function testSearchable(): void
     {
-        request()->merge(
-            [
-                'search' => '1',
-                'a' => '2',
-            ]
-        );
+        request()->merge([
+            'search' => '1',
+            'a' => '2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->searchable(['b', 'c'])
             ->enableFilters('a')
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('search'),
+                request()
+                    ->input('search'),
                 function ($query, $search) {
                     return $query->where(
                         function ($query) use ($search) {
@@ -37,12 +36,9 @@ class SearchableTest extends TestCase
                     );
                 }
             )
-            ->when(
-                request()->input('a'),
-                function ($query, $value) {
-                    return $query->where('a', $value);
-                }
-            )
+            ->when(request()->input('a'), function ($query, $value) {
+                return $query->where('a', $value);
+            })
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -53,38 +49,31 @@ class SearchableTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        $user = User::query()->create(
-            [
-                'name' => $this->faker->name,
-            ]
-        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
         array_map(
             function () use ($user): void {
-                Order::query()->create(
-                    [
-                        'user_id' => $user->getKey(),
-                        'number' => $this->faker->randomNumber(),
-                    ]
-                );
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
             },
             range(1, 2)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'search' => $user->name,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
@@ -97,39 +86,32 @@ class SearchableTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        $user = User::query()->create(
-            [
-                'name' => $this->faker->name,
-            ]
-        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
 
         array_map(
             function () use ($user): void {
-                Order::query()->create(
-                    [
-                        'user_id' => $user->getKey(),
-                        'number' => $this->faker->randomNumber(),
-                    ]
-                );
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
             },
             range(1, 2)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'search' => '',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();

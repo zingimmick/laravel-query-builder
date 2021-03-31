@@ -17,28 +17,34 @@ trait WithSorts
      */
     public function enableSorts($sorts)
     {
-        $this->formatSorts($sorts)->each(
-            function (Sort $sort): void {
-                if ($this->isRequestedSort($sort)) {
-                    $sort->sort($this, $this->getSortValue($sort));
+        $this->formatSorts($sorts)
+            ->each(
+                function (Sort $sort): void {
+                    $thisIsRequestedSort = $this->isRequestedSort($sort);
+                    if ($thisIsRequestedSort) {
+                        $sort->sort($this, $this->getSortValue($sort));
 
-                    return;
+                        return;
+                    }
+
+                    if ($sort->hasDefaultDirection()) {
+                        $sort->sort($this, $sort->getDefaultDirection());
+
+                        return;
+                    }
                 }
-
-                if ($sort->hasDefaultDirection()) {
-                    $sort->sort($this, $sort->getDefaultDirection());
-
-                    return;
-                }
-            }
-        );
+            );
 
         return $this;
     }
 
     protected function isRequestedSort(Sort $sort)
     {
-        return $this->request->input('asc') === $sort->getProperty() || $this->request->input('desc') === $sort->getProperty();
+        if ($this->request->input('asc') === $sort->getProperty()) {
+            return true;
+        }
+
+        return (bool) ($this->request->input('desc') === $sort->getProperty());
     }
 
     protected function getSortValue(Sort $sort)

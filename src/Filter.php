@@ -122,6 +122,7 @@ class Filter
             return empty($remainingProperties) ? null : $remainingProperties;
         }
 
-        return $this->getIgnored()->contains($value) ? null : $value;
+        return $this->getIgnored()
+            ->contains($value) ? null : $value;
     }
 }

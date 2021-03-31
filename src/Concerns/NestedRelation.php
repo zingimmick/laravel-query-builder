@@ -15,7 +15,8 @@ trait NestedRelation
             ->pipe(
                 function (Collection $parts) {
                     return [
-                        $parts->except(count($parts) - 1)->map([Str::class, 'camel'])->implode('.'),
+                        $parts->except(count($parts) - 1)
+                            ->map([Str::class, 'camel'])->implode('.'),
                         $parts->last(),
                     ];
                 }

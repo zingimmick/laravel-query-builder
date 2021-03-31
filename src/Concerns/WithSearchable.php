@@ -75,11 +75,11 @@ trait WithSearchable
     private function resolveNestedSearchable(array $searchable)
     {
         $results = [];
-        foreach ($searchable as $field) {
-            if (Str::contains($field, '.')) {
-                $results = $this->addNestedRelation($field, $results);
+        foreach ($searchable as $singleSearchable) {
+            if (Str::contains($singleSearchable, '.')) {
+                $results = $this->addNestedRelation($singleSearchable, $results);
             } else {
-                $results[] = $field;
+                $results[] = $singleSearchable;
             }
         }
 

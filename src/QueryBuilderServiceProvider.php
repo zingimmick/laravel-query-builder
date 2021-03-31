@@ -21,12 +21,9 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
             return;
         }
 
-        $this->publishes(
-            [
-                $this->getConfigPath() => config_path('query-builder.php'),
-            ],
-            'config'
-        );
+        $this->publishes([
+            $this->getConfigPath() => config_path('query-builder.php'),
+        ], 'config');
     }
 
     public function register(): void
@@ -56,8 +53,6 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
 
     public function provides()
     {
-        return [
-            QueryBuilderFactory::class,
-        ];
+        return [QueryBuilderFactory::class];
     }
 }

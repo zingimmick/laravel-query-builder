@@ -13,8 +13,8 @@ class FiltersPartial extends FiltersExact
         if (is_array($value)) {
             return $query->where(
                 function ($query) use ($value, $property): void {
-                    foreach ($value as $partialValue) {
-                        $query->orWhere($property, 'like', "%{$partialValue}%");
+                    foreach ($value as $singleValue) {
+                        $query->orWhere($property, 'like', "%{$singleValue}%");
                     }
                 }
             );
