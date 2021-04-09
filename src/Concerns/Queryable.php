@@ -23,7 +23,8 @@ trait Queryable
     {
         parent::__construct($builder->getQuery());
 
-        $this->setModel($builder->getModel())->setEagerLoads($builder->getEagerLoads());
+        $this->setModel($builder->getModel())
+            ->setEagerLoads($builder->getEagerLoads());
         $this->scopes = $builder->scopes;
         $this->localMacros = $builder->localMacros;
         $this->onDelete = $builder->onDelete;
@@ -61,6 +62,9 @@ trait Queryable
 
     protected function resolvePerPage()
     {
-        return $this->request->input(config('query-builder.per_page.key', 'per_page'), config('query-builder.per_page.value', $this->model->getPerPage()));
+        return $this->request->input(
+            config('query-builder.per_page.key', 'per_page'),
+            config('query-builder.per_page.value', $this->model->getPerPage())
+        );
     }
 }

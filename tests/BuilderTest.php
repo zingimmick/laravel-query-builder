@@ -22,21 +22,16 @@ class BuilderTest extends TestCase
 
     public function testExact(): void
     {
-        request()->merge(
-            [
-                'name' => '2',
-            ]
-        );
+        request()->merge([
+            'name' => '2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(
-                request()->input('name'),
-                function ($query, $value) {
-                    return $query->where('name', $value);
-                }
-            )
+            ->when(request()->input('name'), function ($query, $value) {
+                return $query->where('name', $value);
+            })
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -45,80 +40,70 @@ class BuilderTest extends TestCase
     {
         array_map(
             function (): void {
-                User::query()->create(
-                    [
-                        'name' => $this->faker->name,
-                        'is_visible' => true,
-                    ]
-                );
+                User::query()->create([
+                    'name' => $this->faker->name,
+                    'is_visible' => true,
+                ]);
             },
             range(1, 2)
         );
         array_map(
             function (): void {
-                User::query()->create(
-                    [
-                        'name' => $this->faker->name,
-                        'is_visible' => false,
-                    ]
-                );
+                User::query()->create([
+                    'name' => $this->faker->name,
+                    'is_visible' => false,
+                ]);
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'true',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'true',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'false',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
         self::assertSame(3, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'false',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
         self::assertSame(3, $actual);
 
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => '1',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
         self::assertSame(2, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => '0',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
@@ -127,17 +112,16 @@ class BuilderTest extends TestCase
 
     public function testPartial(): void
     {
-        request()->merge(
-            [
-                'name' => '2',
-            ]
-        );
+        request()->merge([
+            'name' => '2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     return $query->where('name', 'like', "%{$value}%");
                 }
@@ -148,17 +132,16 @@ class BuilderTest extends TestCase
 
     public function testPartialNull(): void
     {
-        request()->merge(
-            [
-                'name' => null,
-            ]
-        );
+        request()->merge([
+            'name' => null,
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     return $query->where('name', 'like', "%{$value}%");
                 }
@@ -173,39 +156,32 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        $user = User::query()->create(
-            [
-                'name' => $this->faker->name,
-            ]
-        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
 
         array_map(
             function () use ($user): void {
-                Order::query()->create(
-                    [
-                        'user_id' => $user->getKey(),
-                        'number' => $this->faker->randomNumber(),
-                    ]
-                );
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
             },
             range(1, 2)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'name' => $user->name,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::exact('name', 'user.name'))
             ->count();
@@ -214,16 +190,13 @@ class BuilderTest extends TestCase
 
     public function testExactQualified(): void
     {
-        $user = User::query()->create(
-            [
-                'name' => $this->faker->name,
-            ]
-        );
-        request()->merge(
-            [
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
+        request()
+            ->merge([
                 'name' => $user->name,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name', 'users.name'))
             ->count();
@@ -234,40 +207,34 @@ class BuilderTest extends TestCase
     {
         array_map(
             function (): void {
-                User::query()->create(
-                    [
-                        'name' => $this->faker->name,
-                        'is_visible' => true,
-                    ]
-                );
+                User::query()->create([
+                    'name' => $this->faker->name,
+                    'is_visible' => true,
+                ]);
             },
             range(1, 2)
         );
         array_map(
             function (): void {
-                User::query()->create(
-                    [
-                        'name' => $this->faker->name,
-                        'is_visible' => false,
-                    ]
-                );
+                User::query()->create([
+                    'name' => $this->faker->name,
+                    'is_visible' => false,
+                ]);
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'true',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
         self::assertSame(2, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'is_visible' => 'false',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
@@ -277,17 +244,16 @@ class BuilderTest extends TestCase
 
     public function testExactArray(): void
     {
-        request()->merge(
-            [
-                'name' => '1,2',
-            ]
-        );
+        request()->merge([
+            'name' => '1,2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     $value = explode(',', $value);
 
@@ -300,17 +266,16 @@ class BuilderTest extends TestCase
 
     public function testPartialArray(): void
     {
-        request()->merge(
-            [
-                'name' => '1,2',
-            ]
-        );
+        request()->merge([
+            'name' => '1,2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name'))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     $value = explode(',', $value);
 
@@ -333,17 +298,16 @@ class BuilderTest extends TestCase
 
     public function testPartialCastArray(): void
     {
-        request()->merge(
-            [
-                'name' => [1, 2],
-            ]
-        );
+        request()->merge([
+            'name' => [1, 2],
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name')->withCast(CastType::ARRAY))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     return $query->where(
                         function ($query) use ($value) {
@@ -364,17 +328,16 @@ class BuilderTest extends TestCase
 
     public function testPartialCastStringToArray(): void
     {
-        request()->merge(
-            [
-                'name' => '1,2',
-            ]
-        );
+        request()->merge([
+            'name' => '1,2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name')->withCast(CastType::ARRAY))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     $value = explode(',', $value);
 
@@ -397,17 +360,16 @@ class BuilderTest extends TestCase
 
     public function testSkipCastStringToArray(): void
     {
-        request()->merge(
-            [
-                'name' => '1,2',
-            ]
-        );
+        request()->merge([
+            'name' => '1,2',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::partial('name')->withCast(CastType::STRING))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('name'),
+                request()
+                    ->input('name'),
                 function ($query, $value) {
                     return $query->where('name', 'like', "%{$value}%");
                 }
@@ -422,39 +384,32 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        $user = User::query()->create(
-            [
-                'name' => $this->faker->name,
-            ]
-        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
 
         array_map(
             function () use ($user): void {
-                Order::query()->create(
-                    [
-                        'user_id' => $user->getKey(),
-                        'number' => $this->faker->randomNumber(),
-                    ]
-                );
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
             },
             range(1, 2)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'name' => $user->name,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::partial('name', 'user.name'))
             ->count();
@@ -467,28 +422,21 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'id' => 3,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters(
-                [
-                    Filter::custom('id', new LessThan()),
-                ]
-            )
+            ->enableFilters([Filter::custom('id', new LessThan())])
             ->count();
         self::assertSame(2, $actual);
     }
@@ -499,11 +447,9 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -511,26 +457,13 @@ class BuilderTest extends TestCase
             range(1, 3)
         );
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters(
-                [
-                    Filter::custom('id', new LessThan())->default(3),
-                ]
-            )
+            ->enableFilters([Filter::custom('id', new LessThan())->default(3)])
             ->count();
         self::assertSame(2, $actual);
-        $actual = QueryBuilder::fromBuilder(
-            Order::class,
-            request()->merge(
-                [
-                    'id' => 2,
-                ]
-            )
-        )
-            ->enableFilters(
-                [
-                    Filter::custom('id', new LessThan())->default(3),
-                ]
-            )
+        $actual = QueryBuilder::fromBuilder(Order::class, request()->merge([
+            'id' => 2,
+        ]))
+            ->enableFilters([Filter::custom('id', new LessThan())->default(3)])
             ->count();
         self::assertSame(1, $actual);
     }
@@ -541,41 +474,29 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'id' => [1, 2, 3],
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters(
-                [
-                    Filter::exact('id'),
-                ]
-            )
+            ->enableFilters([Filter::exact('id')])
             ->count();
         self::assertSame(3, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'id' => [1, 2, 3],
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableFilters(
-                [
-                    Filter::exact('id')->ignore([1]),
-                ]
-            )
+            ->enableFilters([Filter::exact('id')->ignore([1])])
             ->count();
         self::assertSame(2, $actual);
     }
@@ -586,22 +507,19 @@ class BuilderTest extends TestCase
             function (): void {
                 Order::query()->create(
                     [
-                        'user_id' => User::query()->create(
-                            [
-                                'name' => $this->faker->name,
-                            ]
-                        ),
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
             },
             range(1, 3)
         );
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'id' => 3,
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -630,21 +548,16 @@ class BuilderTest extends TestCase
 
     public function testSort(): void
     {
-        request()->merge(
-            [
-                'asc' => 'name',
-            ]
-        );
+        request()->merge([
+            'asc' => 'name',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(
-                request()->input('asc'),
-                function ($query) {
-                    return $query->orderBy('name');
-                }
-            )
+            ->when(request()->input('asc'), function ($query) {
+                return $query->orderBy('name');
+            })
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -665,63 +578,48 @@ class BuilderTest extends TestCase
             ->orderByDesc('name')
             ->toSql();
         self::assertSame($expected, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'asc' => 'name',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(
-                request()->input('asc'),
-                function ($query) {
-                    return $query->orderBy('name');
-                }
-            )
+            ->when(request()->input('asc'), function ($query) {
+                return $query->orderBy('name');
+            })
             ->toSql();
         self::assertSame($expected, $actual);
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'desc' => 'name',
-            ]
-        );
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(
-                request()->input('desc'),
-                function ($query) {
-                    return $query->orderBy('name', 'desc');
-                }
-            )
+            ->when(request()->input('desc'), function ($query) {
+                return $query->orderBy('name', 'desc');
+            })
             ->toSql();
         self::assertSame($expected, $actual);
     }
 
     public function testSortCustom(): void
     {
-        request()->merge(
-            [
-                'asc' => 'custom_name',
-            ]
-        );
+        request()->merge([
+            'asc' => 'custom_name',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableSorts(
-                [
-                    'custom_name' => 'name',
-                ]
-            )
+            ->enableSorts([
+                'custom_name' => 'name',
+            ])
             ->toSql();
         $expected = User::query()
-            ->when(
-                request()->input('asc'),
-                function ($query) {
-                    return $query->orderBy('name');
-                }
-            )
+            ->when(request()->input('asc'), function ($query) {
+                return $query->orderBy('name');
+            })
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -731,11 +629,10 @@ class BuilderTest extends TestCase
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
         $perPage = 10;
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'per_page' => $perPage,
-            ]
-        );
+            ]);
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame($perPage, $builder->paginate()->perPage());
     }
@@ -745,28 +642,26 @@ class BuilderTest extends TestCase
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame(config('query-builder.per_page.default'), $builder->simplePaginate()->perPage());
         $perPage = 10;
-        request()->merge(
-            [
+        request()
+            ->merge([
                 'per_page' => $perPage,
-            ]
-        );
+            ]);
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame($perPage, $builder->simplePaginate()->perPage());
     }
 
     public function testBetween(): void
     {
-        request()->merge(
-            [
-                'id' => '2,3',
-            ]
-        );
+        request()->merge([
+            'id' => '2,3',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::between('id'))
             ->toSql();
         $expected = User::query()
             ->when(
-                request()->input('id'),
+                request()
+                    ->input('id'),
                 function ($query, $value) {
                     return $query->whereBetween('id', explode(',', $value));
                 }
@@ -777,11 +672,9 @@ class BuilderTest extends TestCase
 
     public function testBetweenException(): void
     {
-        request()->merge(
-            [
-                'id' => '2',
-            ]
-        );
+        request()->merge([
+            'id' => '2',
+        ]);
         $this->expectException(ParameterException::class);
         QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::between('id'))
@@ -790,11 +683,9 @@ class BuilderTest extends TestCase
 
     public function testBetweenRelation(): void
     {
-        request()->merge(
-            [
-                'user_id' => '2,3',
-            ]
-        );
+        request()->merge([
+            'user_id' => '2,3',
+        ]);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::between('user_id', 'user.id'))
             ->toSql();
@@ -803,9 +694,13 @@ class BuilderTest extends TestCase
                 'user',
                 function ($query) {
                     return $query->when(
-                        request()->input('user_id'),
+                        request()
+                            ->input('user_id'),
                         function ($query, $value) {
-                            return $query->whereBetween(User::query()->getModel()->qualifyColumn('id'), explode(',', $value));
+                            return $query->whereBetween(
+                                User::query()->getModel()->qualifyColumn('id'),
+                                explode(',', $value)
+                            );
                         }
                     );
                 }
@@ -816,16 +711,15 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateTime(): void
     {
-        request()->merge(
-            [
-                'created_between' => '2020-01-02,2020-03-04',
-            ]
-        );
+        request()->merge([
+            'created_between' => '2020-01-02,2020-03-04',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDateTime('created_between', 'created_at'));
         $expected = User::query()
             ->when(
-                request()->input('created_between'),
+                request()
+                    ->input('created_between'),
                 function ($query, $value) {
                     [$min, $max] = explode(',', $value);
                     if (is_string($min)) {
@@ -851,16 +745,15 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateTimeInstance(): void
     {
-        request()->merge(
-            [
-                'created_between' => [Carbon::yesterday(), Carbon::today()],
-            ]
-        );
+        request()->merge([
+            'created_between' => [Carbon::yesterday(), Carbon::today()],
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDateTime('created_between', 'created_at'));
         $expected = User::query()
             ->when(
-                request()->input('created_between'),
+                request()
+                    ->input('created_between'),
                 function ($query, $value) {
                     [$min, $max] = $value;
                     if (is_string($min)) {
@@ -890,16 +783,15 @@ class BuilderTest extends TestCase
 
     public function testBetweenDate(): void
     {
-        request()->merge(
-            [
-                'created_between' => '2020-01-02,2020-03-04',
-            ]
-        );
+        request()->merge([
+            'created_between' => '2020-01-02,2020-03-04',
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()
             ->when(
-                request()->input('created_between'),
+                request()
+                    ->input('created_between'),
                 function ($query, $value) {
                     $value = explode(',', $value);
 
@@ -937,7 +829,8 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()
             ->when(
-                request()->input('created_between'),
+                request()
+                    ->input('created_between'),
                 function ($query, $value) {
                     return $query->whereBetween(
                         'created_at',
@@ -964,16 +857,15 @@ class BuilderTest extends TestCase
 
     public function testBetweenDateInstance(): void
     {
-        request()->merge(
-            [
-                'created_between' => [Carbon::yesterday(), Carbon::now()],
-            ]
-        );
+        request()->merge([
+            'created_between' => [Carbon::yesterday(), Carbon::now()],
+        ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $expected = User::query()
             ->when(
-                request()->input('created_between'),
+                request()
+                    ->input('created_between'),
                 function ($query, $value) {
                     return $query->whereBetween(
                         'created_at',
