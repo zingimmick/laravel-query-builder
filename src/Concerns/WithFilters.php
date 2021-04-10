@@ -36,7 +36,8 @@ trait WithFilters
     {
         $this->filters->each(
             function (Filter $filter): void {
-                if ($this->isRequestedFilter($filter)) {
+                $thisIsRequestedFilter = $this->isRequestedFilter($filter);
+                if ($thisIsRequestedFilter) {
                     $filter->filter($this, $this->getFilterValue($filter));
 
                     return;

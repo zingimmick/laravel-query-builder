@@ -20,7 +20,8 @@ trait WithSorts
         $this->formatSorts($sorts)
             ->each(
                 function (Sort $sort): void {
-                    if ($this->isRequestedSort($sort)) {
+                    $thisIsRequestedSort = $this->isRequestedSort($sort);
+                    if ($thisIsRequestedSort) {
                         $sort->sort($this, $this->getSortValue($sort));
 
                         return;
@@ -39,9 +40,11 @@ trait WithSorts
 
     protected function isRequestedSort(Sort $sort)
     {
-        return $this->request->input('asc') === $sort->getProperty() || $this->request->input(
-            'desc'
-        ) === $sort->getProperty();
+        if ($this->request->input('asc') === $sort->getProperty()) {
+            return true;
+        }
+
+        return (bool) ($this->request->input('desc') === $sort->getProperty());
     }
 
     protected function getSortValue(Sort $sort)
