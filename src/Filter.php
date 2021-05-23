@@ -16,7 +16,10 @@ class Filter
     public function filter($query, $value)
     {
         $value = $this->resolveValueForFiltering($value);
-        if ($value === null || $value === '') {
+        if ($value === null) {
+            return $query;
+        }
+        if ($value === '') {
             return $query;
         }
 

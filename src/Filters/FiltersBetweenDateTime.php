@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
 class FiltersBetweenDateTime extends FiltersBetween
 {
     public function apply(Builder $query, $value, $property): Builder
     {
-        $min = head($value);
-        $max = last($value);
+        $min = Arr::first($value);
+        $max = Arr::last($value);
         $startAt = Carbon::parse($min);
         if ($startAt->toDateString() === $min) {
             $startAt->startOfDay();
