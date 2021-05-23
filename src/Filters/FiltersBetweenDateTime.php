@@ -11,7 +11,7 @@ class FiltersBetweenDateTime extends FiltersBetween
 {
     public function apply(Builder $query, $value, $property): Builder
     {
-        $min = head($value);
+        $min = head();
         $max = last($value);
         $startAt = Carbon::parse($min);
         if ($startAt->toDateString() === $min) {
