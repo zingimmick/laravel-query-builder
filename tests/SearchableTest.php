@@ -30,8 +30,8 @@ class SearchableTest extends TestCase
                 function ($query, $search) {
                     return $query->where(
                         function ($query) use ($search) {
-                            return $query->orWhere('b', 'like', "%{$search}%")
-                                ->orWhere('c', 'like', "%{$search}%");
+                            return $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
+                                ->orWhere('c', 'like', sprintf('%%%s%%', $search));
                         }
                     );
                 }
