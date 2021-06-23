@@ -23,7 +23,7 @@ class FiltersDate extends FiltersExact
                 $value
             );
 
-            return $query->whereIn(DB::raw("date({$property})"), $value);
+            return $query->whereIn(DB::raw(sprintf('date(%s)', $property)), $value);
         }
 
         if ($value instanceof \DateTimeInterface) {

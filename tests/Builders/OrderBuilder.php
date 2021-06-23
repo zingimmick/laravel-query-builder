@@ -10,6 +10,6 @@ class OrderBuilder extends Builder
 {
     public function whereNumberLike($number)
     {
-        return $this->where('number', 'like', "%{$number}%");
+        return $this->where('number', 'like', sprintf('%%%s%%', $number));
     }
 }

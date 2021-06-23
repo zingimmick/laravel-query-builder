@@ -123,7 +123,7 @@ class BuilderTest extends TestCase
                 request()
                     ->input('name'),
                 function ($query, $value) {
-                    return $query->where('name', 'like', "%{$value}%");
+                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
             ->toSql();
@@ -143,7 +143,7 @@ class BuilderTest extends TestCase
                 request()
                     ->input('name'),
                 function ($query, $value) {
-                    return $query->where('name', 'like', "%{$value}%");
+                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
             ->toSql();
@@ -283,7 +283,7 @@ class BuilderTest extends TestCase
                         function ($query) use ($value) {
                             collect($value)->each(
                                 function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', "%{$item}%");
+                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
 
@@ -313,7 +313,7 @@ class BuilderTest extends TestCase
                         function ($query) use ($value) {
                             collect($value)->each(
                                 function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', "%{$item}%");
+                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
 
@@ -345,7 +345,7 @@ class BuilderTest extends TestCase
                         function ($query) use ($value) {
                             collect($value)->each(
                                 function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', "%{$item}%");
+                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
 
@@ -371,7 +371,7 @@ class BuilderTest extends TestCase
                 request()
                     ->input('name'),
                 function ($query, $value) {
-                    return $query->where('name', 'like', "%{$value}%");
+                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
             ->toSql();
