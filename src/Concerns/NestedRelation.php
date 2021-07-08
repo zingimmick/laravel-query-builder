@@ -16,7 +16,9 @@ trait NestedRelation
                 function (Collection $parts) {
                     return [
                         $parts->except(count($parts) - 1)
-                            ->map([Str::class, 'camel'])->implode('.'),
+                            ->map(function (string $value): string {
+                                return Str::class->camel($value);
+                            })->implode('.'),
                         $parts->last(),
                     ];
                 }
