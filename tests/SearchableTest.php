@@ -117,4 +117,42 @@ class SearchableTest extends TestCase
             ->count();
         self::assertSame(5, $actual);
     }
+
+    public function testSearchableForNull(): void
+    {
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ]),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
+        $user = User::query()->create([
+            'name' => $this->faker->name,
+        ]);
+
+        array_map(
+            function () use ($user): void {
+                Order::query()->create([
+                    'user_id' => $user->getKey(),
+                    'number' => $this->faker->randomNumber(),
+                ]);
+            },
+            range(1, 2)
+        );
+        request()
+            ->merge([
+                'search' => null,
+            ]);
+        $actual = QueryBuilder::fromBuilder(Order::class, request())
+            ->searchable('user.name')
+            ->count();
+        self::assertSame(5, $actual);
+    }
 }
