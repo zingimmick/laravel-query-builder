@@ -7,7 +7,6 @@ use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
 use PhpCsFixer\Fixer\PhpUnit\PhpUnitInternalClassFixer;
 use PhpCsFixer\Fixer\PhpUnit\PhpUnitTestClassRequiresCoversFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symplify\CodingStandard\Fixer\Commenting\RemoveCommentedCodeFixer;
 use Symplify\EasyCodingStandard\ValueObject\Option;
 use Zing\CodingStandard\Set\ECSSetList;
 
@@ -22,7 +21,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         PhpUnitInternalClassFixer::class,
         PhpUnitTestClassRequiresCoversFixer::class,
         NoSuperfluousPhpdocTagsFixer::class,
-        RemoveCommentedCodeFixer::class,
     ]);
     $parameters->set(
         Option::PATHS,
