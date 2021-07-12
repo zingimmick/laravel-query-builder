@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
-use Zing\QueryBuilder\Enums\CastType;
-use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\Sort;
 
 class SortTest extends TestCase
