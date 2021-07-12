@@ -150,6 +150,26 @@ class BuilderTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testPartialBlank(): void
+    {
+        request()->merge([
+            'name' => '',
+        ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::partial('name'))
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()
+                    ->input('name'),
+                function ($query, $value) {
+                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
     public function testExactRelation(): void
     {
         array_map(
