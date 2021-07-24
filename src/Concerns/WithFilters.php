@@ -45,8 +45,6 @@ trait WithFilters
 
                 if ($filter->hasDefault()) {
                     $filter->filter($this, $filter->getDefault());
-
-                    return;
                 }
             }
         );
