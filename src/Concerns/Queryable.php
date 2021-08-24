@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 trait Queryable
 {
     use WithFilters;
+
     use WithSearchable;
+
     use WithSorts;
 
     /**
