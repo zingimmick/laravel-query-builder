@@ -55,10 +55,7 @@ trait FilterCreator
     /**
      * 通过另一个字段查询.
      *
-     * @param string $property
      * @param \Illuminate\Database\Query\Expression|string|null $column
-     *
-     * @return self
      */
     public static function exact(string $property, $column = null): self
     {
@@ -68,10 +65,7 @@ trait FilterCreator
     /**
      * 通过字段模糊查询.
      *
-     * @param string $property
      * @param string|null $column
-     *
-     * @return self
      */
     public static function partial(string $property, $column = null): self
     {
@@ -81,7 +75,6 @@ trait FilterCreator
     /**
      * 通过作用域查询.
      *
-     * @param string $property
      * @param string|null $column
      *
      * @return \Zing\QueryBuilder\Filter
@@ -94,8 +87,6 @@ trait FilterCreator
     /**
      * 自定义过滤器.
      *
-     * @param string $property
-     * @param \Zing\QueryBuilder\Contracts\Filter $filterClass
      * @param string|null $column
      *
      * @return \Zing\QueryBuilder\Filter

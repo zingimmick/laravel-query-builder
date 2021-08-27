@@ -62,7 +62,6 @@ trait WithSearchable
 
     /**
      * @param string $field
-     * @param array $results
      *
      * @return array
      */

@@ -29,7 +29,6 @@ class Sort
     /**
      * Sort constructor.
      *
-     * @param string $property
      * @param string $column
      */
     public function __construct(string $property, Contracts\Sort $sort, $column)
