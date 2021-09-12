@@ -19,6 +19,7 @@ class Filter
         if ($value === null) {
             return $query;
         }
+
         if ($value === '') {
             return $query;
         }
@@ -91,26 +92,32 @@ class Filter
 
     protected function castValue($value)
     {
-        switch ($this->getCast()) {
-            case CastType::STRING:
-                return $value;
-            case CastType::BOOLEAN:
-                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-            case CastType::INTEGER:
-                return filter_var($value, FILTER_VALIDATE_INT);
-            case CastType::ARRAY:
-                return explode(',', $value);
-            default:
-                if (in_array(strtolower($value), ['true', 'false'], true)) {
-                    $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                }
+        $cast = $this->getCast();
+        if ($cast === CastType::STRING) {
+            return $value;
+        }
 
-                if (Str::contains($value, ',')) {
-                    $value = explode(',', $value);
-                }
+        if ($cast === CastType::BOOLEAN) {
+            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        }
 
-                return $value;
-        }//end switch
+        if ($cast === CastType::INTEGER) {
+            return filter_var($value, FILTER_VALIDATE_INT);
+        }
+
+        if ($cast === CastType::ARRAY) {
+            return explode(',', $value);
+        }
+
+        if (in_array(strtolower($value), ['true', 'false'], true)) {
+            $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
+        }
+
+        if (Str::contains($value, ',')) {
+            $value = explode(',', $value);
+        }
+
+        return $value;
     }
 
     protected function resolveValueForFiltering($value)

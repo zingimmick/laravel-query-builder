@@ -18,6 +18,7 @@ trait WithSearchable
         if ($search === null) {
             return $this;
         }
+
         if (is_string($search) && trim($search) === '') {
             return $this;
         }
