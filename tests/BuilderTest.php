@@ -555,9 +555,6 @@ class BuilderTest extends TestCase
         self::assertSame(2, $actual);
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function testCastInteger(): void
     {
         $filter = Filter::scope('name')->withCast(CastType::INTEGER);
