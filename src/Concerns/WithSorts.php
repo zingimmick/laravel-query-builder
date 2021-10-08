@@ -44,7 +44,7 @@ trait WithSorts
             return true;
         }
 
-        return (bool) ($this->request->input('desc') === $sort->getProperty());
+        return $this->request->input('desc') === $sort->getProperty();
     }
 
     protected function getSortValue(Sort $sort)
