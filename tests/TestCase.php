@@ -14,8 +14,14 @@ class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
 
+    /**
+     * @var string
+     */
     private const DATABASE = 'database';
 
+    /**
+     * @var string
+     */
     private const TESTING = 'testing';
 
     protected function setUp(): void
