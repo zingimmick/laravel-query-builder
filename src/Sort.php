@@ -19,6 +19,9 @@ class Sort
      */
     protected $sort;
 
+    /**
+     * @var string
+     */
     protected $column;
 
     /**

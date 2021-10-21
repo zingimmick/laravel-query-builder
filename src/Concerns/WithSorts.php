@@ -11,11 +11,11 @@ trait WithSorts
     /**
      * 排序逻辑.
      *
-     * @param array $sorts
+     * @param mixed[] $sorts
      *
      * @return mixed
      */
-    public function enableSorts($sorts)
+    public function enableSorts(array $sorts)
     {
         $this->formatSorts($sorts)
             ->each(
@@ -38,6 +38,9 @@ trait WithSorts
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function isRequestedSort(Sort $sort)
     {
         if ($this->request->input('asc') === $sort->getProperty()) {
@@ -47,6 +50,9 @@ trait WithSorts
         return $this->request->input('desc') === $sort->getProperty();
     }
 
+    /**
+     * @return string
+     */
     protected function getSortValue(Sort $sort)
     {
         if ($this->request->input('desc') === $sort->getProperty()) {
@@ -56,10 +62,15 @@ trait WithSorts
         return 'asc';
     }
 
+    /**
+     * @param mixed $sorts
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function formatSorts($sorts)
     {
         return collect($sorts)->map(
-            function ($sort, $key) {
+            function ($sort, $key): Sort {
                 if ($sort instanceof Sort) {
                     return $sort;
                 }

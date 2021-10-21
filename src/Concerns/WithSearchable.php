@@ -62,11 +62,9 @@ trait WithSearchable
     }
 
     /**
-     * @param string $field
-     *
      * @return array
      */
-    private function addNestedRelation($field, array $results)
+    private function addNestedRelation(string $field, array $results)
     {
         [$relation, $property] = $this->resolveNestedRelation($field);
 

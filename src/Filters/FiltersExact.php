@@ -14,6 +14,9 @@ class FiltersExact implements Filter
 {
     use NestedRelation;
 
+    /**
+     * @var string[]
+     */
     protected $relationConstraints = [];
 
     public function apply(Builder $query, $value, $property): Builder
