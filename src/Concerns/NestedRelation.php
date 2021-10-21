@@ -13,7 +13,7 @@ trait NestedRelation
     {
         return collect(explode('.', $property))
             ->pipe(
-                function (Collection $parts) {
+                function (Collection $parts): array {
                     return [
                         $parts->except(count($parts) - 1)
                             ->map(function (string $value): string {

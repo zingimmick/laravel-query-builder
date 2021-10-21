@@ -21,7 +21,10 @@ class FactoryTest extends TestCase
         self::assertInstanceOf(OrderQueryBuilder::class, $factory->create(Order::class, request()));
     }
 
-    public function provideBuilders()
+    /**
+     * @return array<int, array<class-string<\Zing\QueryBuilder\QueryBuilder>>>
+     */
+    public function provideBuilders(): array
     {
         return [[QueryBuilder::class]];
     }

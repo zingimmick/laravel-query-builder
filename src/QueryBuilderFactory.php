@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class QueryBuilderFactory
 {
+    /**
+     * @var string[]|mixed[]
+     */
     protected $builders = [];
 
     /**
@@ -21,6 +24,11 @@ class QueryBuilderFactory
         $this->builders = $builders;
     }
 
+    /**
+     * @param mixed $baseQuery
+     *
+     * @return mixed|\Zing\QueryBuilder\QueryBuilder
+     */
     public function create($baseQuery, Request $request)
     {
         if (is_subclass_of($baseQuery, Model::class)) {
@@ -47,7 +55,13 @@ class QueryBuilderFactory
         return new $builder($baseQuery, $request);
     }
 
-    public function queryBy($builder, $queryBuilder)
+    /**
+     * @param mixed $builder
+     * @param mixed $queryBuilder
+     *
+     * @return string[]|mixed[]
+     */
+    public function queryBy($builder, $queryBuilder): array
     {
         $this->builders[$builder] = $queryBuilder;
 

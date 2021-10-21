@@ -31,7 +31,7 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
         $this->registerConfig();
         $this->app->singleton(
             QueryBuilderFactory::class,
-            function () {
+            function (): QueryBuilderFactory {
                 return new QueryBuilderFactory(config('query-builder.builders'));
             }
         );
@@ -51,7 +51,10 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
         $this->mergeConfigFrom($this->getConfigPath(), 'query-builder');
     }
 
-    public function provides()
+    /**
+     * @return array<class-string<\Zing\QueryBuilder\QueryBuilderFactory>>
+     */
+    public function provides(): array
     {
         return [QueryBuilderFactory::class];
     }

@@ -13,6 +13,12 @@ class Filter
 {
     use FilterCreator;
 
+    /**
+     * @param mixed $query
+     * @param mixed $value
+     *
+     * @return mixed|\Illuminate\Database\Eloquent\Builder
+     */
     public function filter($query, $value)
     {
         $value = $this->resolveValueForFiltering($value);
@@ -42,7 +48,7 @@ class Filter
         return $this->column;
     }
 
-    public function withCast($cast)
+    public function withCast($cast): self
     {
         $this->cast = $cast;
 
@@ -54,6 +60,9 @@ class Filter
         return $this->cast !== null;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getCast()
     {
         return $this->cast;
@@ -80,6 +89,9 @@ class Filter
         return $this;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getDefault()
     {
         return $this->default;
@@ -120,6 +132,11 @@ class Filter
         return $value;
     }
 
+    /**
+     * @param mixed $value
+     *
+     * @return mixed[]|mixed|null
+     */
     protected function resolveValueForFiltering($value)
     {
         if (is_string($value)) {

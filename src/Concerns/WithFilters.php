@@ -8,6 +8,9 @@ use Zing\QueryBuilder\Filter;
 
 trait WithFilters
 {
+    /**
+     * @var mixed|null
+     */
     protected $filters;
 
     public function enableFilters($filters)
@@ -19,10 +22,15 @@ trait WithFilters
         return $this;
     }
 
+    /**
+     * @param mixed $filters
+     *
+     * @return \Illuminate\Support\Collection
+     */
     protected function formatFilters($filters)
     {
         return collect($filters)->map(
-            function ($filter) {
+            function ($filter): Filter {
                 if ($filter instanceof Filter) {
                     return $filter;
                 }
