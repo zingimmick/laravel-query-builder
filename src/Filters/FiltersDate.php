@@ -19,12 +19,12 @@ class FiltersDate extends FiltersExact
         if (is_array($value)) {
             $value = array_map(
                 function ($value) {
-                if ($value instanceof DateTimeInterface) {
-                    return $value->format('Y-m-d');
-                }
+                    if ($value instanceof DateTimeInterface) {
+                        return $value->format('Y-m-d');
+                    }
 
-                return $value;
-            },
+                    return $value;
+                },
                 $value
             );
 

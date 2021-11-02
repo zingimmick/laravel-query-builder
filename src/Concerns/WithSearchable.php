@@ -61,10 +61,8 @@ trait WithSearchable
     /**
      * @param array<string> $fields
      * @param mixed $search
-     *
-     * @return mixed
      */
-    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search)
+    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search): Builder
     {
         return $query->orWhereHas(
             $relation,

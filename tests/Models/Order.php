@@ -25,7 +25,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function newEloquentBuilder($query)
+    public function newEloquentBuilder($query): OrderBuilder
     {
         return new OrderBuilder($query);
     }

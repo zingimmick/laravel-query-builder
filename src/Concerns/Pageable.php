@@ -13,7 +13,7 @@ trait Pageable
      *
      * @return $this
      */
-    public function enablePaginator($paginator)
+    public function enablePaginator(string $paginator)
     {
         $paginator = is_string($paginator) ? Paginator::name($paginator) : $paginator;
         $this->builder->getModel()
