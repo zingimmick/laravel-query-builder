@@ -9,6 +9,10 @@ use Illuminate\Support\Str;
 
 trait NestedRelation
 {
+    /**
+     * @param string $property
+     * @return mixed
+     */
     protected function resolveNestedRelation($property)
     {
         return collect(explode('.', $property))

@@ -13,6 +13,10 @@ trait WithFilters
      */
     protected $filters;
 
+    /**
+     * @param array<string|Filter>|string|Filter $filters
+     * @return $this
+     */
     public function enableFilters($filters)
     {
         $filters = is_array($filters) ? $filters : func_get_args();
@@ -23,7 +27,7 @@ trait WithFilters
     }
 
     /**
-     * @param mixed $filters
+     * @param array<string|Filter> $filters
      *
      * @return \Illuminate\Support\Collection
      */
@@ -46,23 +50,31 @@ trait WithFilters
             function (Filter $filter): void {
                 $thisIsRequestedFilter = $this->isRequestedFilter($filter);
                 if ($thisIsRequestedFilter) {
-                    $filter->filter($this, $this->getFilterValue($filter));
+                    $filter->filter($this->builder, $this->getFilterValue($filter));
 
                     return;
                 }
 
                 if ($filter->hasDefault()) {
-                    $filter->filter($this, $filter->getDefault());
+                    $filter->filter($this->builder, $filter->getDefault());
                 }
             }
         );
     }
 
+    /**
+     * @param \Zing\QueryBuilder\Filter $filter
+     * @return bool
+     */
     protected function isRequestedFilter(Filter $filter)
     {
         return $this->request->has($filter->getProperty());
     }
 
+    /**
+     * @param \Zing\QueryBuilder\Filter $filter
+     * @return mixed
+     */
     protected function getFilterValue(Filter $filter)
     {
         return $this->request->input($filter->getProperty());

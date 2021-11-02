@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface Filter
 {
-    public function apply(Builder $query, $value, string $property): Builder;
+    /**
+     * @param mixed $value
+     * @param \Illuminate\Database\Query\Expression|string $property
+     */
+    public function apply(Builder $query, $value, $property): Builder;
 }

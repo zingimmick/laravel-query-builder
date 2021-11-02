@@ -9,14 +9,18 @@ use Zing\QueryBuilder\Contracts\Filter;
 
 class FiltersCallback implements Filter
 {
+    /** @var callable */
     private $callback;
 
+    /**
+     * @param callable $callback
+     */
     public function __construct($callback)
     {
         $this->callback = $callback;
     }
 
-    public function apply(Builder $query, $value, string $property): Builder
+    public function apply(Builder $query, $value, $property): Builder
     {
         return call_user_func($this->callback, $query, $value, $property);
     }

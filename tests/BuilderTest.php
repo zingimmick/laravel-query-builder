@@ -650,7 +650,7 @@ class BuilderTest extends TestCase
             ->merge([
                 'per_page' => $perPage,
             ]);
-        $builder = QueryBuilder::fromBuilder(User::class, request());
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator('per_page');
         self::assertSame($perPage, $builder->paginate()->perPage());
     }
 
@@ -663,7 +663,7 @@ class BuilderTest extends TestCase
             ->merge([
                 'per_page' => $perPage,
             ]);
-        $builder = QueryBuilder::fromBuilder(User::class, request());
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator('per_page');
         self::assertSame($perPage, $builder->simplePaginate()->perPage());
     }
 
@@ -819,12 +819,6 @@ class BuilderTest extends TestCase
                                 if (is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
-
-                                if ($dateTime instanceof DateTimeInterface) {
-                                    return $dateTime->format('Y-m-d');
-                                }
-
-                                return $dateTime;
                             },
                             $value
                         )

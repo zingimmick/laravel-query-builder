@@ -19,6 +19,10 @@ class FiltersExact implements Filter
      */
     protected $relationConstraints = [];
 
+    /**
+     * @param mixed $value
+     * @param string|Expression $property
+     */
     public function apply(Builder $query, $value, $property): Builder
     {
         if ($property instanceof Expression) {
@@ -32,6 +36,10 @@ class FiltersExact implements Filter
         return $this->withPropertyConstraint($query, $value, $property);
     }
 
+    /**
+     * @param mixed $value
+     * @param Expression|string $property
+     */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (is_array($value)) {
@@ -53,7 +61,9 @@ class FiltersExact implements Filter
 
         return ! Str::startsWith($property, $query->getModel()->getTable() . '.');
     }
-
+    /**
+     * @param mixed $value
+     */
     protected function withRelationConstraint(Builder $query, $value, string $property): Builder
     {
         [$relation, $property] = $this->resolveNestedRelation($property);

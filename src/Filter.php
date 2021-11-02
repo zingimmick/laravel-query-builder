@@ -14,10 +14,10 @@ class Filter
     use FilterCreator;
 
     /**
-     * @param mixed $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param mixed $value
      *
-     * @return mixed|\Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function filter($query, $value)
     {
@@ -43,11 +43,18 @@ class Filter
         return $this->property === $property;
     }
 
-    public function getColumn(): string
+    /**
+     * @return \Illuminate\Database\Query\Expression|string
+     */
+    public function getColumn()
     {
         return $this->column;
     }
 
+    /**
+     * @param string $cast
+     * @return $this
+     */
     public function withCast($cast): self
     {
         $this->cast = $cast;
@@ -61,13 +68,17 @@ class Filter
     }
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
     public function getCast()
     {
         return $this->cast;
     }
 
+    /**
+     * @param mixed[] $values
+     * @return $this
+     */
     public function ignore(array $values): self
     {
         $this->ignored = $this->ignored
@@ -82,6 +93,10 @@ class Filter
         return $this->ignored;
     }
 
+    /**
+     * @param mixed $value
+     * @return $this
+     */
     public function default($value): self
     {
         $this->default = $value;
@@ -102,6 +117,10 @@ class Filter
         return $this->default !== null;
     }
 
+    /**
+     * @param mixed $value
+     * @return false|mixed|string[]
+     */
     protected function castValue($value)
     {
         $cast = $this->getCast();

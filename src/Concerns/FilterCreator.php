@@ -27,7 +27,7 @@ trait FilterCreator
     protected $property;
 
     /**
-     * @var string
+     * @var \Illuminate\Database\Query\Expression|string
      */
     protected $column;
 
@@ -40,9 +40,16 @@ trait FilterCreator
      * @var mixed
      */
     protected $default;
-
+    /**
+     * @var string|null
+     */
     protected $cast;
 
+    /**
+     * @param string $property
+     * @param \Zing\QueryBuilder\Contracts\Filter $filter
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public function __construct(string $property, $filter, $column = null)
     {
         $this->property = $property;
@@ -65,7 +72,7 @@ trait FilterCreator
     /**
      * 通过字段模糊查询.
      *
-     * @param string|null $column
+     * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function partial(string $property, $column = null): self
     {
@@ -75,7 +82,7 @@ trait FilterCreator
     /**
      * 通过作用域查询.
      *
-     * @param string|null $column
+     * @param \Illuminate\Database\Query\Expression|string|null $column
      *
      * @return \Zing\QueryBuilder\Filter
      */
@@ -87,7 +94,7 @@ trait FilterCreator
     /**
      * 自定义过滤器.
      *
-     * @param string|null $column
+     * @param \Illuminate\Database\Query\Expression|string|null $column
      *
      * @return \Zing\QueryBuilder\Filter
      */
@@ -96,26 +103,39 @@ trait FilterCreator
         return new self($property, $filterClass, $column);
     }
 
+    /**
+     * @param callable $callback
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public static function callback(string $property, $callback, $column = null): self
     {
         return new self($property, new FiltersCallback($callback), $column);
     }
 
+    /**
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public static function between(string $property, $column = null): self
     {
         return new self($property, new FiltersBetween(), $column);
     }
-
+    /**
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public static function betweenDateTime(string $property, $column = null): self
     {
         return new self($property, new FiltersBetweenDateTime(), $column);
     }
-
+    /**
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public static function betweenDate(string $property, $column = null): self
     {
         return new self($property, new FiltersBetweenDate(), $column);
     }
-
+    /**
+     * @param \Illuminate\Database\Query\Expression|string|null $column
+     */
     public static function date(string $property, $column = null): self
     {
         return new self($property, new FiltersDate(), $column);

@@ -7,6 +7,7 @@ namespace Zing\QueryBuilder\Tests\Models;
 use Illuminate\Database\Eloquent\Model;
 use Zing\QueryBuilder\Tests\Builders\OrderBuilder;
 
+
 class Order extends Model
 {
     /**
@@ -24,7 +25,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function newEloquentBuilder($query): OrderBuilder
+    public function newEloquentBuilder($query)
     {
         return new OrderBuilder($query);
     }

@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 class QueryBuilderFactory
 {
     /**
-     * @var string[]|mixed[]
+     * @var array<class-string, class-string<\Zing\QueryBuilder\QueryBuilder>>
      */
     protected $builders = [];
 
     /**
      * QueryBuilderFactory constructor.
      *
-     * @param string[] $builders
+     * @param array<class-string, class-string<\Zing\QueryBuilder\QueryBuilder>> $builders
      */
     public function __construct(array $builders)
     {
@@ -25,9 +25,9 @@ class QueryBuilderFactory
     }
 
     /**
-     * @param mixed $baseQuery
+     * @param class-string<Model>|\Illuminate\Database\Eloquent\Builder $baseQuery
      *
-     * @return mixed|\Zing\QueryBuilder\QueryBuilder
+     * @return \Zing\QueryBuilder\QueryBuilder
      */
     public function create($baseQuery, Request $request)
     {
@@ -50,6 +50,12 @@ class QueryBuilderFactory
         return new QueryBuilder($baseQuery, $request);
     }
 
+    /**
+     * @param class-string<\Zing\QueryBuilder\QueryBuilder> $builder
+     * @param class-string<Model>|\Illuminate\Database\Eloquent\Builder|bool $baseQuery
+     * @param Request $request
+     * @return \Zing\QueryBuilder\QueryBuilder
+     */
     public function resolveBuilder($builder, $baseQuery, $request)
     {
         return new $builder($baseQuery, $request);
