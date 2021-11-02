@@ -2,6 +2,8 @@
 
 namespace Zing\QueryBuilder\Concerns;
 
+use Zing\QueryBuilder\Paginator;
+
 trait Pageable
 {
 
@@ -12,7 +14,7 @@ trait Pageable
      */
     public function enablePaginator($paginator)
     {
-        $paginator = is_string($paginator) ? \Zing\QueryBuilder\Paginator::name($paginator) : $paginator;
+        $paginator = is_string($paginator) ? Paginator::name($paginator) : $paginator;
         $this->builder->getModel()->setPerPage($this->request->input($paginator->getName(), $paginator->getDefault()));
         return $this;
     }
