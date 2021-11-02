@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Zing\QueryBuilder\Tests\Builders\OrderBuilder;
 
-
 class Order extends Model
 {
     /**

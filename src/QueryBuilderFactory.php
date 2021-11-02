@@ -25,11 +25,9 @@ class QueryBuilderFactory
     }
 
     /**
-     * @param class-string<Model>|\Illuminate\Database\Eloquent\Builder $baseQuery
-     *
-     * @return \Zing\QueryBuilder\QueryBuilder
+     * @param class-string<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Builder $baseQuery
      */
-    public function create($baseQuery, Request $request)
+    public function create($baseQuery, Request $request): QueryBuilder
     {
         if (is_subclass_of($baseQuery, Model::class)) {
             $baseQuery = forward_static_call([$baseQuery, 'query']);
@@ -52,11 +50,9 @@ class QueryBuilderFactory
 
     /**
      * @param class-string<\Zing\QueryBuilder\QueryBuilder> $builder
-     * @param class-string<Model>|\Illuminate\Database\Eloquent\Builder|bool $baseQuery
-     * @param Request $request
-     * @return \Zing\QueryBuilder\QueryBuilder
+     * @param class-string<\Illuminate\Database\Eloquent\Model>|\Illuminate\Database\Eloquent\Builder|bool $baseQuery
      */
-    public function resolveBuilder($builder, $baseQuery, $request)
+    public function resolveBuilder($builder, $baseQuery, Request $request): QueryBuilder
     {
         return new $builder($baseQuery, $request);
     }

@@ -11,7 +11,10 @@ class FactoryTest extends TestCase
 {
     public function testCreate(): void
     {
-        self::assertSame(Order::query()->whereNumberLike('test')->toSql(), QueryBuilder::fromBuilder(Order::class, request())->whereNumberLike('test')->toSql());
+        self::assertSame(
+            Order::query()->whereNumberLike('test')->toSql(),
+            QueryBuilder::fromBuilder(Order::class, request())->whereNumberLike('test')->toSql()
+        );
     }
 
     /**

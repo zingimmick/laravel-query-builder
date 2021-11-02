@@ -11,22 +11,20 @@ use Illuminate\Support\Facades\DB;
 class FiltersDate extends FiltersExact
 {
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param mixed $value
      * @param \Illuminate\Database\Query\Expression|string $property
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (is_array($value)) {
-           $value= array_map(
+            $value = array_map(
                 function ($value) {
-                    if ($value instanceof DateTimeInterface) {
-                        return $value->format('Y-m-d');
-                    }
+                if ($value instanceof DateTimeInterface) {
+                    return $value->format('Y-m-d');
+                }
 
-                    return $value;
-                },
+                return $value;
+            },
                 $value
             );
 

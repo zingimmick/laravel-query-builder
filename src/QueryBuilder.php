@@ -9,13 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Zing\QueryBuilder\Concerns\Pageable;
-use Zing\QueryBuilder\Concerns\Queryable;
 use Zing\QueryBuilder\Concerns\WithFilters;
 use Zing\QueryBuilder\Concerns\WithSearchable;
 use Zing\QueryBuilder\Concerns\WithSorts;
 
 /**
- * @mixin Builder
+ * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class QueryBuilder
 {
@@ -23,17 +22,20 @@ class QueryBuilder
     use WithSearchable;
     use WithSorts;
     use Pageable;
+    use ForwardsCalls;
 
     /**
      * @var \Illuminate\Http\Request
      */
     protected $request;
-    /** @var \Illuminate\Database\Eloquent\Builder  */
+
+    /**
+     * @var \Illuminate\Database\Eloquent\Builder
+     */
     protected $builder;
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      */
     public function __construct(Builder $builder, $request)
     {
@@ -52,16 +54,15 @@ class QueryBuilder
 
         return new self($baseQuery, $request);
     }
-    use ForwardsCalls;
 
     /**
      * @param string $name
      * @param mixed[] $arguments
+     *
      * @return $this|mixed
      */
     public function __call($name, $arguments)
     {
-
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
         /*
@@ -71,6 +72,7 @@ class QueryBuilder
         if ($result === $this->builder) {
             return $this;
         }
+
         return $result;
     }
 }

@@ -12,12 +12,10 @@ use Zing\QueryBuilder\Contracts\Filter;
 class FiltersScope implements Filter
 {
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param mixed $value
      * @param string $property
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Builder $query, $value,  $property): Builder
+    public function apply(Builder $query, $value, $property): Builder
     {
         $scope = Str::camel($property);
         $values = Arr::wrap($value);

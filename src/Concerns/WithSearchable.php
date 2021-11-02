@@ -13,6 +13,7 @@ trait WithSearchable
 
     /**
      * @param string|array<string> $searchable
+     *
      * @return $this
      */
     public function searchable($searchable)
@@ -35,11 +36,12 @@ trait WithSearchable
     /**
      * @param mixed $search
      * @param array<array<string>|string> $searchable
+     *
      * @return $this
      */
     protected function applySearchable($search, array $searchable = [])
     {
-         $this->where(
+        $this->where(
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search) {
@@ -47,22 +49,22 @@ trait WithSearchable
                             return $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
                         }
 
-                        return $this->applyRelationSearchable($query, $key, (array)$value, $search);
+                        return $this->applyRelationSearchable($query, $key, (array) $value, $search);
                     }
                 );
             }
         );
+
         return $this;
     }
 
     /**
-     * @param Builder $query
-     * @param string $relation
      * @param array<string> $fields
      * @param mixed $search
+     *
      * @return mixed
      */
-    protected function applyRelationSearchable($query, $relation, $fields, $search)
+    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search)
     {
         return $query->orWhereHas(
             $relation,
@@ -80,6 +82,7 @@ trait WithSearchable
 
     /**
      * @param array<string> $searchable
+     *
      * @return array<array<string>|string>
      */
     private function resolveNestedSearchable(array $searchable)

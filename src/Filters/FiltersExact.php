@@ -21,7 +21,7 @@ class FiltersExact implements Filter
 
     /**
      * @param mixed $value
-     * @param string|Expression $property
+     * @param string|\Illuminate\Database\Query\Expression $property
      */
     public function apply(Builder $query, $value, $property): Builder
     {
@@ -38,7 +38,7 @@ class FiltersExact implements Filter
 
     /**
      * @param mixed $value
-     * @param Expression|string $property
+     * @param \Illuminate\Database\Query\Expression|string $property
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
@@ -61,6 +61,7 @@ class FiltersExact implements Filter
 
         return ! Str::startsWith($property, $query->getModel()->getTable() . '.');
     }
+
     /**
      * @param mixed $value
      */

@@ -40,13 +40,13 @@ trait FilterCreator
      * @var mixed
      */
     protected $default;
+
     /**
      * @var string|null
      */
     protected $cast;
 
     /**
-     * @param string $property
      * @param \Zing\QueryBuilder\Contracts\Filter $filter
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -104,10 +104,9 @@ trait FilterCreator
     }
 
     /**
-     * @param callable $callback
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function callback(string $property, $callback, $column = null): self
+    public static function callback(string $property, callable $callback, $column = null): self
     {
         return new self($property, new FiltersCallback($callback), $column);
     }
@@ -119,6 +118,7 @@ trait FilterCreator
     {
         return new self($property, new FiltersBetween(), $column);
     }
+
     /**
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -126,6 +126,7 @@ trait FilterCreator
     {
         return new self($property, new FiltersBetweenDateTime(), $column);
     }
+
     /**
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -133,6 +134,7 @@ trait FilterCreator
     {
         return new self($property, new FiltersBetweenDate(), $column);
     }
+
     /**
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */

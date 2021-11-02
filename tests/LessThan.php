@@ -9,7 +9,7 @@ use Zing\QueryBuilder\Contracts\Filter;
 
 class LessThan implements Filter
 {
-    public function apply(Builder $query, $value,  $property): Builder
+    public function apply(Builder $query, $value, $property): Builder
     {
         return $query->where($property, '<', $value);
     }

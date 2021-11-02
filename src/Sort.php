@@ -88,11 +88,7 @@ class Sort
         return $this->defaultDirection;
     }
 
-    /**
-     * @param Builder $query
-     * @param string $direction
-     */
-    public function sort($query, $direction): Builder
+    public function sort(Builder $query, string $direction): Builder
     {
         return $this->sort->apply($query, $direction === 'desc', $this->column);
     }

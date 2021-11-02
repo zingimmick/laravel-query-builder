@@ -28,7 +28,7 @@ class User extends Model
         return $this->hasMany(Order::class);
     }
 
-    public function scopeVisible(Builder $query,bool $visible = true): Builder
+    public function scopeVisible(Builder $query, bool $visible = true): Builder
     {
         return $query->where('is_visible', $visible);
     }

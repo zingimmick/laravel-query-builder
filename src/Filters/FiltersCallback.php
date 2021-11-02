@@ -9,7 +9,9 @@ use Zing\QueryBuilder\Contracts\Filter;
 
 class FiltersCallback implements Filter
 {
-    /** @var callable */
+    /**
+     * @var callable
+     */
     private $callback;
 
     /**
