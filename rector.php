@@ -32,7 +32,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             PrivatizeLocalGetterToPropertyRector::class,
 
             // bug
-            ParamTypeByMethodCallTypeRector::class
+            ParamTypeByMethodCallTypeRector::class,
         ]
     );
     $parameters->set(
