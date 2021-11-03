@@ -60,7 +60,7 @@ trait FilterCreator
     }
 
     /**
-     * 通过另一个字段查询.
+     * The input of property equals the column(or property if column is null)
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -70,7 +70,7 @@ trait FilterCreator
     }
 
     /**
-     * 通过字段模糊查询.
+     * The input of property in the column(or property if column is null).
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -80,11 +80,10 @@ trait FilterCreator
     }
 
     /**
-     * 通过作用域查询.
+     * Specify a scope(property if column is null) that will execute when the filter is requested.
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      *
-     * @return \Zing\QueryBuilder\Filter
      */
     public static function scope(string $property, $column = null): self
     {
@@ -92,11 +91,10 @@ trait FilterCreator
     }
 
     /**
-     * 自定义过滤器.
+     * Specify a custom filter that will execute when the filter is requested.
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      *
-     * @return \Zing\QueryBuilder\Filter
      */
     public static function custom(string $property, Filter $filterClass, $column = null): self
     {
@@ -104,6 +102,8 @@ trait FilterCreator
     }
 
     /**
+     * Specify a callable that will execute when the filter is requested.
+     *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function callback(string $property, callable $callback, $column = null): self
@@ -112,6 +112,8 @@ trait FilterCreator
     }
 
     /**
+     * The column(or property if column is null) between the input of property.
+     *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function between(string $property, $column = null): self
@@ -120,6 +122,8 @@ trait FilterCreator
     }
 
     /**
+     * The column(or property if column is null) between the datetime of the input of property.
+     *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function betweenDateTime(string $property, $column = null): self
@@ -128,6 +132,8 @@ trait FilterCreator
     }
 
     /**
+     * The column(or property if column is null) between the date of the input of property.
+     *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function betweenDate(string $property, $column = null): self
@@ -136,6 +142,8 @@ trait FilterCreator
     }
 
     /**
+     * The column(or property if column is null) equals the date of the input of property.
+     *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
     public static function date(string $property, $column = null): self

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Zing\QueryBuilder\Concerns\FilterCreator;
@@ -16,7 +17,7 @@ class Filter
     /**
      * @param mixed $value
      */
-    public function filter(\Illuminate\Database\Eloquent\Builder $query, $value): \Illuminate\Database\Eloquent\Builder
+    public function filter(Builder $query, $value): Builder
     {
         $value = $this->resolveValueForFiltering($value);
         if ($value === null) {

@@ -9,11 +9,9 @@ use Zing\QueryBuilder\Sort;
 trait WithSorts
 {
     /**
-     * 排序逻辑.
-     *
      * @param mixed[] $sorts
      *
-     * @return mixed
+     * @return $this
      */
     public function enableSorts(array $sorts)
     {
