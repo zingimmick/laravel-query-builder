@@ -673,9 +673,10 @@ class BuilderTest extends TestCase
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
         request()
-            ->merge([
-            ]);
-        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator(Paginator::name('size')->default(5));
+            ->merge([]);
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator(
+            Paginator::name('size')->default(5)
+        );
         self::assertSame(5, $builder->paginate()->perPage());
     }
 
