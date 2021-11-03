@@ -11,7 +11,6 @@ use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\Paginator;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
