@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application as Laravel;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as Lumen;

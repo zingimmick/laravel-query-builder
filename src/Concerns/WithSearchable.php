@@ -44,9 +44,10 @@ trait WithSearchable
         $this->where(
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
-                    function ($value, $key) use ($query, $search) {
+                    function ($value, $key) use ($query, $search): void {
                         if (is_numeric($key)) {
                             $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+
                             return;
                         }
 
