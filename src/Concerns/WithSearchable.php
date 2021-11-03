@@ -35,7 +35,7 @@ trait WithSearchable
 
     /**
      * @param mixed $search
-     * @param array<int, string>|array<string, array<string>> $searchable
+     * @param array<int|string, string|array<string>> $searchable
      *
      * @return $this
      */
@@ -62,7 +62,6 @@ trait WithSearchable
 
     /**
      * @param array<string> $fields
-     * @param string $relation
      * @param mixed $search
      */
     protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search): Builder
@@ -84,7 +83,7 @@ trait WithSearchable
     /**
      * @param array<string> $searchable
      *
-     * @return array<int, string>|array<string, array<string>>
+     * @return array<int|string, string|array<string>>
      */
     private function resolveNestedSearchable(array $searchable)
     {

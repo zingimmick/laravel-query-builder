@@ -558,7 +558,7 @@ class BuilderTest extends TestCase
                 [
                     Filter::callback(
                         'id',
-                        function ($query, $value, string $property) {
+                        function ($query, $value, string $property): void {
                             $query->where($property, '<', $value);
                         }
                     ),
