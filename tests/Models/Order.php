@@ -11,7 +11,7 @@ use Zing\QueryBuilder\Tests\Builders\OrderBuilder;
 class Order extends Model
 {
     /**
-     * @var mixed[]
+     * @var string[]
      */
     protected $guarded = [];
 

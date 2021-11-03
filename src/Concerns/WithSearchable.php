@@ -35,7 +35,7 @@ trait WithSearchable
 
     /**
      * @param mixed $search
-     * @param array<array<string>|string> $searchable
+     * @param array<int|string, string|array<string>> $searchable
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ trait WithSearchable
     /**
      * @param array<string> $searchable
      *
-     * @return array<array<string>|string>
+     * @return array<int|string, string|array<string>>
      */
     private function resolveNestedSearchable(array $searchable)
     {

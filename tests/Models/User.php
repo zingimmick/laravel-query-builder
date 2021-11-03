@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Model
 {
     /**
-     * @var mixed[]
+     * @var string[]
      */
     protected $guarded = [];
 

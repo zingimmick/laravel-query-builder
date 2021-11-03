@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Concerns;
 
+use Illuminate\Support\Collection;
 use Zing\QueryBuilder\Filter;
 
 trait WithFilters
 {
-    /**
-     * @var mixed|null
-     */
-    protected $filters;
-
     /**
      * @param array<(string|\Zing\QueryBuilder\Filter)>|string|\Zing\QueryBuilder\Filter $filters
      *
@@ -21,8 +17,7 @@ trait WithFilters
     public function enableFilters($filters)
     {
         $filters = is_array($filters) ? $filters : func_get_args();
-        $this->filters = $this->formatFilters($filters);
-        $this->applyFilters();
+        $this->applyFilters($this->formatFilters($filters));
 
         return $this;
     }
@@ -45,9 +40,9 @@ trait WithFilters
         );
     }
 
-    protected function applyFilters(): void
+    protected function applyFilters(Collection $filters): void
     {
-        $this->filters->each(
+        $filters->each(
             function (Filter $filter): void {
                 $thisIsRequestedFilter = $this->isRequestedFilter($filter);
                 if ($thisIsRequestedFilter) {
