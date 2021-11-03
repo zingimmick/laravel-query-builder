@@ -13,7 +13,7 @@ trait Pageable
      *
      * @return $this
      */
-    public function enablePaginator(?string $paginator = null)
+    public function enablePaginator($paginator = null)
     {
         $paginator = $paginator instanceof Paginator ? $paginator : Paginator::name($paginator);
         $perPage = $this->request->input($paginator->getName(), $paginator->getDefault());
