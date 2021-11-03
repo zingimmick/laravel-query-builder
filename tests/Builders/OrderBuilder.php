@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @template TModelClass of \Illuminate\Database\Eloquent\Model
- * @extends Builder<TModelClass>
+ * @extends \Illuminate\Database\Eloquent\Builder<TModelClass>
  */
 class OrderBuilder extends Builder
 {
