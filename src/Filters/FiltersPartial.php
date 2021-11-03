@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class FiltersPartial extends FiltersExact
 {
+    /**
+     * @param mixed $value
+     * @param \Illuminate\Database\Query\Expression|string $property
+     */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (is_array($value)) {

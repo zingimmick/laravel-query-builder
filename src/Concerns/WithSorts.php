@@ -22,13 +22,13 @@ trait WithSorts
                 function (Sort $sort): void {
                     $thisIsRequestedSort = $this->isRequestedSort($sort);
                     if ($thisIsRequestedSort) {
-                        $sort->sort($this, $this->getSortValue($sort));
+                        $sort->sort($this->builder, $this->getSortValue($sort));
 
                         return;
                     }
 
                     if ($sort->hasDefaultDirection()) {
-                        $sort->sort($this, $sort->getDefaultDirection());
+                        $sort->sort($this->builder, $sort->getDefaultDirection());
 
                         return;
                     }

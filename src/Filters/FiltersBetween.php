@@ -9,6 +9,10 @@ use Zing\QueryBuilder\Exceptions\ParameterException;
 
 class FiltersBetween extends FiltersExact
 {
+    /**
+     * @param mixed $value
+     * @param \Illuminate\Database\Query\Expression|string $property
+     */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
         if (! is_array($value) || count($value) !== 2) {

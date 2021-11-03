@@ -11,7 +11,11 @@ use Zing\QueryBuilder\Contracts\Filter;
 
 class FiltersScope implements Filter
 {
-    public function apply(Builder $query, $value, string $property): Builder
+    /**
+     * @param mixed $value
+     * @param string $property
+     */
+    public function apply(Builder $query, $value, $property): Builder
     {
         $scope = Str::camel($property);
         $values = Arr::wrap($value);

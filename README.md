@@ -18,7 +18,7 @@
 Require Laravel Query Builder using [Composer](https://getcomposer.org):
 
 ```bash
-composer require zing/laravel-query-builder --dev
+composer require zing/laravel-query-builder
 ```
 
 ## Basic usage
@@ -49,6 +49,18 @@ QueryBuilder::fromBuilder(User::class, request())
     ])
     ->simplePaginate();
 ```
+### Search
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Paginator;
+
+// /api/users?search=Harry
+QueryBuilder::fromBuilder(User::class, request())
+    ->searchable(['name', 'email'])
+    ->count();
+```
 
 ### Cast Input(Skip auto cast)
 
@@ -67,6 +79,24 @@ QueryBuilder::fromBuilder(User::class, request())
 // /api/orders?content=code,and
 QueryBuilder::fromBuilder(Order::class, request())
     ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
+    ->count();
+```
+
+### Paginator
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Paginator;
+
+// /api/users?size=5
+QueryBuilder::fromBuilder(User::class, request())
+    ->enablePaginator('size')
+    ->count();
+
+// /api/users?size=
+QueryBuilder::fromBuilder(User::class, request())
+    ->enablePaginator(Paginator::name('size')->default(5))
     ->count();
 ```
 

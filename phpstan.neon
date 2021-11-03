@@ -1,0 +1,14 @@
+
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    level: max
+    paths:
+        - config
+        - src
+        - tests
+    ignoreErrors:
+        - '#Class Laravel\\Lumen\\Application not found.#'
+        - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
+        - '#Parameter \#1 \$column of method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::where(.*)\(\) expects string, Illuminate\\Database\\Query\\Expression(\|string)? given.#'

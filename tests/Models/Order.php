@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Zing\QueryBuilder\Tests\Builders\OrderBuilder;
 
 class Order extends Model
@@ -19,7 +20,7 @@ class Order extends Model
      */
     protected $connection = 'testing';
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

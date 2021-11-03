@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application as Laravel;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as Lumen;
 
-class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableProvider
+class QueryBuilderServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
@@ -29,12 +28,6 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
     public function register(): void
     {
         $this->registerConfig();
-        $this->app->singleton(
-            QueryBuilderFactory::class,
-            function (): QueryBuilderFactory {
-                return new QueryBuilderFactory(config('query-builder.builders'));
-            }
-        );
     }
 
     protected function getConfigPath(): string
@@ -49,13 +42,5 @@ class QueryBuilderServiceProvider extends ServiceProvider implements DeferrableP
         }
 
         $this->mergeConfigFrom($this->getConfigPath(), 'query-builder');
-    }
-
-    /**
-     * @return array<class-string<\Zing\QueryBuilder\QueryBuilderFactory>>
-     */
-    public function provides(): array
-    {
-        return [QueryBuilderFactory::class];
     }
 }

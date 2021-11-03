@@ -11,6 +11,11 @@ trait WithSearchable
 {
     use NestedRelation;
 
+    /**
+     * @param string|array<string> $searchable
+     *
+     * @return $this
+     */
     public function searchable($searchable)
     {
         $searchable = is_array($searchable) ? $searchable : func_get_args();
@@ -28,24 +33,38 @@ trait WithSearchable
         return $this->applySearchable($search, $searchable);
     }
 
+    /**
+     * @param mixed $search
+     * @param array<array<string>|string> $searchable
+     *
+     * @return $this
+     */
     protected function applySearchable($search, array $searchable = [])
     {
-        return $this->where(
+        $this->where(
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
-                    function ($value, $key) use ($query, $search) {
+                    function ($value, $key) use ($query, $search): void {
                         if (is_numeric($key)) {
-                            return $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+                            $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+
+                            return;
                         }
 
-                        return $this->applyRelationSearchable($query, $key, $value, $search);
+                        $this->applyRelationSearchable($query, $key, (array) $value, $search);
                     }
                 );
             }
         );
+
+        return $this;
     }
 
-    protected function applyRelationSearchable($query, $relation, $fields, $search)
+    /**
+     * @param array<string> $fields
+     * @param mixed $search
+     */
+    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search): Builder
     {
         return $query->orWhereHas(
             $relation,
@@ -62,23 +81,18 @@ trait WithSearchable
     }
 
     /**
-     * @return array
+     * @param array<string> $searchable
+     *
+     * @return array<array<string>|string>
      */
-    private function addNestedRelation(string $field, array $results)
-    {
-        [$relation, $property] = $this->resolveNestedRelation($field);
-
-        $results[$relation][] = $property;
-
-        return $results;
-    }
-
     private function resolveNestedSearchable(array $searchable)
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
             if (Str::contains($singleSearchable, '.')) {
-                $results = $this->addNestedRelation($singleSearchable, $results);
+                [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
+
+                $results[$relation][] = $property;
             } else {
                 $results[] = $singleSearchable;
             }

@@ -6,9 +6,13 @@ namespace Zing\QueryBuilder\Tests\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @template TModelClass of \Illuminate\Database\Eloquent\Model
+ * @extends \Illuminate\Database\Eloquent\Builder<TModelClass>
+ */
 class OrderBuilder extends Builder
 {
-    public function whereNumberLike($number): self
+    public function whereNumberLike(string $number): self
     {
         return $this->where('number', 'like', sprintf('%%%s%%', $number));
     }

@@ -114,7 +114,7 @@ class FilterExactTest extends TestCase
                 'created_date' => [Carbon::yesterday(), today()->toDateString()],
             ]);
         self::assertSame(
-            3,
+            5,
             QueryBuilder::fromBuilder(Order::class, request())
                 ->enableFilters(Filter::date('created_date', 'created_at'))
                 ->count()

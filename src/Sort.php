@@ -32,7 +32,7 @@ class Sort
     /**
      * Sort constructor.
      *
-     * @param string $column
+     * @param string|null $column
      */
     public function __construct(string $property, Contracts\Sort $sort, $column)
     {
@@ -41,9 +41,12 @@ class Sort
         $this->column = $column ?? $property;
     }
 
+    /**
+     * @param string|null $column
+     */
     public static function field(string $property, $column = null): self
     {
-        return new static($property, new SortField(), $column);
+        return new self($property, new SortField(), $column);
     }
 
     public function getProperty(): string
@@ -85,7 +88,7 @@ class Sort
         return $this->defaultDirection;
     }
 
-    public function sort($query, $direction): Builder
+    public function sort(Builder $query, string $direction): Builder
     {
         return $this->sort->apply($query, $direction === 'desc', $this->column);
     }

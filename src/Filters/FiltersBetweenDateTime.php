@@ -10,6 +10,10 @@ use Illuminate\Support\Carbon;
 
 class FiltersBetweenDateTime extends FiltersBetween
 {
+    /**
+     * @param mixed $value
+     * @param string $property
+     */
     public function apply(Builder $query, $value, $property): Builder
     {
         $min = Arr::first($value);
