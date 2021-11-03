@@ -650,7 +650,20 @@ class BuilderTest extends TestCase
             ->merge([
                 'per_page' => $perPage,
             ]);
-        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator('per_page');
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator();
+        self::assertSame($perPage, $builder->paginate()->perPage());
+    }
+
+    public function testPerPageName(): void
+    {
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
+        $perPage = 10;
+        request()
+            ->merge([
+                'size' => $perPage,
+            ]);
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator('size');
         self::assertSame($perPage, $builder->paginate()->perPage());
     }
 

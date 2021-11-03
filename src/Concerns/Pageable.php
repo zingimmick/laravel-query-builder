@@ -13,11 +13,11 @@ trait Pageable
      *
      * @return $this
      */
-    public function enablePaginator(string $paginator)
+    public function enablePaginator($paginator = null)
     {
-        $paginator = is_string($paginator) ? Paginator::name($paginator) : $paginator;
-        $this->builder->getModel()
-            ->setPerPage($this->request->input($paginator->getName(), $paginator->getDefault()));
+        $paginator = $paginator instanceof Paginator ? $paginator : Paginator::name($paginator);
+        $perPage = $this->request->input($paginator->getName(), $paginator->getDefault());
+        $this->builder->getModel()->setPerPage($perPage);
 
         return $this;
     }

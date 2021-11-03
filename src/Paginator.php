@@ -18,13 +18,13 @@ class Paginator
      */
     private $default;
 
-    public function __construct(string $name, ?int $default = null)
+    public function __construct(string $name=null, ?int $default = null)
     {
-        $this->name = $name;
+        $this->name = $name ?: (string) config('query-builder.per_page.key');
         $this->default = $default ?: (int) config('query-builder.per_page.value');
     }
 
-    public static function name(string $name, ?int $default = null): self
+    public static function name(string $name=null, ?int $default = null): self
     {
         return new self($name, $default);
     }

@@ -46,10 +46,11 @@ trait WithSearchable
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search) {
                         if (is_numeric($key)) {
-                            return $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+                            $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+                            return;
                         }
 
-                        return $this->applyRelationSearchable($query, $key, (array) $value, $search);
+                        $this->applyRelationSearchable($query, $key, (array) $value, $search);
                     }
                 );
             }
