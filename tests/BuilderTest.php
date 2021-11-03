@@ -11,6 +11,7 @@ use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\Paginator;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
@@ -665,6 +666,17 @@ class BuilderTest extends TestCase
             ]);
         $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator('size');
         self::assertSame($perPage, $builder->paginate()->perPage());
+    }
+
+    public function testPaginator(): void
+    {
+        $builder = QueryBuilder::fromBuilder(User::class, request());
+        self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
+        request()
+            ->merge([
+            ]);
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator(Paginator::name('size')->default(5));
+        self::assertSame(5, $builder->paginate()->perPage());
     }
 
     public function testSimplePaginate(): void
