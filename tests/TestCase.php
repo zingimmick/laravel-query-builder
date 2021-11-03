@@ -6,6 +6,7 @@ namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Zing\QueryBuilder\QueryBuilderServiceProvider;
@@ -38,7 +39,7 @@ class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app): void
     {
-        config()->set(
+        Config::set(
             self::DATABASE,
             [
                 'default' => self::TESTING,

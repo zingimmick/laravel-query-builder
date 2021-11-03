@@ -9,6 +9,9 @@ use Zing\QueryBuilder\Contracts\Sort;
 
 class SortField implements Sort
 {
+    /**
+     * @param non-empty-string $property
+     */
     public function apply(Builder $query, bool $descending, string $property): Builder
     {
         return $query->orderBy($property, $descending ? 'desc' : 'asc');

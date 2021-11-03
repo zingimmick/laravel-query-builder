@@ -9,7 +9,7 @@ use Zing\QueryBuilder\Filter;
 trait WithFilters
 {
     /**
-     * @var mixed|null
+     * @var \Illuminate\Support\Collection
      */
     protected $filters;
 

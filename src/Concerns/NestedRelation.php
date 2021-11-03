@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 trait NestedRelation
 {
     /**
-     * @return mixed
+     * @return array{non-empty-string, non-empty-string}
      */
     protected function resolveNestedRelation(string $property)
     {
