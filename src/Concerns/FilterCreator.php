@@ -60,7 +60,7 @@ trait FilterCreator
     }
 
     /**
-     * The input of property equals the column(or property if column is null)
+     * The input of property equals the column(or property if column is null).
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
@@ -83,7 +83,6 @@ trait FilterCreator
      * Specify a scope(property if column is null) that will execute when the filter is requested.
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
-     *
      */
     public static function scope(string $property, $column = null): self
     {
@@ -94,7 +93,6 @@ trait FilterCreator
      * Specify a custom filter that will execute when the filter is requested.
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
-     *
      */
     public static function custom(string $property, Filter $filterClass, $column = null): self
     {
