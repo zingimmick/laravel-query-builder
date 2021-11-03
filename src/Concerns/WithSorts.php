@@ -9,7 +9,7 @@ use Zing\QueryBuilder\Sort;
 trait WithSorts
 {
     /**
-     * @param array<string|Sort> $sorts
+     * @param array<(string|\Zing\QueryBuilder\Sort)> $sorts
      *
      * @return $this
      */

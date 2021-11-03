@@ -24,7 +24,7 @@ class FiltersCallback implements Filter
 
     public function apply(Builder $query, $value, $property): Builder
     {
-         call_user_func($this->callback, $query, $value, $property);
+        call_user_func($this->callback, $query, $value, $property);
         return $query;
     }
 }
