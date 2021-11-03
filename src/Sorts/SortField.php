@@ -10,7 +10,7 @@ use Zing\QueryBuilder\Contracts\Sort;
 class SortField implements Sort
 {
     /**
-     * @param non-empty-string $property
+     * @param string $property
      */
     public function apply(Builder $query, bool $descending, string $property): Builder
     {

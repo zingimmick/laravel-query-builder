@@ -553,6 +553,19 @@ class BuilderTest extends TestCase
             )
             ->count();
         self::assertSame(2, $actual);
+        $actual = QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(
+                [
+                    Filter::callback(
+                        'id',
+                        function ($query, $value, string $property) {
+                            $query->where($property, '<', $value);
+                        }
+                    ),
+                ]
+            )
+            ->count();
+        self::assertSame(2, $actual);
     }
 
     public function testCastInteger(): void
