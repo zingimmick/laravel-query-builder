@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Zing\QueryBuilder\Contracts\Filter;
 
-class FiltersScope implements Filter
+class ScopeFilter implements Filter
 {
     /**
      * @param mixed $value

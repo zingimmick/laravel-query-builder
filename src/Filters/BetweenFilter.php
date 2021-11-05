@@ -7,7 +7,7 @@ namespace Zing\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 
-class FiltersBetween extends FiltersExact
+class BetweenFilter extends ExactFilter
 {
     /**
      * @param mixed $value

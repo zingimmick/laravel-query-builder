@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-class FiltersDate extends FiltersExact
+class DateFilter extends ExactFilter
 {
     /**
      * @param mixed $value

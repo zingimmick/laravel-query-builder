@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Builder;
-use Zing\QueryBuilder\Sorts\SortField;
+use Zing\QueryBuilder\Sorts\FieldSort;
 
 class Sort
 {
@@ -46,7 +46,7 @@ class Sort
      */
     public static function field(string $property, $column = null): self
     {
-        return new self($property, new SortField(), $column);
+        return new self($property, new FieldSort(), $column);
     }
 
     public function getProperty(): string

@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
-class FiltersBetweenDate extends FiltersBetween
+class BetweenDateFilter extends BetweenFilter
 {
     /**
      * @param mixed $value

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Concerns;
 
 use Zing\QueryBuilder\Contracts\Filter;
-use Zing\QueryBuilder\Filters\FiltersBetween;
-use Zing\QueryBuilder\Filters\FiltersBetweenDate;
-use Zing\QueryBuilder\Filters\FiltersBetweenDateTime;
-use Zing\QueryBuilder\Filters\FiltersCallback;
-use Zing\QueryBuilder\Filters\FiltersDate;
-use Zing\QueryBuilder\Filters\FiltersExact;
-use Zing\QueryBuilder\Filters\FiltersPartial;
-use Zing\QueryBuilder\Filters\FiltersScope;
+use Zing\QueryBuilder\Filters\BetweenFilter;
+use Zing\QueryBuilder\Filters\BetweenDateFilter;
+use Zing\QueryBuilder\Filters\BetweenDateTimeFilter;
+use Zing\QueryBuilder\Filters\CallbackFilter;
+use Zing\QueryBuilder\Filters\DateFilter;
+use Zing\QueryBuilder\Filters\ExactFilter;
+use Zing\QueryBuilder\Filters\PartialFilter;
+use Zing\QueryBuilder\Filters\ScopeFilter;
 
 trait FilterCreator
 {
@@ -66,7 +66,7 @@ trait FilterCreator
      */
     public static function exact(string $property, $column = null): self
     {
-        return new self($property, new FiltersExact(), $column);
+        return new self($property, new ExactFilter(), $column);
     }
 
     /**
@@ -76,7 +76,7 @@ trait FilterCreator
      */
     public static function partial(string $property, $column = null): self
     {
-        return new self($property, new FiltersPartial(), $column);
+        return new self($property, new PartialFilter(), $column);
     }
 
     /**
@@ -86,7 +86,7 @@ trait FilterCreator
      */
     public static function scope(string $property, $column = null): self
     {
-        return new self($property, new FiltersScope(), $column);
+        return new self($property, new ScopeFilter(), $column);
     }
 
     /**
@@ -106,7 +106,7 @@ trait FilterCreator
      */
     public static function callback(string $property, callable $callback, $column = null): self
     {
-        return new self($property, new FiltersCallback($callback), $column);
+        return new self($property, new CallbackFilter($callback), $column);
     }
 
     /**
@@ -116,7 +116,7 @@ trait FilterCreator
      */
     public static function between(string $property, $column = null): self
     {
-        return new self($property, new FiltersBetween(), $column);
+        return new self($property, new BetweenFilter(), $column);
     }
 
     /**
@@ -126,7 +126,7 @@ trait FilterCreator
      */
     public static function betweenDateTime(string $property, $column = null): self
     {
-        return new self($property, new FiltersBetweenDateTime(), $column);
+        return new self($property, new BetweenDateTimeFilter(), $column);
     }
 
     /**
@@ -136,7 +136,7 @@ trait FilterCreator
      */
     public static function betweenDate(string $property, $column = null): self
     {
-        return new self($property, new FiltersBetweenDate(), $column);
+        return new self($property, new BetweenDateFilter(), $column);
     }
 
     /**
@@ -146,6 +146,6 @@ trait FilterCreator
      */
     public static function date(string $property, $column = null): self
     {
-        return new self($property, new FiltersDate(), $column);
+        return new self($property, new DateFilter(), $column);
     }
 }

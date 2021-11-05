@@ -6,7 +6,7 @@ namespace Zing\QueryBuilder\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class FiltersPartial extends FiltersExact
+class PartialFilter extends ExactFilter
 {
     /**
      * @param mixed $value

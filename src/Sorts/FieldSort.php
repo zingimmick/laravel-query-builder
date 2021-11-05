@@ -7,7 +7,7 @@ namespace Zing\QueryBuilder\Sorts;
 use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Contracts\Sort;
 
-class SortField implements Sort
+class FieldSort implements Sort
 {
     public function apply(Builder $query, bool $descending, string $property): Builder
     {
