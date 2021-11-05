@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Concerns;
 
 use Zing\QueryBuilder\Contracts\Filter;
-use Zing\QueryBuilder\Filters\BetweenFilter;
 use Zing\QueryBuilder\Filters\BetweenDateFilter;
 use Zing\QueryBuilder\Filters\BetweenDateTimeFilter;
+use Zing\QueryBuilder\Filters\BetweenFilter;
 use Zing\QueryBuilder\Filters\CallbackFilter;
 use Zing\QueryBuilder\Filters\DateFilter;
 use Zing\QueryBuilder\Filters\ExactFilter;
