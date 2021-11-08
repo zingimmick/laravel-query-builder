@@ -7,7 +7,7 @@ namespace Zing\QueryBuilder\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Contracts\Filter;
 
-class FiltersCallback implements Filter
+class CallbackFilter implements Filter
 {
     /**
      * @var callable

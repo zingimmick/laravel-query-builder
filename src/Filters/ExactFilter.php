@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Zing\QueryBuilder\Concerns\NestedRelation;
 use Zing\QueryBuilder\Contracts\Filter;
 
-class FiltersExact implements Filter
+class ExactFilter implements Filter
 {
     use NestedRelation;
 
