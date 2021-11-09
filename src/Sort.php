@@ -20,7 +20,7 @@ class Sort
     protected $sort;
 
     /**
-     * @var string
+     * @var string|\Illuminate\Database\Query\Expression
      */
     protected $column;
 
@@ -32,7 +32,7 @@ class Sort
     /**
      * Sort constructor.
      *
-     * @param string|null $column
+     * @param string|\Illuminate\Database\Query\Expression|null $column
      */
     public function __construct(string $property, Contracts\Sort $sort, $column)
     {
@@ -42,7 +42,7 @@ class Sort
     }
 
     /**
-     * @param string|null $column
+     * @param string|\Illuminate\Database\Query\Expression|null $column
      */
     public static function field(string $property, $column = null): self
     {
@@ -59,7 +59,10 @@ class Sort
         return $this->property === $property;
     }
 
-    public function getColumn(): string
+    /**
+     * @return string|\Illuminate\Database\Query\Expression
+     */
+    public function getColumn()
     {
         return $this->column;
     }
