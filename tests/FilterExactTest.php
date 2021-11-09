@@ -120,4 +120,64 @@ class FilterExactTest extends TestCase
                 ->count()
         );
     }
+
+    public function testBoolean(): void
+    {
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ])->getKey(),
+                        'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 2)
+        );
+        array_map(
+            function (): void {
+                Order::query()->create(
+                    [
+                        'user_id' => User::query()->create([
+                            'name' => $this->faker->name,
+                        ])->getKey(),
+                        'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
+                        'number' => $this->faker->randomNumber(),
+                    ]
+                );
+            },
+            range(1, 3)
+        );
+        request()
+            ->merge([
+                'is_today' => 1,
+            ]);
+        self::assertSame(
+            2,
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->enableFilters(Filter::boolean('is_today', function ($query) {
+                    return $query->whereDate('created_at', Carbon::yesterday());
+                }, function ($query) {
+                    return $query->whereDate('created_at', '!=', Carbon::yesterday());
+                }))
+                ->count()
+        );
+        request()
+            ->merge([
+                'is_today' => 0,
+            ]);
+        self::assertSame(
+            3,
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->enableFilters(Filter::boolean('is_today', function ($query) {
+                    return $query->whereDate('created_at', Carbon::yesterday());
+                }, function ($query) {
+                    return $query->whereDate('created_at', '!=', Carbon::yesterday());
+                }))
+                ->count()
+        );
+    }
 }
