@@ -12,4 +12,4 @@ parameters:
         - '#Class Laravel\\Lumen\\Application not found.#'
         - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
         - '#Parameter \#1 \$column of method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::where(.*)\(\) expects string, Illuminate\\Database\\Query\\Expression(\|string)? given.#'
-        - '#Parameter #1 $column of method (.*)::orderBy() expects (.*) given.#'
+        - '#Parameter \#1 $column of method (.*)::orderBy() expects (.*) given.#'
