@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface Sort
 {
-    public function apply(Builder $query, bool $descending, string $property): Builder;
+    /**
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $property
+     */
+    public function apply(Builder $query, bool $descending, $property): Builder;
 }

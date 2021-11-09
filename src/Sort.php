@@ -9,21 +9,30 @@ use Zing\QueryBuilder\Sorts\FieldSort;
 
 class Sort
 {
-    protected string $property;
+    /**
+     * @var string
+     */
+    protected $property;
 
     /**
      * @var \Zing\QueryBuilder\Contracts\Sort
      */
     protected $sort;
 
-    protected string $column;
+    /**
+     * @var \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
+     */
+    protected $column;
 
-    protected string $defaultDirection;
+    /**
+     * @var string
+     */
+    protected $defaultDirection;
 
     /**
      * Sort constructor.
      *
-     * @param string|null $column
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
     public function __construct(string $property, Contracts\Sort $sort, $column)
     {
@@ -33,7 +42,7 @@ class Sort
     }
 
     /**
-     * @param string|null $column
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
     public static function field(string $property, $column = null): self
     {
@@ -50,7 +59,10 @@ class Sort
         return $this->property === $property;
     }
 
-    public function getColumn(): string
+    /**
+     * @return \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
+     */
+    public function getColumn()
     {
         return $this->column;
     }
