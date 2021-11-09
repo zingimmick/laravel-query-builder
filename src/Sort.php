@@ -20,7 +20,7 @@ class Sort
     protected $sort;
 
     /**
-     * @var string|\Illuminate\Database\Query\Expression
+     * @var \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
      */
     protected $column;
 
@@ -32,7 +32,7 @@ class Sort
     /**
      * Sort constructor.
      *
-     * @param string|\Illuminate\Database\Query\Expression|null $column
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
     public function __construct(string $property, Contracts\Sort $sort, $column)
     {
@@ -42,7 +42,7 @@ class Sort
     }
 
     /**
-     * @param string|\Illuminate\Database\Query\Expression|null $column
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
     public static function field(string $property, $column = null): self
     {
@@ -60,7 +60,7 @@ class Sort
     }
 
     /**
-     * @return string|\Illuminate\Database\Query\Expression
+     * @return \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
      */
     public function getColumn()
     {

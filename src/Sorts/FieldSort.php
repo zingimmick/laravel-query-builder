@@ -10,7 +10,7 @@ use Zing\QueryBuilder\Contracts\Sort;
 class FieldSort implements Sort
 {
     /**
-     * @param string|\Illuminate\Database\Query\Expression $property
+     * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $property
      */
     public function apply(Builder $query, bool $descending, $property): Builder
     {
