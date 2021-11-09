@@ -51,7 +51,7 @@ class SearchableTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -88,7 +88,7 @@ class SearchableTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -126,7 +126,7 @@ class SearchableTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );

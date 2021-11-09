@@ -178,7 +178,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -406,7 +406,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -444,7 +444,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -469,7 +469,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -496,7 +496,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
@@ -529,7 +529,7 @@ class BuilderTest extends TestCase
                     [
                         'user_id' => User::query()->create([
                             'name' => $this->faker->name,
-                        ]),
+                        ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
                 );
