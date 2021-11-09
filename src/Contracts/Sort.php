@@ -11,5 +11,5 @@ interface Sort
     /**
      * @param string|\Illuminate\Database\Query\Expression $property
      */
-    public function apply(Builder $query, bool $descending,  $property): Builder;
+    public function apply(Builder $query, bool $descending, $property): Builder;
 }

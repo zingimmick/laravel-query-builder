@@ -12,6 +12,8 @@ use Zing\QueryBuilder\Tests\Models\User;
 
 class SortTest extends TestCase
 {
+    use WithFaker;
+
     public function test(): void
     {
         $filter = Sort::field('order_number', 'number');
@@ -19,17 +21,33 @@ class SortTest extends TestCase
         self::assertSame('number', $filter->getColumn());
     }
 
-    use WithFaker;
-
-    public function testSortExpression():void
+    public function testSortExpression(): void
     {
         request()->merge([
             'desc' => 'registered_at',
         ]);
         $expected = Order::query()
-            ->orderBy(User::query()->whereColumn(User::query()->getModel()->getQualifiedKeyName(), Order::query()->getModel()->qualifyColumn('user_id'))->select(User::query()->getModel()->qualifyColumn('created_at')), 'desc')->toSql();
+            ->orderBy(
+                User::query()->whereColumn(
+                    User::query()->getModel()->getQualifiedKeyName(),
+                    Order::query()->getModel()->qualifyColumn('user_id')
+                )->select(
+                    User::query()->getModel()->qualifyColumn('created_at')
+                ),
+                'desc'
+            )->toSql();
         $actual = QueryBuilder::fromBuilder(Order::class, request())
-            ->enableSorts([Sort::field('registered_at', User::query()->whereColumn(User::query()->getModel()->getQualifiedKeyName(), Order::query()->getModel()->qualifyColumn('user_id'))->select(User::query()->getModel()->qualifyColumn('created_at')))])
+            ->enableSorts(
+                [Sort::field(
+                    'registered_at',
+                    User::query()->whereColumn(
+                        User::query()->getModel()->getQualifiedKeyName(),
+                        Order::query()->getModel()->qualifyColumn('user_id')
+                    )->select(User::query()->getModel()->qualifyColumn(
+                        'created_at'
+                    ))
+                )]
+            )
             ->toSql();
 
         self::assertSame($expected, $actual);
