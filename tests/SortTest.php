@@ -31,9 +31,7 @@ class SortTest extends TestCase
                 User::query()->whereColumn(
                     User::query()->getModel()->getQualifiedKeyName(),
                     Order::query()->getModel()->qualifyColumn('user_id')
-                )->select(
-                    User::query()->getModel()->qualifyColumn('created_at')
-                ),
+                )->select(User::query()->getModel()->qualifyColumn('created_at')),
                 'desc'
             )->toSql();
         $actual = QueryBuilder::fromBuilder(Order::class, request())
@@ -43,10 +41,9 @@ class SortTest extends TestCase
                     User::query()->whereColumn(
                         User::query()->getModel()->getQualifiedKeyName(),
                         Order::query()->getModel()->qualifyColumn('user_id')
-                    )->select(User::query()->getModel()->qualifyColumn(
-                        'created_at'
-                    ))
-                )]
+                    )->select(User::query()->getModel()->qualifyColumn('created_at'))
+                ),
+                ]
             )
             ->toSql();
 
