@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Concerns;
 
+use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Contracts\Filter;
 use Zing\QueryBuilder\Filters\BetweenDateFilter;
 use Zing\QueryBuilder\Filters\BetweenDateTimeFilter;
@@ -147,5 +148,15 @@ trait FilterCreator
     public static function date(string $property, $column = null): self
     {
         return new self($property, new DateFilter(), $column);
+    }
+
+    /**
+     * Specify a callable that will execute when the filter is requested or default when filter is requested not.
+     */
+    public static function boolean(string $property, callable $callback, ?callable $default = null): self
+    {
+        return self::callback($property, function (Builder $query, $value, $property) use ($callback, $default) {
+            return $query->when($value, $callback, $default);
+        });
     }
 }
