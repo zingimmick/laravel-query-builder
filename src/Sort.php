@@ -9,7 +9,7 @@ use Zing\QueryBuilder\Sorts\FieldSort;
 
 class Sort
 {
-    protected string $property;
+    protected $property;
 
     /**
      * @var \Zing\QueryBuilder\Contracts\Sort
@@ -21,7 +21,7 @@ class Sort
      */
     protected $column;
 
-    protected string $defaultDirection;
+    protected $defaultDirection;
 
     /**
      * Sort constructor.
