@@ -8,8 +8,14 @@ use function config;
 
 class Paginator
 {
+    /**
+     * @var string
+     */
     private $name;
 
+    /**
+     * @var int
+     */
     private $default;
 
     public function __construct(?string $name = null, ?int $default = null)
