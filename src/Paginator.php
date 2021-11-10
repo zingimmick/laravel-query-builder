@@ -8,9 +8,9 @@ use function config;
 
 class Paginator
 {
-    private string $name;
+    private $name;
 
-    private int $default;
+    private $default;
 
     public function __construct(?string $name = null, ?int $default = null)
     {
