@@ -30,9 +30,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             FinalizeClassesWithoutChildrenRector::class,
             RepeatedLiteralToClassConstantRector::class,
             PrivatizeLocalGetterToPropertyRector::class,
-
-            // bug
-            ParamTypeByMethodCallTypeRector::class,
         ]
     );
     $parameters->set(
