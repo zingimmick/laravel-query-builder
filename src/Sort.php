@@ -9,6 +9,9 @@ use Zing\QueryBuilder\Sorts\FieldSort;
 
 class Sort
 {
+    /**
+     * @var string
+     */
     protected $property;
 
     /**
@@ -21,6 +24,9 @@ class Sort
      */
     protected $column;
 
+    /**
+     * @var string
+     */
     protected $defaultDirection;
 
     /**
