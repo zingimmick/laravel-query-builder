@@ -6,6 +6,8 @@ namespace Zing\QueryBuilder\Tests;
 
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
 
 class FilterTest extends TestCase
 {
@@ -16,4 +18,26 @@ class FilterTest extends TestCase
         self::assertTrue($filter->isForProperty('order_number'));
         self::assertSame('number', $filter->getColumn());
     }
+    public function testDelimiter(): void
+    {
+        request()->merge([
+            'name' => '1|2',
+        ]);
+        $expected = User::query()
+            ->when(
+                request()
+                    ->input('name'),
+                function ($query, $value) {
+                    $value = explode('|', $value);
+
+                    return $query->whereIn('name', $value);
+                }
+            )
+            ->toSql();
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('name')->delimiter('|'))
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
+
 }
