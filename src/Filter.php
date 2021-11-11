@@ -162,11 +162,15 @@ class Filter
             ->contains($value) ? null : $value;
     }
 
+    /**
+     * @var string
+     */
     private $delimiter = ',';
 
     public function delimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;
+
         return $this;
     }
 }

@@ -18,6 +18,7 @@ class FilterTest extends TestCase
         self::assertTrue($filter->isForProperty('order_number'));
         self::assertSame('number', $filter->getColumn());
     }
+
     public function testDelimiter(): void
     {
         request()->merge([
@@ -39,5 +40,4 @@ class FilterTest extends TestCase
             ->toSql();
         self::assertSame($expected, $actual);
     }
-
 }
