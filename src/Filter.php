@@ -127,15 +127,15 @@ class Filter
         }
 
         if ($cast === CastType::ARRAY) {
-            return explode(',', $value);
+            return explode($this->delimiter, $value);
         }
 
         if (in_array(strtolower($value), ['true', 'false'], true)) {
             $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
-        if (Str::contains($value, ',')) {
-            $value = explode(',', $value);
+        if (Str::contains($value, $this->delimiter)) {
+            $value = explode($this->delimiter, $value);
         }
 
         return $value;
@@ -160,5 +160,22 @@ class Filter
 
         return $this->getIgnored()
             ->contains($value) ? null : $value;
+    }
+
+    /**
+     * @phpstan-var non-empty-string
+     *
+     * @var string
+     */
+    private $delimiter = ',';
+
+    /**
+     * @param non-empty-string $delimiter
+     */
+    public function delimiter(string $delimiter): self
+    {
+        $this->delimiter = $delimiter;
+
+        return $this;
     }
 }
