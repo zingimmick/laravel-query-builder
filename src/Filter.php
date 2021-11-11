@@ -163,7 +163,7 @@ class Filter
     }
 
     /**
-     * @var string
+     * @var non-empty-string
      */
     private $delimiter = ',';
 
