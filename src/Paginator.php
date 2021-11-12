@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
-use function config;
-
 class Paginator
 {
     /**

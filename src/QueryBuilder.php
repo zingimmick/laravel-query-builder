@@ -65,6 +65,6 @@ class QueryBuilder
     {
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
-        return $result === $this->builder?$this: $result;
+        return $result === $this->builder ? $this : $result;
     }
 }
