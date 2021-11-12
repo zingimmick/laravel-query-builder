@@ -20,6 +20,16 @@ class ExactFilter implements Filter
     protected $relationConstraints = [];
 
     /**
+     * @var bool
+     */
+    protected $autoRelationConstraints = true;
+
+    public function __construct(bool $autoRelationConstraints = true)
+    {
+        $this->autoRelationConstraints = $autoRelationConstraints;
+    }
+
+    /**
      * @param mixed $value
      * @param string|\Illuminate\Database\Query\Expression $property
      */
@@ -29,7 +39,7 @@ class ExactFilter implements Filter
             return $this->withPropertyConstraint($query, $value, $property);
         }
 
-        if ($this->isRelationProperty($query, $property)) {
+        if ($this->autoRelationConstraints && $this->isRelationProperty($query, $property)) {
             return $this->withRelationConstraint($query, $value, $property);
         }
 

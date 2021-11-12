@@ -434,6 +434,11 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::partial('name', 'user.name'))
             ->count();
         self::assertSame(2, $actual);
+        $actual = QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::partial('name', 'users.name', false))
+            ->leftJoin('users', 'orders.user_id', 'users.id')
+            ->count();
+        self::assertSame(2, $actual);
     }
 
     public function testCustom(): void
