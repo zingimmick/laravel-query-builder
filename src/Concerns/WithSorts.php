@@ -65,7 +65,7 @@ trait WithSorts
      *
      * @return \Illuminate\Support\Collection
      */
-    public function formatSorts($sorts)
+    protected function formatSorts($sorts)
     {
         return collect($sorts)->map(
             function ($sort, $key): Sort {
