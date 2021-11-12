@@ -14,6 +14,8 @@ class PaginatorTest extends TestCase
     {
         $builder = QueryBuilder::fromBuilder(User::class, request());
         self::assertSame(config('query-builder.per_page.default'), $builder->paginate()->perPage());
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator();
+        self::assertSame(15, $builder->paginate()->perPage());
         $perPage = 10;
         request()
             ->merge([
