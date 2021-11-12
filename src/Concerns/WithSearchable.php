@@ -48,10 +48,11 @@ trait WithSearchable
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search): void {
 
-                        if ($this->isFilterWithDefault($value)) {
-                            throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
-                        }
+
                         if ($value instanceof Filter) {
+                            if ($value->getDefault() !== null) {
+                                throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
+                            }
                             $query->orWhere(function ($query) use ($value, $search): void {
                                 $value->filter($query, $search);
                             });
@@ -103,7 +104,7 @@ trait WithSearchable
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if ($this->isNestedRelation($singleSearchable)) {
+            if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
@@ -115,15 +116,5 @@ trait WithSearchable
         }
 
         return $results;
-    }
-
-    protected function isFilterWithDefault($value): bool
-    {
-     return $value instanceof Filter && $value->getDefault() !== null;
-    }
-
-    protected function isNestedRelation($value): bool
-    {
-        return ! $value instanceof Filter && Str::contains($value, '.');
     }
 }
