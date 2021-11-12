@@ -78,6 +78,11 @@ class FilterTest extends TestCase
             ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableTypedFilter('search_type', 'search', [Filter::exact('email')]);
+        $expected = User::query();
+        self::assertSame($expected->toSql(), $actual->toSql());
+        self::assertSame($expected->getBindings(), $actual->getBindings());
         $this->expectException(ParameterException::class);
 
         QueryBuilder::fromBuilder(User::class, request())
