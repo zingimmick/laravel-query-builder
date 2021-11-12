@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Foundation\Testing\WithFaker;
+use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
@@ -154,5 +155,32 @@ class SearchableTest extends TestCase
             ->searchable('user.name')
             ->count();
         self::assertSame(5, $actual);
+    }
+
+    public function testSearchableFilters(): void
+    {
+        request()->merge([
+            'search' => '1',
+        ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->searchable([Filter::exact('b'), 'c'])
+            ->toSql();
+        $expected = User::query()
+            ->when(
+                request()
+                    ->input('search'),
+                function ($query, $search) {
+                    return $query->where(
+                        function ($query) use ($search) {
+                            return $query->orWhere(function ($query)use ($search){
+                                return $query->where('b', $search);
+                            })
+                                ->orWhere('c', 'like', sprintf('%%%s%%', $search));
+                        }
+                    );
+                }
+            )
+            ->toSql();
+        self::assertSame($expected, $actual);
     }
 }
