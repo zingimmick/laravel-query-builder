@@ -24,14 +24,14 @@ trait WithTypedFilter
         $filterValue = $this->request->input($value);
         $filter = collect($filters)
             ->filter(function ($filter) use ($property): bool {
-               $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
+                $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
 
-               if ($filter->getDefault() !== null) {
-                   throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
-               }
+                if ($filter->getDefault() !== null) {
+                    throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
+                }
 
-               return $filter->isForProperty($property);
-           })
+                return $filter->isForProperty($property);
+            })
             ->first();
         $filter->filter($this->builder, $filterValue);
 
