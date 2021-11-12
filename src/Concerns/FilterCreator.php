@@ -49,6 +49,13 @@ trait FilterCreator
     protected $cast;
 
     /**
+     * @phpstan-var non-empty-string
+     *
+     * @var string
+     */
+    private $delimiter = ',';
+
+    /**
      * @param \Zing\QueryBuilder\Contracts\Filter $filter
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
