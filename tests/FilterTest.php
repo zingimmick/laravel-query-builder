@@ -55,10 +55,11 @@ class FilterTest extends TestCase
         $expected = User::query();
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
-        request()->merge([
-            'search_type' => 'name',
-            'search' => '1',
-        ]);
+        request()
+            ->merge([
+                'search_type' => 'name',
+                'search' => '1',
+            ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::exact('name')]);
         $expected = User::query()
@@ -72,7 +73,7 @@ class FilterTest extends TestCase
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableTypedFilter('search_type', 'search', [Filter::partial('email'),Filter::partial('name')]);
+            ->enableTypedFilter('search_type', 'search', [Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
             ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
         self::assertSame($expected->toSql(), $actual->toSql());
