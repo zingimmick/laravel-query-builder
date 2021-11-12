@@ -23,6 +23,9 @@ class QueryConfiguration
      */
     private static $pageName = 'per_page';
 
+    /**
+     * @phpstan-return non-empty-string
+     */
     public static function getDelimiter(): string
     {
         return self::$delimiter;
