@@ -49,6 +49,22 @@ QueryBuilder::fromBuilder(User::class, request())
     ])
     ->simplePaginate();
 ```
+
+### Typed filter
+
+**⚠️ The filter with default value is not supported yet.**
+
+```php
+use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\Order;
+
+// /api/users?search_type=number&search_value=2021
+QueryBuilder::fromBuilder(\Zing\QueryBuilder\Tests\Models\Order::class, request())
+    ->enableTypedFilter('search_type', 'search_value', [Filter::partial('number'), Filter::partial('user_name', 'user.name')])
+    ->count();
+```
+
 ### Search
 
 ```php
