@@ -99,11 +99,11 @@ trait WithSearchable
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if ($singleSearchable instanceof Filter && $singleSearchable->getDefault() !== null) {
+            if ($this->isFilterWithDefault($singleSearchable)) {
                 throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
             }
 
-            if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
+            if ($this->isNestedRelation($singleSearchable)) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
@@ -114,5 +114,15 @@ trait WithSearchable
         }
 
         return $results;
+    }
+
+    protected function isFilterWithDefault($value): bool
+    {
+     return $value instanceof Filter && $value->getDefault() !== null;
+    }
+
+    protected function isNestedRelation($value): bool
+    {
+        return ! $value instanceof Filter && Str::contains($value, '.');
     }
 }
