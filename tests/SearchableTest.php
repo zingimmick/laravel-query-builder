@@ -185,7 +185,7 @@ class SearchableTest extends TestCase
         self::assertSame($expected, $actual);
         $this->expectException(ParameterException::class);
         $this->expectExceptionMessage('unsupported filter with default value for search');
-        $actual = QueryBuilder::fromBuilder(User::class, request())
+        QueryBuilder::fromBuilder(User::class, request())
             ->searchable([Filter::exact('b')->default('test'), 'c'])
             ->toSql();
     }

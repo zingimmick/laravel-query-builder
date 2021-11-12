@@ -105,13 +105,17 @@ trait WithSearchable
                 }
 
                 $results[] = $singleSearchable;
-            } elseif (Str::contains($singleSearchable, '.')) {
+                continue;
+            }
+
+            if (Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
-            } else {
-                $results[] = $singleSearchable;
+                continue;
             }
+
+            $results[] = $singleSearchable;
         }
 
         return $results;
