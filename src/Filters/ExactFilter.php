@@ -18,14 +18,12 @@ class ExactFilter implements Filter
      * @var string[]
      */
     protected $relationConstraints = [];
+
     /**
      * @var bool
      */
     protected $autoRelationConstraints = true;
 
-    /**
-     * @param bool $autoRelationConstraints
-     */
     public function __construct(bool $autoRelationConstraints = true)
     {
         $this->autoRelationConstraints = $autoRelationConstraints;
