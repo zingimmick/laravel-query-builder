@@ -67,9 +67,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function exact(string $property, $column = null): self
+    public static function exact(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new ExactFilter(), $column);
+        return new self($property, new ExactFilter($autoRelationConstraints), $column);
     }
 
     /**
@@ -77,9 +77,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function partial(string $property, $column = null): self
+    public static function partial(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new PartialFilter(), $column);
+        return new self($property, new PartialFilter($autoRelationConstraints), $column);
     }
 
     /**
@@ -117,9 +117,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function between(string $property, $column = null): self
+    public static function between(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new BetweenFilter(), $column);
+        return new self($property, new BetweenFilter($autoRelationConstraints), $column);
     }
 
     /**
@@ -127,9 +127,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function betweenDateTime(string $property, $column = null): self
+    public static function betweenDateTime(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new BetweenDateTimeFilter(), $column);
+        return new self($property, new BetweenDateTimeFilter($autoRelationConstraints), $column);
     }
 
     /**
@@ -137,9 +137,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function betweenDate(string $property, $column = null): self
+    public static function betweenDate(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new BetweenDateFilter(), $column);
+        return new self($property, new BetweenDateFilter($autoRelationConstraints), $column);
     }
 
     /**
@@ -147,9 +147,9 @@ trait FilterCreator
      *
      * @param \Illuminate\Database\Query\Expression|string|null $column
      */
-    public static function date(string $property, $column = null): self
+    public static function date(string $property, $column = null,bool $autoRelationConstraints = true): self
     {
-        return new self($property, new DateFilter(), $column);
+        return new self($property, new DateFilter($autoRelationConstraints), $column);
     }
 
     /**
