@@ -7,6 +7,7 @@ namespace Zing\QueryBuilder\Tests;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\QueryConfiguration;
 use Zing\QueryBuilder\Tests\Models\User;
 
 class FilterTest extends TestCase
@@ -37,6 +38,11 @@ class FilterTest extends TestCase
             ->toSql();
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name')->delimiter('|'))
+            ->toSql();
+        self::assertSame($expected, $actual);
+        QueryConfiguration::setDelimiter('|');
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('name'))
             ->toSql();
         self::assertSame($expected, $actual);
     }

@@ -12,6 +12,8 @@ class QueryBuilderServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        QueryConfiguration::setPerPage((int) config('query-builder.per_page.default'));
+        QueryConfiguration::setPageName( (string) config('query-builder.per_page.key'));
         if (! $this->app->runningInConsole()) {
             return;
         }

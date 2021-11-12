@@ -14,6 +14,7 @@ use Zing\QueryBuilder\Filters\DateFilter;
 use Zing\QueryBuilder\Filters\ExactFilter;
 use Zing\QueryBuilder\Filters\PartialFilter;
 use Zing\QueryBuilder\Filters\ScopeFilter;
+use Zing\QueryBuilder\QueryConfiguration;
 
 trait FilterCreator
 {
@@ -58,6 +59,7 @@ trait FilterCreator
         $this->filter = $filter;
         $this->ignored = collect();
         $this->column = $column ?? $property;
+        $this->delimiter = QueryConfiguration::getDelimiter();
     }
 
     /**

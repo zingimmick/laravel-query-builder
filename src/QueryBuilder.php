@@ -65,14 +65,6 @@ class QueryBuilder
     {
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
-        /*
-         * If the forwarded method call is part of a chain we can return $this
-         * instead of the actual $result to keep the chain going.
-         */
-        if ($result === $this->builder) {
-            return $this;
-        }
-
-        return $result;
+        return $result === $this->builder?$this: $result;
     }
 }
