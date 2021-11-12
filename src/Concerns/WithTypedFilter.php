@@ -20,6 +20,17 @@ trait WithTypedFilter
             return $this;
         }
 
+        $this->applyTypedFilters($type, $value, $filters);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string|\Zing\QueryBuilder\Filter> $filters
+     *
+     */
+    protected function applyTypedFilters(string $type, string $value, array $filters)
+    {
         foreach ($filters as $filter) {
             $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
 
@@ -32,9 +43,7 @@ trait WithTypedFilter
             }
             $filter->filter($this->builder, $this->request->input($value));
 
-            return $this;
+            break;
         }
-
-        return $this;
     }
 }
