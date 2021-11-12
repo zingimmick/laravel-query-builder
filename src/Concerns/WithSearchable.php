@@ -107,10 +107,11 @@ trait WithSearchable
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
-                continue;
+            }else{
+                $results[] = $singleSearchable;
             }
 
-            $results[] = $singleSearchable;
+
         }
 
         return $results;
