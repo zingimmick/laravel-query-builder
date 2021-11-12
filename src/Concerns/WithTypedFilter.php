@@ -41,6 +41,7 @@ trait WithTypedFilter
             if (! $filter->isForProperty($this->request->input($type))) {
                 continue;
             }
+
             $filter->filter($this->builder, $this->request->input($value));
 
             break;
