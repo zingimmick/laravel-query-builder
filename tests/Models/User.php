@@ -18,11 +18,6 @@ class User extends Model
      */
     protected $guarded = [];
 
-    /**
-     * @var string
-     */
-    protected $connection = 'testing';
-
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
