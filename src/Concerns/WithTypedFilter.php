@@ -21,19 +21,18 @@ trait WithTypedFilter
         }
 
         foreach ($filters as $filter) {
-            if (! $filter instanceof Filter) {
-                $filter = Filter::exact($filter);
-            }
+            $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
 
             if ($filter->getDefault() !== null) {
                 throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
             }
 
-            if ($filter->isForProperty($this->request->input($type))) {
-                $filter->filter($this->builder, $this->request->input($value));
-
-                return $this;
+            if (! $filter->isForProperty($this->request->input($type))) {
+                continue;
             }
+            $filter->filter($this->builder, $this->request->input($value));
+
+            return $this;
         }
 
         return $this;
