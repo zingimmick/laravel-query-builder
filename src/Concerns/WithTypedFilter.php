@@ -31,9 +31,10 @@ trait WithTypedFilter
                 return $filter->isForProperty($property);
             })
             ->first();
-        if ($filter === null) {
+        if (! $filter instanceof Filter) {
             return $this;
         }
+
         $filter->filter($this->builder, $filterValue);
 
         return $this;
