@@ -27,9 +27,8 @@ trait WithTypedFilter
 
     /**
      * @param array<string|\Zing\QueryBuilder\Filter> $filters
-     *
      */
-    protected function applyTypedFilters(string $type, string $value, array $filters)
+    protected function applyTypedFilters(string $type, string $value, array $filters): void
     {
         foreach ($filters as $filter) {
             $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
