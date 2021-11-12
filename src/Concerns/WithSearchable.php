@@ -99,26 +99,19 @@ trait WithSearchable
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if ($singleSearchable instanceof Filter) {
-                if ($singleSearchable->getDefault() !== null) {
-                    throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
-                }
-
-                $results[] = $singleSearchable;
-
-                continue;
+            if ($singleSearchable instanceof Filter && $singleSearchable->getDefault() !== null) {
+                throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
             }
 
-            if (Str::contains($singleSearchable, '.')) {
+            if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
-
                 continue;
             }
 
             $results[] = $singleSearchable;
-        }//end foreach
+        }
 
         return $results;
     }
