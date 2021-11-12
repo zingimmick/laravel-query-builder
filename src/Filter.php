@@ -163,13 +163,6 @@ class Filter
     }
 
     /**
-     * @phpstan-var non-empty-string
-     *
-     * @var string
-     */
-    private $delimiter = ',';
-
-    /**
      * @param non-empty-string $delimiter
      */
     public function delimiter(string $delimiter): self
