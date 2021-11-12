@@ -47,12 +47,11 @@ trait WithSearchable
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search): void {
-
-
                         if ($value instanceof Filter) {
                             if ($value->getDefault() !== null) {
                                 throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
                             }
+
                             $query->orWhere(function ($query) use ($value, $search): void {
                                 $value->filter($query, $search);
                             });
@@ -108,11 +107,9 @@ trait WithSearchable
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
-            }else{
+            } else {
                 $results[] = $singleSearchable;
             }
-
-
         }
 
         return $results;
