@@ -22,6 +22,7 @@ trait WithTypedFilter
 
         $property = $this->request->input($type);
         $filterValue = $this->request->input($value);
+        /** @var Filter|null $filter */
         $filter = collect($filters)
             ->filter(function ($filter) use ($property): bool {
                 $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
