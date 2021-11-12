@@ -14,7 +14,7 @@ trait WithSearchable
     use NestedRelation;
 
     /**
-     * @param string|Filter|array<string|Filter> $searchable
+     * @param string|\Zing\QueryBuilder\Filter|array<(string|\Zing\QueryBuilder\Filter)> $searchable
      *
      * @return $this
      */
@@ -37,7 +37,7 @@ trait WithSearchable
 
     /**
      * @param mixed $search
-     * @param array<int|string, string|array<string>|Filter> $searchable
+     * @param array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)> $searchable
      *
      * @return $this
      */
@@ -47,12 +47,14 @@ trait WithSearchable
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search): void {
-                        if ($value instanceof Filter){
-                            $query->orWhere(function ($query)use ($value,$search){
+                        if ($value instanceof Filter) {
+                            $query->orWhere(function ($query) use ($value, $search): void {
                                 $value->filter($query, $search);
                             });
+
                             return;
                         }
+
                         if (is_numeric($key)) {
                             $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
 
@@ -89,21 +91,21 @@ trait WithSearchable
     }
 
     /**
-     * @param array<string|Filter> $searchable
+     * @param array<(string|\Zing\QueryBuilder\Filter)> $searchable
      *
-     * @return array<int|string, string|array<string>|Filter>
+     * @return array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)>
      */
     private function resolveNestedSearchable(array $searchable)
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if ($singleSearchable instanceof Filter){
-                if ($singleSearchable->getDefault()!==null){
+            if ($singleSearchable instanceof Filter) {
+                if ($singleSearchable->getDefault() !== null) {
                     throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
                 }
+
                 $results[] = $singleSearchable;
-            }
-            elseif (Str::contains($singleSearchable, '.')) {
+            } elseif (Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;

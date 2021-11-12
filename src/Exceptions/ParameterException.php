@@ -6,7 +6,6 @@ namespace Zing\QueryBuilder\Exceptions;
 
 class ParameterException extends Exception
 {
-
     public static function unsupportedFilterWithDefaultValueForSearch(): self
     {
         return new self('unsupported filter with default value for search');
