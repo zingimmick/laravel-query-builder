@@ -19,32 +19,21 @@ trait WithTypedFilter
         if (! $this->request->has($type)) {
             return $this;
         }
-
-        $this->applyTypedFilters($type, $value, $filters);
-
-        return $this;
-    }
-
-    /**
-     * @param array<string|\Zing\QueryBuilder\Filter> $filters
-     *
-     */
-    protected function applyTypedFilters(string $type, string $value, array $filters)
-    {
-        foreach ($filters as $filter) {
+        $property = $this->request->input($type);
+        $filterValue = $this->request->input($value);
+       $filter= collect($filters)
+           ->filter(function ($filter)use ($property){
             $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
 
             if ($filter->getDefault() !== null) {
                 throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
             }
 
-            if (! $filter->isForProperty($this->request->input($type))) {
-                continue;
-            }
+            return $filter->isForProperty($property);
+        })
+           ->first();
+        $filter->filter($this->builder, $filterValue);
 
-            $filter->filter($this->builder, $this->request->input($value));
-
-            break;
-        }
+        return $this;
     }
 }
