@@ -118,7 +118,7 @@ trait WithSearchable
             }
 
             $results[] = $singleSearchable;
-        }
+        }//end foreach
 
         return $results;
     }
