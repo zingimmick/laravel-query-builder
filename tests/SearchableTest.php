@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Foundation\Testing\WithFaker;
+use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
@@ -182,5 +183,10 @@ class SearchableTest extends TestCase
             )
             ->toSql();
         self::assertSame($expected, $actual);
+        $this->expectException(ParameterException::class);
+        $this->expectExceptionMessage('unsupported filter with default value for search');
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->searchable([Filter::exact('b')->default('test'), 'c'])
+            ->toSql();
     }
 }
