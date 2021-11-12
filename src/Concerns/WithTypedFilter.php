@@ -19,19 +19,20 @@ trait WithTypedFilter
         if (! $this->request->has($type)) {
             return $this;
         }
+
         $property = $this->request->input($type);
         $filterValue = $this->request->input($value);
-       $filter= collect($filters)
-           ->filter(function ($filter)use ($property){
-            $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
+        $filter = collect($filters)
+            ->filter(function ($filter) use ($property): bool {
+               $filter = $filter instanceof Filter ? $filter : Filter::exact($filter);
 
-            if ($filter->getDefault() !== null) {
-                throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
-            }
+               if ($filter->getDefault() !== null) {
+                   throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
+               }
 
-            return $filter->isForProperty($property);
-        })
-           ->first();
+               return $filter->isForProperty($property);
+           })
+            ->first();
         $filter->filter($this->builder, $filterValue);
 
         return $this;
