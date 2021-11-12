@@ -47,6 +47,10 @@ trait WithSearchable
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search): void {
+
+                        if ($this->isFilterWithDefault($value)) {
+                            throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
+                        }
                         if ($value instanceof Filter) {
                             $query->orWhere(function ($query) use ($value, $search): void {
                                 $value->filter($query, $search);
@@ -99,10 +103,6 @@ trait WithSearchable
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if ($this->isFilterWithDefault($singleSearchable)) {
-                throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
-            }
-
             if ($this->isNestedRelation($singleSearchable)) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
