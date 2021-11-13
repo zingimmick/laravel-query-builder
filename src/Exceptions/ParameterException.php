@@ -10,4 +10,9 @@ class ParameterException extends Exception
     {
         return new self('Too few elements for between expression, at least 2 elements expected');
     }
+
+    public static function unsupportedFilterWithDefaultValueForTypedFilter(): self
+    {
+        return new self('unsupported filter with default value for typed filter');
+    }
 }

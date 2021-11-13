@@ -12,6 +12,7 @@ use Zing\QueryBuilder\Concerns\Pageable;
 use Zing\QueryBuilder\Concerns\WithFilters;
 use Zing\QueryBuilder\Concerns\WithSearchable;
 use Zing\QueryBuilder\Concerns\WithSorts;
+use Zing\QueryBuilder\Concerns\WithTypedFilter;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -23,6 +24,7 @@ class QueryBuilder
     use WithSorts;
     use Pageable;
     use ForwardsCalls;
+    use WithTypedFilter;
 
     /**
      * @var \Illuminate\Http\Request
