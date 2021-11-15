@@ -6,13 +6,15 @@ namespace Zing\QueryBuilder\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Zing\QueryBuilder\Exceptions\ParameterException;
+use Zing\QueryBuilder\Filter;
 
 trait WithSearchable
 {
     use NestedRelation;
 
     /**
-     * @param string|array<string> $searchable
+     * @param string|\Zing\QueryBuilder\Filter|array<(string|\Zing\QueryBuilder\Filter)> $searchable
      *
      * @return $this
      */
@@ -35,7 +37,7 @@ trait WithSearchable
 
     /**
      * @param mixed $search
-     * @param array<int|string, string|array<string>> $searchable
+     * @param array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)> $searchable
      *
      * @return $this
      */
@@ -45,6 +47,18 @@ trait WithSearchable
             function (Builder $query) use ($search, $searchable): void {
                 collect($searchable)->each(
                     function ($value, $key) use ($query, $search): void {
+                        if ($value instanceof Filter) {
+                            if ($value->getDefault() !== null) {
+                                throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
+                            }
+
+                            $query->orWhere(function ($query) use ($value, $search): void {
+                                $value->filter($query, $search);
+                            });
+
+                            return;
+                        }
+
                         if (is_numeric($key)) {
                             $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
 
@@ -81,15 +95,15 @@ trait WithSearchable
     }
 
     /**
-     * @param array<string> $searchable
+     * @param array<(string|\Zing\QueryBuilder\Filter)> $searchable
      *
-     * @return array<int|string, string|array<string>>
+     * @return array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)>
      */
     private function resolveNestedSearchable(array $searchable)
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {
-            if (Str::contains($singleSearchable, '.')) {
+            if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
 
                 $results[$relation][] = $property;
