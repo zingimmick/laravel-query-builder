@@ -21,7 +21,26 @@ Require Laravel Query Builder using [Composer](https://getcomposer.org):
 composer require zing/laravel-query-builder
 ```
 
+- [Basic usage](#Basic usage)
+- [Filter](#Filter)
+- [Typed filter](#Typed-filter)
+
 ## Basic usage
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+
+// /api/users?name=Harry&status=1,2,3&desc=created_at
+QueryBuilder::fromBuilder(User::class, request())
+    ->searchable(['name'])
+    ->enableFilters(['is_visible', 'status'])
+    ->enableSorts(['created_at'])
+    ->enablePaginator()
+    ->simplePaginate();
+```
+
+## Filter
 
 ```php
 use Zing\QueryBuilder\QueryBuilder;
