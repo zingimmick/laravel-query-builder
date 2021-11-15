@@ -48,6 +48,14 @@ class PaginatorTest extends TestCase
             Paginator::name('size')->default(5)
         );
         self::assertSame(5, $builder->paginate()->perPage());
+        request()
+            ->merge([
+                'size' => null,
+            ]);
+        $builder = QueryBuilder::fromBuilder(User::class, request())->enablePaginator(
+            Paginator::name('size')->default(5)
+        );
+        self::assertSame(5, $builder->paginate()->perPage());
     }
 
     public function testSimplePaginate(): void
