@@ -16,7 +16,7 @@ trait Pageable
     public function enablePaginator($paginator = null)
     {
         $paginator = $paginator instanceof Paginator ? $paginator : Paginator::name($paginator);
-        $perPage = $this->request->input($paginator->getName(), $paginator->getDefault());
+        $perPage = $this->request->input($paginator->getName()) ?: $paginator->getDefault();
         $this->builder->getModel()
             ->setPerPage($perPage);
 
