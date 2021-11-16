@@ -16,24 +16,16 @@ class DateFilter extends ExactFilter
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
+        $formatter = function ($value) {
+            return $value instanceof DateTimeInterface ? $value->format('Y-m-d') : $value;
+        };
         if (is_array($value)) {
-            $value = array_map(
-                function ($value) {
-                    if ($value instanceof DateTimeInterface) {
-                        return $value->format('Y-m-d');
-                    }
-
-                    return $value;
-                },
-                $value
-            );
+            $value = array_map($formatter, $value);
 
             return $query->whereIn(DB::raw(sprintf('date(%s)', $property)), $value);
         }
 
-        if ($value instanceof DateTimeInterface) {
-            $value = $value->format('Y-m-d');
-        }
+        $value = $formatter($value);
 
         return $query->whereDate($property, $value);
     }
