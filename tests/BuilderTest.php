@@ -524,6 +524,14 @@ class BuilderTest extends TestCase
             ->enableFilters([Filter::exact('id')->ignore([1])])
             ->count();
         self::assertSame(2, $actual);
+        request()
+            ->merge([
+                'id' => '1,2,3',
+            ]);
+        $actual = QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters([Filter::exact('id')->ignore([1])])
+            ->count();
+        self::assertSame(2, $actual);
     }
 
     public function testCallback(): void
