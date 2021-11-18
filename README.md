@@ -61,6 +61,8 @@ QueryBuilder::fromBuilder(User::class, request())
 
 #### Composite search
 
+⚠️ The filter with default value is not supported yet.
+
 ```php
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
