@@ -52,7 +52,7 @@ class SearchableTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -61,7 +61,7 @@ class SearchableTest extends TestCase
             range(1, 3)
         );
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
         array_map(
             function () use ($user): void {
@@ -89,7 +89,7 @@ class SearchableTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -98,7 +98,7 @@ class SearchableTest extends TestCase
             range(1, 3)
         );
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
 
         array_map(
@@ -127,7 +127,7 @@ class SearchableTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -136,7 +136,7 @@ class SearchableTest extends TestCase
             range(1, 3)
         );
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
 
         array_map(
