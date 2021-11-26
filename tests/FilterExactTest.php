@@ -23,7 +23,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
@@ -37,7 +37,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
@@ -65,7 +65,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
@@ -80,7 +80,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
@@ -128,7 +128,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::yesterday()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),
@@ -142,7 +142,7 @@ class FilterExactTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'created_at' => Carbon::today()->setTimeFromTimeString($this->faker->time()),
                         'number' => $this->faker->randomNumber(),

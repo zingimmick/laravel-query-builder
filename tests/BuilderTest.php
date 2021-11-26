@@ -41,7 +41,7 @@ class BuilderTest extends TestCase
         array_map(
             function (): void {
                 User::query()->create([
-                    'name' => $this->faker->name,
+                    'name' => $this->faker->name(),
                     'is_visible' => true,
                 ]);
             },
@@ -50,7 +50,7 @@ class BuilderTest extends TestCase
         array_map(
             function (): void {
                 User::query()->create([
-                    'name' => $this->faker->name,
+                    'name' => $this->faker->name(),
                     'is_visible' => false,
                 ]);
             },
@@ -177,7 +177,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -186,7 +186,7 @@ class BuilderTest extends TestCase
             range(1, 3)
         );
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
 
         array_map(
@@ -211,7 +211,7 @@ class BuilderTest extends TestCase
     public function testExactQualified(): void
     {
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
         request()
             ->merge([
@@ -228,7 +228,7 @@ class BuilderTest extends TestCase
         array_map(
             function (): void {
                 User::query()->create([
-                    'name' => $this->faker->name,
+                    'name' => $this->faker->name(),
                     'is_visible' => true,
                 ]);
             },
@@ -237,7 +237,7 @@ class BuilderTest extends TestCase
         array_map(
             function (): void {
                 User::query()->create([
-                    'name' => $this->faker->name,
+                    'name' => $this->faker->name(),
                     'is_visible' => false,
                 ]);
             },
@@ -405,7 +405,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -414,7 +414,7 @@ class BuilderTest extends TestCase
             range(1, 3)
         );
         $user = User::query()->create([
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ]);
 
         array_map(
@@ -448,7 +448,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -473,7 +473,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -500,7 +500,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
@@ -541,7 +541,7 @@ class BuilderTest extends TestCase
                 Order::query()->create(
                     [
                         'user_id' => User::query()->create([
-                            'name' => $this->faker->name,
+                            'name' => $this->faker->name(),
                         ])->getKey(),
                         'number' => $this->faker->randomNumber(),
                     ]
