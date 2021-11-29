@@ -8,6 +8,9 @@ use Illuminate\Foundation\Application as Laravel;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as Lumen;
 
+/**
+ * @deprecated No need for service provider
+ */
 class QueryBuilderServiceProvider extends ServiceProvider
 {
     public function boot(): void
