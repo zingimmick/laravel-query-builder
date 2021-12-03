@@ -1,7 +1,7 @@
 # Laravel Query Builder
 
 <p align="center">
-<a href=""><img src="https://github.com/zingimmick/laravel-query-builder/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml"><img src="https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml/badge.svg" alt="Build Status"></a>
 <a href="https://codecov.io/gh/zingimmick/laravel-query-builder"><img src="https://codecov.io/gh/zingimmick/laravel-query-builder/branch/master/graph/badge.svg" alt="Code Coverage" /></a>
 <a href="https://packagist.org/packages/zing/laravel-query-builder"><img src="https://poser.pugx.org/zing/laravel-query-builder/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/zing/laravel-query-builder"><img src="https://poser.pugx.org/zing/laravel-query-builder/downloads" alt="Total Downloads"></a>
