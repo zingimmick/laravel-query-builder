@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -37,10 +36,10 @@ class QueryBuilder
     protected $builder;
 
     /**
-     * @param Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct( $builder, $request)
+    public function __construct($builder, $request)
     {
         $this->builder = $builder;
         $this->request = $request;
