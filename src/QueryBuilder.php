@@ -37,9 +37,10 @@ class QueryBuilder
     protected $builder;
 
     /**
+     * @param Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct(Builder $builder, $request)
+    public function __construct( $builder, $request)
     {
         $this->builder = $builder;
         $this->request = $request;

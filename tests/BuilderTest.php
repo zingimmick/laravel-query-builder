@@ -900,4 +900,13 @@ class BuilderTest extends TestCase
         self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
         self::assertSame($expected->toSql(), $actual->toSql());
     }
+
+    public function testRelation()
+    {
+        $user = User::query()->create(['name' => $this->faker->name]);
+        $expected = Order::query()->where(Order::query()->qualifyColumn('user_id'), $user->getKey())->whereNotNull(Order::query()->qualifyColumn('user_id'))->toSql();
+        $actual = QueryBuilder::fromBuilder($user->orders(), request())
+            ->toSql();
+        self::assertSame($expected, $actual);
+    }
 }
