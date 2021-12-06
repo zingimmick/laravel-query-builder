@@ -35,7 +35,7 @@ trait WithTypedFilter
             return $this;
         }
 
-        $filter->filter($this->builder, $filterValue);
+        $filter->filter($this->getBuilder(), $filterValue);
 
         return $this;
     }

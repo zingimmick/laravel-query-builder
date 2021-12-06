@@ -6,6 +6,7 @@ namespace Zing\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Zing\QueryBuilder\Concerns\Pageable;
@@ -32,21 +33,22 @@ class QueryBuilder
     protected $request;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Builder
+     * @var \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation
      */
     protected $builder;
 
     /**
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct(Builder $builder, $request)
+    public function __construct($builder, $request)
     {
         $this->builder = $builder;
         $this->request = $request;
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|string $baseQuery
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|string $baseQuery
      */
     public static function fromBuilder($baseQuery, Request $request): self
     {
@@ -55,6 +57,15 @@ class QueryBuilder
         }
 
         return new self($baseQuery, $request);
+    }
+
+    public function getBuilder(): Builder
+    {
+        if ($this->builder instanceof Relation) {
+            return $this->builder->getQuery();
+        }
+
+        return $this->builder;
     }
 
     /**
