@@ -46,13 +46,13 @@ trait WithFilters
             function (Filter $filter): void {
                 $thisIsRequestedFilter = $this->isRequestedFilter($filter);
                 if ($thisIsRequestedFilter) {
-                    $filter->filter($this->builder, $this->getFilterValue($filter));
+                    $filter->filter($this->getBuilder(), $this->getFilterValue($filter));
 
                     return;
                 }
 
                 if ($filter->hasDefault()) {
-                    $filter->filter($this->builder, $filter->getDefault());
+                    $filter->filter($this->getBuilder(), $filter->getDefault());
                 }
             }
         );
