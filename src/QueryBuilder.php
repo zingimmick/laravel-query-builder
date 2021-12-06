@@ -59,12 +59,12 @@ class QueryBuilder
         return new self($baseQuery, $request);
     }
 
-
     public function getBuilder(): Builder
     {
         if ($this->builder instanceof Relation) {
             return $this->builder->getQuery();
         }
+
         return $this->builder;
     }
 
