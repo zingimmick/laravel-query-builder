@@ -68,6 +68,11 @@ class QueryBuilder
         return $this->builder;
     }
 
+    public function __get($name)
+    {
+        return $this->builder->{$name};
+    }
+
     /**
      * @param string $name
      * @param mixed[] $arguments
@@ -79,5 +84,15 @@ class QueryBuilder
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
         return $result === $this->builder ? $this : $result;
+    }
+
+    public function clone()
+    {
+        return clone $this;
+    }
+
+    public function __clone()
+    {
+        $this->builder = clone $this->builder;
     }
 }
