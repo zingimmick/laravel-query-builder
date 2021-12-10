@@ -86,7 +86,7 @@ class QueryBuilder
         return $result === $this->builder ? $this : $result;
     }
 
-    public function clone()
+    public function clone(): self
     {
         return clone $this;
     }
