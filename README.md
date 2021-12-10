@@ -37,8 +37,8 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 
 // uri: /api/users?search=Harry&status=1,2,3&desc=created_at&per_page=10
-// sql: select * from "users" where ("name" like '%Harry%') and "status" in ('1', '2', '3') order by "created_at" desc limit 11 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+// sql: select * from "users" where ("name" like "%Harry%") and "status" in ("1", "2", "3") order by "created_at" desc limit 11 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
     ->searchable(['name'])
     ->enableFilters(['is_visible', 'status'])
     ->enableSorts(['created_at'])
@@ -53,8 +53,8 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 
 // uri: /api/users?search=Harry
-// sql: select * from "users" where ("name" like '%Harry%' or "email" like '%Harry%') limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+// sql: select * from "users" where ("name" like "%Harry%" or "email" like "%Harry%") limit 16 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
     ->searchable(['name', 'email'])
     ->simplePaginate();
 ```
@@ -69,9 +69,9 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 
 // uri: /api/users?search=2021
-// sql: select * from "users" where ("number" like '%2021%' or ("id" = '2021')) limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())\n
-    ->searchable(['number', Filter::exact('encoded_id', 'id')])\n
+// sql: select * from "users" where ("number" like "%2021%" or ("id" = "2021")) limit 16 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
+    ->searchable(['number', Filter::exact('encoded_id', 'id')])
     ->simplePaginate();
 ```
 
@@ -83,26 +83,26 @@ use Zing\QueryBuilder\Tests\Models\User;
 use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?name=Harry
-// sql: select * from "users" where "name" like '%Harry%' limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+// sql: select * from "users" where "name" like "%Harry%" limit 16 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters([
         Filter::partial('name')
     ])
     ->simplePaginate();
 
 // uri: /api/users?status=1,2,3
-// sql: select * from "users" where "status" in ('1', '2', '3') limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+// sql: select * from "users" where "status" in ("1", "2", "3") limit 16 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters([
         Filter::exact('status')
     ])
     ->simplePaginate();
 
 // uri: /api/users?visible=1
-// sql: select * from "users" where "is_visible" = '1' limit 16 offset 0
+// sql: select * from "users" where "is_visible" = true limit 16 offset 0
 // uri: /api/users
 // sql: select * from "users" where "is_visible" = '1' limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters([
         Filter::scope('visible')->default(true)
     ])
@@ -119,8 +119,8 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/users?search_type=number&search_value=2021
-// sql: select * from "orders" where "number" like '%2021%' limit 16 offset 0
-QueryBuilder::fromBuilder(Order::class, request())
+// sql: select * from "orders" where "number" like "%2021%" limit 16 offset 0
+QueryBuilder::fromBuilder(Order::class, $request)
     ->enableTypedFilter('search_type', 'search_value', [Filter::partial('number'), Filter::partial('user_name', 'user.name')])
     ->simplePaginate();
 ```
@@ -135,14 +135,14 @@ use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/users?is_visible=true
-// sql: select * from "users" where "is_visible" = '1' limit 16 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+// sql: select * from "users" where "is_visible" = true limit 16 offset 0
+QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
     ->simplePaginate();
 
 // uri: /api/orders?content=code,and
-// sql: select * from "orders" where "content" like '%code,and%' limit 16 offset 0
-QueryBuilder::fromBuilder(Order::class, request())
+// sql: select * from "orders" where "content" like "%code,and%" limit 16 offset 0
+QueryBuilder::fromBuilder(Order::class, $request)
     ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
     ->simplePaginate();
 ```
@@ -157,7 +157,7 @@ use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/users?desc=created_date
 // sql: select * from "orders" order by "created_at" desc limit 16 offset 0
-QueryBuilder::fromBuilder(Order::class, request())
+QueryBuilder::fromBuilder(Order::class, $request)
     ->enableSorts([Sort::field('created_date', 'created_at')])
     ->simplePaginate();
 ```
@@ -171,13 +171,13 @@ use Zing\QueryBuilder\Paginator;
 
 // uri: /api/users?size=5
 // sql: select * from "users" limit 6 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+QueryBuilder::fromBuilder(User::class, $request)
     ->enablePaginator('size')
     ->simplePaginate();
 
 // uri: /api/users?size=
 // sql: select * from "users" limit 6 offset 0
-QueryBuilder::fromBuilder(User::class, request())
+QueryBuilder::fromBuilder(User::class, $request)
     ->enablePaginator(Paginator::name('size')->default(5))
     ->simplePaginate();
 ```
