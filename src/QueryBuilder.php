@@ -70,6 +70,16 @@ class QueryBuilder
 
     /**
      * @param string $name
+     *
+     * @return \Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed
+     */
+    public function __get($name)
+    {
+        return $this->builder->{$name};
+    }
+
+    /**
+     * @param string $name
      * @param mixed[] $arguments
      *
      * @return $this|mixed
@@ -79,5 +89,15 @@ class QueryBuilder
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
         return $result === $this->builder ? $this : $result;
+    }
+
+    public function clone(): self
+    {
+        return clone $this;
+    }
+
+    public function __clone()
+    {
+        $this->builder = clone $this->builder;
     }
 }

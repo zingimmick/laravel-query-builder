@@ -906,11 +906,61 @@ class BuilderTest extends TestCase
         $user = User::query()->create([
             'name' => $this->faker->name(),
         ]);
-        $expected = Order::query()->where(Order::query()->qualifyColumn('user_id'), $user->getKey())->whereNotNull(
-            Order::query()->qualifyColumn('user_id')
-        )->toSql();
+        request()
+            ->merge([
+                'number' => '2021',
+            ]);
+        $expected = Order::query()
+            ->where(Order::query()->qualifyColumn('user_id'), $user->getKey())->whereNotNull(
+                Order::query()->qualifyColumn('user_id')
+            )->where('number', 'like', sprintf('%%%s%%', '2021'))
+            ->toSql();
         $actual = QueryBuilder::fromBuilder($user->orders(), request())
+            ->enableFilters([Filter::partial('number')])
             ->toSql();
         self::assertSame($expected, $actual);
+    }
+
+    public function testClone(): void
+    {
+        $query = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
+        self::assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
+        self::assertNotSame(
+            (clone $query)->whereNotNull('test1')
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
+        );
+    }
+
+    public function testCloneMethod(): void
+    {
+        $query = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
+        self::assertSame($query->clone()->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
+        self::assertNotSame(
+            $query->clone()
+                ->whereNotNull('test1')
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
+        );
+    }
+
+    public function testOrWhere(): void
+    {
+        self::assertSame(
+            Order::query()
+                ->where('user_id', 0)
+                ->orWhere
+                ->whereNotNull('user_id')
+                ->toSql(),
+            QueryBuilder::fromBuilder(Order::class, request())
+                ->where('user_id', 0)
+                ->orWhere
+                ->whereNotNull('user_id')
+                ->toSql()
+        );
     }
 }
