@@ -70,6 +70,7 @@ class QueryBuilder
 
     /**
      * @param string $name
+     *
      * @return \Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed
      */
     public function __get($name)
