@@ -927,8 +927,10 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         self::assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
         self::assertNotSame(
-            (clone $query)->whereNotNull('test1')->toSql(),
-            (clone $query)->whereNotNull('test2')->toSql()
+            (clone $query)->whereNotNull('test1')
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
         );
     }
 
@@ -938,8 +940,11 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         self::assertSame($query->clone()->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
         self::assertNotSame(
-            $query->clone()->whereNotNull('test1')->toSql(),
-            (clone $query)->whereNotNull('test2')->toSql()
+            $query->clone()
+                ->whereNotNull('test1')
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
         );
     }
 
