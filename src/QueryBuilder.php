@@ -68,6 +68,10 @@ class QueryBuilder
         return $this->builder;
     }
 
+    /**
+     * @param string $name
+     * @return \Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed
+     */
     public function __get($name)
     {
         return $this->builder->{$name};
