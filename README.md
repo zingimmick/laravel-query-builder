@@ -61,7 +61,7 @@ QueryBuilder::fromBuilder(User::class, $request)
 
 #### Composite search
 
-⚠️ The filter with default value is not supported yet.
+**⚠️ The filter with default value is not supported yet.**
 
 ```php
 use Zing\QueryBuilder\Filter;
@@ -89,6 +89,12 @@ QueryBuilder::fromBuilder(User::class, $request)
         Filter::partial('name')
     ])
     ->simplePaginate();
+```
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?status=1,2,3
 // sql: select * from "users" where "status" in ("1", "2", "3") limit 16 offset 0
@@ -97,11 +103,17 @@ QueryBuilder::fromBuilder(User::class, $request)
         Filter::exact('status')
     ])
     ->simplePaginate();
+```
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?visible=1
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
 // uri: /api/users
-// sql: select * from "users" where "is_visible" = '1' limit 16 offset 0
+// sql: select * from "users" where "is_visible" = true limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters([
         Filter::scope('visible')->default(true)
@@ -132,13 +144,19 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\Enums\CastType;
-use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/users?is_visible=true
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
     ->simplePaginate();
+```
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/orders?content=code,and
 // sql: select * from "orders" where "content" like "%code,and%" limit 16 offset 0
@@ -174,6 +192,12 @@ use Zing\QueryBuilder\Paginator;
 QueryBuilder::fromBuilder(User::class, $request)
     ->enablePaginator('size')
     ->simplePaginate();
+```
+
+```php
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\User;
+use Zing\QueryBuilder\Paginator;
 
 // uri: /api/users?size=
 // sql: select * from "users" limit 6 offset 0
