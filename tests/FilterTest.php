@@ -88,4 +88,34 @@ class FilterTest extends TestCase
         QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::partial('name')->default('test')]);
     }
+
+    public function testFlagged(): void
+    {
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFlaggedFilter([Filter::exact('name')->default('foo')]);
+        $expected = User::query()->where(function ($query) {
+            return $query->where(function ($query) {
+                return $query->where('name', 'foo');
+            });
+        });
+        self::assertSame($expected->toSql(), $actual->toSql());
+        self::assertSame($expected->getBindings(), $actual->getBindings());
+        request()
+            ->merge([
+                'name' => '1',
+                'email' => '2',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFlaggedFilter([Filter::partial('email'), Filter::partial('name')]);
+        $expected = User::query()
+            ->where(function ($query) {
+                return $query->orWhere(function ($query) {
+                    return $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')));
+                })->orWhere(function ($query) {
+                    return $query->where('name', 'like', sprintf('%%%s%%', request()->input('name')));
+                });
+            });
+        self::assertSame($expected->toSql(), $actual->toSql());
+        self::assertSame($expected->getBindings(), $actual->getBindings());
+    }
 }

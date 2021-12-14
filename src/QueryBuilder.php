@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Zing\QueryBuilder\Concerns\Pageable;
 use Zing\QueryBuilder\Concerns\WithFilters;
+use Zing\QueryBuilder\Concerns\WithFlaggedFilter;
 use Zing\QueryBuilder\Concerns\WithSearchable;
 use Zing\QueryBuilder\Concerns\WithSorts;
 use Zing\QueryBuilder\Concerns\WithTypedFilter;
@@ -26,6 +27,7 @@ class QueryBuilder
     use Pageable;
     use ForwardsCalls;
     use WithTypedFilter;
+    use WithFlaggedFilter;
 
     /**
      * @var \Illuminate\Http\Request
