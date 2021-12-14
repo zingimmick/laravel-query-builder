@@ -21,19 +21,19 @@ trait WithFlaggedFilter
                 $this->formatFilters($filters)
                     ->each(
                         function (Filter $filter) use ($query): void {
-                        $query->orWhere(function ($query) use ($filter): void {
-                            $thisIsRequestedFilter = $this->isRequestedFilter($filter);
-                            if ($thisIsRequestedFilter) {
-                                $filter->filter($query, $this->getFilterValue($filter));
+                            $query->orWhere(function ($query) use ($filter): void {
+                                $thisIsRequestedFilter = $this->isRequestedFilter($filter);
+                                if ($thisIsRequestedFilter) {
+                                    $filter->filter($query, $this->getFilterValue($filter));
 
-                                return;
-                            }
+                                    return;
+                                }
 
-                            if ($filter->hasDefault()) {
-                                $filter->filter($query, $filter->getDefault());
-                            }
-                        });
-                    }
+                                if ($filter->hasDefault()) {
+                                    $filter->filter($query, $filter->getDefault());
+                                }
+                            });
+                        }
                     );
             }
         );
