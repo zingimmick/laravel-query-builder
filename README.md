@@ -31,7 +31,10 @@ composer require zing/laravel-query-builder
 - [Sort](#sort)
 - [Paginator](#paginator)
 
-## Basic usage
+
+## Usage
+
+### Basic usage
 
 ```php
 use Zing\QueryBuilder\QueryBuilder;

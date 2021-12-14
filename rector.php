@@ -33,6 +33,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     );
     $parameters->set(
         Option::PATHS,
-        [__DIR__ . '/config', __DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/ecs.php', __DIR__ . '/rector.php']
+        [
+            __DIR__ . '/bin',
+            __DIR__ . '/samples',
+            __DIR__ . '/config',
+            __DIR__ . '/src',
+            __DIR__ . '/tests',
+            __DIR__ . '/ecs.php',
+            __DIR__ . '/rector.php',
+        ]
     );
 };

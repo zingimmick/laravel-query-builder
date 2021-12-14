@@ -29,7 +29,7 @@ class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                function ($query, $search) {
+                function ($query, $search): \Illuminate\Database\Eloquent\Builder {
                     return $query->where(
                         function ($query) use ($search) {
                             return $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
@@ -38,7 +38,7 @@ class SearchableTest extends TestCase
                     );
                 }
             )
-            ->when(request()->input('a'), function ($query, $value) {
+            ->when(request()->input('a'), function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                 return $query->where('a', $value);
             })
             ->toSql();
@@ -170,7 +170,7 @@ class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                function ($query, $search) {
+                function ($query, $search): \Illuminate\Database\Eloquent\Builder {
                     return $query->where(
                         function ($query) use ($search) {
                             return $query->orWhere(function ($query) use ($search) {
