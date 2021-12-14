@@ -17,10 +17,11 @@ trait WithFlaggedFilter
     public function enableFlaggedFilter(array $filters): self
     {
         $this->where(
-            function (Builder $query) use ($filters){
-                $this->formatFilters($filters)->each(
-                    function (Filter $filter) use ($query): void {
-                        $query->orWhere(function ($query) use ($filter) {
+            function (Builder $query) use ($filters): void {
+                $this->formatFilters($filters)
+                    ->each(
+                        function (Filter $filter) use ($query): void {
+                        $query->orWhere(function ($query) use ($filter): void {
                             $thisIsRequestedFilter = $this->isRequestedFilter($filter);
                             if ($thisIsRequestedFilter) {
                                 $filter->filter($query, $this->getFilterValue($filter));
@@ -33,8 +34,10 @@ trait WithFlaggedFilter
                             }
                         });
                     }
-                );
-            });
+                    );
+            }
+        );
+
         return $this;
     }
 }

@@ -93,9 +93,9 @@ class FilterTest extends TestCase
     {
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::exact('name')->default('foo')]);
-        $expected = User::query()->where(function ($query){
-            return $query->where(function ($query){
-                return $query->where('name','foo');
+        $expected = User::query()->where(function ($query) {
+            return $query->where(function ($query) {
+                return $query->where('name', 'foo');
             });
         });
         self::assertSame($expected->toSql(), $actual->toSql());
@@ -108,14 +108,13 @@ class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
-            ->where(function ($query){
+            ->where(function ($query) {
                 return $query->orWhere(function ($query) {
                     return $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')));
                 })->orWhere(function ($query) {
                     return $query->where('name', 'like', sprintf('%%%s%%', request()->input('name')));
                 });
-            })
-            ;
+            });
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
     }

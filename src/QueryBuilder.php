@@ -27,7 +27,8 @@ class QueryBuilder
     use Pageable;
     use ForwardsCalls;
     use WithTypedFilter;
-use WithFlaggedFilter;
+    use WithFlaggedFilter;
+
     /**
      * @var \Illuminate\Http\Request
      */
