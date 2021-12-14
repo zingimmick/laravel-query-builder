@@ -41,7 +41,7 @@ class CodeSample
 
 declare(strict_types=1);
 
-', '', (string)file_get_contents($this->code))
+', '', (string) file_get_contents($this->code))
         ));
     }
 }
