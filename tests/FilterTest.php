@@ -30,7 +30,7 @@ class FilterTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     $value = explode('|', $value);
 
                     return $query->whereIn('name', $value);
@@ -46,6 +46,7 @@ class FilterTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         self::assertSame($expected, $actual);
+        QueryConfiguration::setDelimiter(',');
     }
 
     public function testTyped(): void

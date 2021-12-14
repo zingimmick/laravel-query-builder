@@ -27,7 +27,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Zing\\QueryBuilder\\Tests\\": "tests"
+            "Zing\\QueryBuilder\\Tests\\": "tests",
+            "Zing\\QueryBuilder\\Samples\\": "samples"
         }
     },
     "config": {

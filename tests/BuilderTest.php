@@ -29,7 +29,7 @@ class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value) {
+            ->when(request()->input('name'), function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                 return $query->where('name', $value);
             })
             ->toSql();
@@ -122,7 +122,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -142,7 +142,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -162,7 +162,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -274,7 +274,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     $value = explode(',', $value);
 
                     return $query->whereIn('name', $value);
@@ -296,7 +296,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     $value = explode(',', $value);
 
                     return $query->where(
@@ -328,7 +328,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where(
                         function ($query) use ($value) {
                             collect($value)->each(
@@ -358,7 +358,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     $value = explode(',', $value);
 
                     return $query->where(
@@ -390,7 +390,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -598,7 +598,7 @@ class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query) {
+            ->when(request()->input('asc'), function ($query): \Illuminate\Database\Eloquent\Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -629,7 +629,7 @@ class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query) {
+            ->when(request()->input('asc'), function ($query): \Illuminate\Database\Eloquent\Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -642,7 +642,7 @@ class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('desc'), function ($query) {
+            ->when(request()->input('desc'), function ($query): \Illuminate\Database\Eloquent\Builder {
                 return $query->orderBy('name', 'desc');
             })
             ->toSql();
@@ -660,7 +660,7 @@ class BuilderTest extends TestCase
             ])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query) {
+            ->when(request()->input('asc'), function ($query): \Illuminate\Database\Eloquent\Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -679,7 +679,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('id'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->whereBetween('id', explode(',', $value));
                 }
             )
@@ -737,7 +737,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     [$min, $max] = explode(',', $value);
                     if (is_string($min)) {
                         $startAt = Carbon::parse($min);
@@ -771,7 +771,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     [$min, $max] = $value;
                     if (is_string($min)) {
                         $startAt = Carbon::parse($min);
@@ -809,7 +809,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     $value = explode(',', $value);
 
                     return $query->whereBetween(
@@ -842,7 +842,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->whereBetween(
                         'created_at',
                         array_map(
@@ -877,7 +877,7 @@ class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value) {
+                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->whereBetween(
                         'created_at',
                         array_map(

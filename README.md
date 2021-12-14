@@ -31,7 +31,10 @@ composer require zing/laravel-query-builder
 - [Sort](#sort)
 - [Paginator](#paginator)
 
-## Basic usage
+
+## Usage
+
+### Basic usage
 
 ```php
 use Zing\QueryBuilder\QueryBuilder;
@@ -79,46 +82,40 @@ QueryBuilder::fromBuilder(User::class, $request)
 ### Filter
 
 ```php
+use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?name=Harry
 // sql: select * from "users" where "name" like "%Harry%" limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::partial('name')
-    ])
+    ->enableFilters([Filter::partial('name')])
     ->simplePaginate();
 ```
 
 ```php
+use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?status=1,2,3
 // sql: select * from "users" where "status" in ("1", "2", "3") limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::exact('status')
-    ])
+    ->enableFilters([Filter::exact('status')])
     ->simplePaginate();
 ```
 
 ```php
+use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
 
 // uri: /api/users?visible=1
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
 // uri: /api/users
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::scope('visible')->default(true)
-    ])
+    ->enableFilters([Filter::scope('visible')->default(true)])
     ->simplePaginate();
 ```
 
@@ -134,7 +131,11 @@ use Zing\QueryBuilder\Tests\Models\Order;
 // uri: /api/users?search_type=number&search_value=2021
 // sql: select * from "orders" where "number" like "%2021%" limit 16 offset 0
 QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableTypedFilter('search_type', 'search_value', [Filter::partial('number'), Filter::partial('user_name', 'user.name')])
+    ->enableTypedFilter(
+        'search_type',
+        'search_value',
+        [Filter::partial('number'), Filter::partial('user_name', 'user.name')]
+    )
     ->simplePaginate();
 ```
 
@@ -155,10 +156,10 @@ QueryBuilder::fromBuilder(Order::class, $request)
 #### Cast Input(Skip auto cast)
 
 ```php
+use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\Enums\CastType;
 
 // uri: /api/users?is_visible=true
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
@@ -168,9 +169,9 @@ QueryBuilder::fromBuilder(User::class, $request)
 ```
 
 ```php
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Filter;
 use Zing\QueryBuilder\Enums\CastType;
+use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 
 // uri: /api/orders?content=code,and
@@ -183,7 +184,6 @@ QueryBuilder::fromBuilder(Order::class, $request)
 ### Sort
 
 ```php
-use Illuminate\Support\Facades\DB;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
@@ -200,7 +200,6 @@ QueryBuilder::fromBuilder(Order::class, $request)
 ```php
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Paginator;
 
 // uri: /api/users?size=5
 // sql: select * from "users" limit 6 offset 0
@@ -210,9 +209,9 @@ QueryBuilder::fromBuilder(User::class, $request)
 ```
 
 ```php
+use Zing\QueryBuilder\Paginator;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Paginator;
 
 // uri: /api/users?size=
 // sql: select * from "users" limit 6 offset 0

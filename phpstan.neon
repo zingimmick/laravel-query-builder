@@ -5,6 +5,8 @@ includes:
 parameters:
     level: 8
     paths:
+        - bin
+        - samples
         - config
         - src
         - tests
@@ -13,3 +15,6 @@ parameters:
         - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
         - '#Parameter \#1 \$column of method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::where(.*)\(\) expects string, Illuminate\\Database\\Query\\Expression(\|string)? given.#'
         - '#Parameter \#1 \$column of method (.*)::orderBy\(\) expects (.*) given.#'
+        - message: '#Variable \$request might not be defined.#'
+          paths:
+              - samples/**/*.php
