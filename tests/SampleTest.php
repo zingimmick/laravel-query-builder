@@ -5,14 +5,9 @@ declare(strict_types=1);
 namespace Zing\QueryBuilder\Tests;
 
 use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Samples\SampleCollector;
-use Zing\QueryBuilder\Sort;
-use Zing\QueryBuilder\Tests\Models\Order;
-use Zing\QueryBuilder\Tests\Models\User;
 
 class SampleTest extends TestCase
 {
@@ -44,7 +39,7 @@ class SampleTest extends TestCase
     public function testSample(string $uri, string $sql, string $code): void
     {
         $request = Request::create($uri);
-        self::assertStringEndsWith($request->path(), parse_url($uri, PHP_URL_PATH));
+        self::assertStringEndsWith($request->path(), (string) parse_url($uri, PHP_URL_PATH));
         DB::listen(function (QueryExecuted $queryExecuted) use ($sql): void {
             self::assertSame(
                 $sql,
@@ -61,6 +56,7 @@ class SampleTest extends TestCase
                 }, $queryExecuted->bindings))
             );
         });
-        eval($code);
+
+        require $code;
     }
 }

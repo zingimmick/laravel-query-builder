@@ -19,7 +19,6 @@ class CodeSample
     public $ioSamples;
 
     /**
-     * @param string $code
      * @param \Zing\QueryBuilder\Samples\IOSample[] $ioSamples
      */
     public function __construct(string $code, array $ioSamples)
@@ -30,7 +29,7 @@ class CodeSample
 
     public function print(): string
     {
-        return sprintf("```php\n%s\n```" . PHP_EOL, str_replace(
+        return sprintf("```php\n%s```" . PHP_EOL, str_replace(
             PHP_EOL . PHP_EOL,
             PHP_EOL . PHP_EOL . $this->ioSamples->map(function ($ioSample): string {
                 return implode('', [
@@ -38,7 +37,11 @@ class CodeSample
                     sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),
                 ]);
             })->implode(''),
-            $this->code
+            str_replace('<?php
+
+declare(strict_types=1);
+
+', '', (string)file_get_contents($this->code))
         ));
     }
 }

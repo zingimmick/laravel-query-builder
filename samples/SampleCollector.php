@@ -13,18 +13,7 @@ class SampleCollector
     {
         return [
             new Sample('Basic usage', '', [new CodeSample(
-                <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->searchable(['name'])
-    ->enableFilters(['is_visible', 'status'])
-    ->enableSorts(['created_at'])
-    ->enablePaginator()
-    ->simplePaginate();
-CODE_SAMPLE
-                ,
+                __DIR__ . '/basic/basic.php',
                 [
                     new IOSample(
                         '/api/users?search=Harry&status=1,2,3&desc=created_at&per_page=10',
@@ -38,15 +27,7 @@ CODE_SAMPLE
                 'Search',
                 '',
                 [new CodeSample(
-                    <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->searchable(['name', 'email'])
-    ->simplePaginate();
-CODE_SAMPLE
-                    ,
+                    __DIR__ . '/search/search.php',
                     [
                         new IOSample(
                             '/api/users?search=Harry',
@@ -61,16 +42,7 @@ CODE_SAMPLE
                 'Search',
                 'Composite search',
                 [new CodeSample(
-                    <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->searchable(['number', Filter::exact('encoded_id', 'id')])
-    ->simplePaginate();
-CODE_SAMPLE
-                    ,
+                    __DIR__ . '/search/composite_search.php',
                     [
                         new IOSample(
                             '/api/users?search=2021',
@@ -85,18 +57,7 @@ CODE_SAMPLE
                 '',
                 [
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::partial('name')
-    ])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/filter_column_contains_property_value.php',
                         [
                             new IOSample(
                                 '/api/users?name=Harry',
@@ -105,18 +66,7 @@ CODE_SAMPLE
                         ]
                     ),
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::exact('status')
-    ])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/filter_column_equals_to_property_value.php',
                         [
                             new IOSample(
                                 '/api/users?status=1,2,3',
@@ -125,18 +75,7 @@ CODE_SAMPLE
                         ]
                     ),
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters([
-        Filter::scope('visible')->default(true)
-    ])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/filter_with_scope_and_default.php',
                         [
                             new IOSample(
                                 '/api/users?visible=1',
@@ -155,16 +94,7 @@ CODE_SAMPLE
                 'Typed filter',
                 [
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\Order;
-
-QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableTypedFilter('search_type', 'search_value', [Filter::partial('number'), Filter::partial('user_name', 'user.name')])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/filter_orders_with_type_and_value.php',
                         [
                             new IOSample(
                                 '/api/users?search_type=number&search_value=2021',
@@ -179,16 +109,7 @@ CODE_SAMPLE
                 'Flagged filter',
                 [
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\Order;
-
-QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableFlaggedFilter([Filter::partial('number'), Filter::partial('user_name', 'user.name')])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/filter_orders_match_any_filters.php',
                         [
                             new IOSample(
                                 '/api/users?number=2021&user_name=Jone',
@@ -203,17 +124,7 @@ CODE_SAMPLE
                 'Cast Input(Skip auto cast)',
                 [
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\Enums\CastType;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/cast_value_to_boolean.php',
                         [
                             new IOSample(
                                 '/api/users?is_visible=true',
@@ -222,17 +133,7 @@ CODE_SAMPLE
                         ]
                     ),
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Filter;
-use Zing\QueryBuilder\Enums\CastType;
-use Zing\QueryBuilder\Tests\Models\Order;
-
-QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/filter/cast_value_force_to_string.php',
                         [
                             new IOSample(
                                 '/api/orders?content=code,and',
@@ -246,25 +147,12 @@ CODE_SAMPLE
                 'Sort',
                 '',
                 [
-                    new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Illuminate\Support\Facades\DB;
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Sort;
-use Zing\QueryBuilder\Tests\Models\Order;
-
-QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableSorts([Sort::field('created_date', 'created_at')])
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
-                        [
-                            new IOSample(
-                                '/api/users?desc=created_date',
-                                'select * from "orders" order by "created_at" desc limit 16 offset 0'
-                            ),
-                        ]
-                    ),
+                    new CodeSample(__DIR__ . '/sort/sort_users_by_created_date.php', [
+                        new IOSample(
+                            '/api/users?desc=created_date',
+                            'select * from "orders" order by "created_at" desc limit 16 offset 0'
+                        ),
+                    ]),
                 ]
             ),
             new Sample(
@@ -272,29 +160,11 @@ CODE_SAMPLE
                 '',
                 [
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Paginator;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enablePaginator('size')
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/paginator/paginate_by_size_per_page.php',
                         [new IOSample('/api/users?size=5', 'select * from "users" limit 6 offset 0')]
                     ),
                     new CodeSample(
-                        <<<'CODE_SAMPLE'
-use Zing\QueryBuilder\QueryBuilder;
-use Zing\QueryBuilder\Tests\Models\User;
-use Zing\QueryBuilder\Paginator;
-
-QueryBuilder::fromBuilder(User::class, $request)
-    ->enablePaginator(Paginator::name('size')->default(5))
-    ->simplePaginate();
-CODE_SAMPLE
-                        ,
+                        __DIR__ . '/paginator/paginate_by_size_per_page_with_default.php',
                         [new IOSample('/api/users?size=', 'select * from "users" limit 6 offset 0')]
                     ),
                 ]

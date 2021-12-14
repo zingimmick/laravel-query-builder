@@ -29,8 +29,6 @@ class Sample
     private $description = '';
 
     /**
-     * @param string $title
-     * @param string $subtitle
      * @param \Zing\QueryBuilder\Samples\CodeSample[] $codeSamples
      */
     public function __construct(string $title, string $subtitle, array $codeSamples)
