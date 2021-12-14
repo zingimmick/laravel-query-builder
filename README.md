@@ -26,6 +26,7 @@ composer require zing/laravel-query-builder
   - [Composite search](#composite-search)
 - [Filter](#filter)
   - [Typed filter](#typed-filter)
+  - [Flagged filter](#flagged-filter)
   - [Cast Input(Skip auto cast)](#cast-inputskip-auto-cast)
 - [Sort](#sort)
 - [Paginator](#paginator)
@@ -134,6 +135,20 @@ use Zing\QueryBuilder\Tests\Models\Order;
 // sql: select * from "orders" where "number" like "%2021%" limit 16 offset 0
 QueryBuilder::fromBuilder(Order::class, $request)
     ->enableTypedFilter('search_type', 'search_value', [Filter::partial('number'), Filter::partial('user_name', 'user.name')])
+    ->simplePaginate();
+```
+
+#### Flagged filter
+
+```php
+use Zing\QueryBuilder\Filter;
+use Zing\QueryBuilder\QueryBuilder;
+use Zing\QueryBuilder\Tests\Models\Order;
+
+// uri: /api/users?number=2021&user_name=Jone
+// sql: select * from "orders" where (("number" like "%2021%") or (exists (select * from "users" where "orders"."user_id" = "users"."id" and "users"."name" like "%Jone%"))) limit 16 offset 0
+QueryBuilder::fromBuilder(Order::class, $request)
+    ->enableFlaggedFilter([Filter::partial('number'), Filter::partial('user_name', 'user.name')])
     ->simplePaginate();
 ```
 
