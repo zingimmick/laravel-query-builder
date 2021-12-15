@@ -21,7 +21,9 @@ build:
                             format: 'clover'
 filter:
     excluded_paths:
+        - 'bin/*'
         - 'tests/*'
+        - 'samples/*'
 checks:
     php: true
 coding_style:
