@@ -2,12 +2,11 @@
 <?php
 
 use Illuminate\Support\Str;
-use Zing\QueryBuilder\Samples\Sample;
 use Zing\QueryBuilder\Samples\SampleCollector;
 
 include_once __DIR__ . '/../vendor/autoload.php';
-$cases = (new SampleCollector())->samples();
-$readme=<<<MARKDOWN
+
+$readme = <<<'CODE_SAMPLE'
 # Laravel Query Builder
 
 <p align="center">
@@ -42,32 +41,42 @@ Laravel Query Builder is an open-sourced software licensed under the [MIT licens
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder?ref=badge_large)
 
-MARKDOWN;
+CODE_SAMPLE;
 
-file_put_contents(__DIR__ . '/../README.md', str_replace(['%TOC%','%CASES%'],[collect($cases)->groupBy('title')->map(function ($cases, $key) {
-    return implode('', [
-        sprintf('- [%s](#%s)', $key, str_replace(' ','-',Str::lower(str_replace(['(',')'],'',$key)))),
-        $cases->groupBy('subtitle')->map(function ($cases, $key) {
-            $lines = [];
-            if ($key) {
-                $lines[] = sprintf('  - [%s](#%s)',$key, str_replace(' ','-',Str::lower(str_replace(['(',')'],'',$key))));
-            }
-            return implode(PHP_EOL, $lines);
-        })->implode(PHP_EOL).PHP_EOL,
-    ]);
-})->implode(''),collect($cases)->groupBy('title')->map(function ($cases, $key) {
-    return implode(PHP_EOL, [
-        sprintf('### %s' . PHP_EOL, $key),
-        $cases->groupBy('subtitle')->map(function ($cases, $key) {
-            $lines = [];
-            if ($key) {
-                $lines[] = sprintf('#### %s' . PHP_EOL, $key);
-            }
-            $lines[] = $cases->map(function (Sample $sample) {
+$samples = (new SampleCollector())->samples();
+$toc = collect($samples)
+    ->groupBy('title')
+    ->map(function ($samples, $key) {
+        return implode('', [
+            sprintf('- [%s](#%s)', $key, Str::slug($key)),
+            $samples->groupBy('subtitle')
+                ->map(function ($samples, $key) {
+                    $lines = [];
+                    if ($key) {
+                        $lines[] = sprintf('  - [%s](#%s)', $key, Str::slug($key));
+                    }
 
-                return $sample->print();
-            })->implode('');
-            return implode(PHP_EOL, $lines);
-        })->implode(PHP_EOL),
-    ]);
-})->implode(PHP_EOL)],$readme));
+                    return implode(PHP_EOL, $lines);
+                })->implode(PHP_EOL) . PHP_EOL,
+        ]);
+    })->implode('');
+$cases = collect($samples)
+    ->groupBy('title')
+    ->map(function ($samples, $key) {
+        return implode(PHP_EOL, [
+            sprintf('### %s' . PHP_EOL, $key),
+            $samples->groupBy('subtitle')
+                ->map(function ($samples, $key) {
+                    $lines = [];
+                    if ($key) {
+                        $lines[] = sprintf('#### %s' . PHP_EOL, $key);
+                    }
+                    $lines[] = $samples->map->print()->implode('');
+
+                    return implode(PHP_EOL, $lines);
+                })->implode(PHP_EOL),
+        ]);
+    })->implode(PHP_EOL);
+$contents = str_replace(['%TOC%', '%CASES%'], [$toc, $cases], $readme);
+
+file_put_contents(__DIR__ . '/../README.md', $contents);
