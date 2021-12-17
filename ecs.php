@@ -25,6 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         Option::PATHS,
         [
             __DIR__ . '/bin',
+            __DIR__ . '/samples',
             __DIR__ . '/config',
             __DIR__ . '/src',
             __DIR__ . '/tests',
