@@ -99,7 +99,7 @@ trait WithSearchable
      *
      * @return array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)>
      */
-    private function resolveNestedSearchable(array $searchable): array
+    private function resolveNestedSearchable(array $searchable)
     {
         $results = [];
         foreach ($searchable as $singleSearchable) {

@@ -16,7 +16,10 @@ use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class BuilderTest extends TestCase
+/**
+ * @internal
+ */
+final class BuilderTest extends TestCase
 {
     use WithFaker;
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Zing\QueryBuilder\QueryBuilderServiceProvider;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
 

@@ -36,7 +36,10 @@ trait WithSorts
         return $this;
     }
 
-    protected function isRequestedSort(Sort $sort): bool
+    /**
+     * @return bool
+     */
+    protected function isRequestedSort(Sort $sort)
     {
         if ($this->request->input('asc') === $sort->getProperty()) {
             return true;
@@ -45,7 +48,10 @@ trait WithSorts
         return $this->request->input('desc') === $sort->getProperty();
     }
 
-    protected function getSortValue(Sort $sort): string
+    /**
+     * @return string
+     */
+    protected function getSortValue(Sort $sort)
     {
         if ($this->request->input('desc') === $sort->getProperty()) {
             return 'desc';
@@ -56,8 +62,10 @@ trait WithSorts
 
     /**
      * @param mixed $sorts
+     *
+     * @return \Illuminate\Support\Collection
      */
-    protected function formatSorts($sorts): \Illuminate\Support\Collection
+    protected function formatSorts($sorts)
     {
         return collect($sorts)->map(
             function ($sort, $key): Sort {
