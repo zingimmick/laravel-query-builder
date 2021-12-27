@@ -29,7 +29,7 @@ trait FilterCreator
     protected $property;
 
     /**
-     * @var \Illuminate\Database\Query\Expression|string
+     * @var mixed|string
      */
     protected $column;
 
