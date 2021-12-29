@@ -11,7 +11,10 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\QueryConfiguration;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class FilterTest extends TestCase
+/**
+ * @internal
+ */
+final class FilterTest extends TestCase
 {
     public function testFilter(): void
     {

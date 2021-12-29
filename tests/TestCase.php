@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Zing\QueryBuilder\QueryBuilderServiceProvider;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
 
@@ -37,7 +37,7 @@ class TestCase extends BaseTestCase
      *
      * @return array<class-string<\Illuminate\Support\ServiceProvider>>
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [QueryBuilderServiceProvider::class];
     }

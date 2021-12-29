@@ -10,7 +10,10 @@ use Zing\QueryBuilder\Sort;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class SortTest extends TestCase
+/**
+ * @internal
+ */
+final class SortTest extends TestCase
 {
     use WithFaker;
 

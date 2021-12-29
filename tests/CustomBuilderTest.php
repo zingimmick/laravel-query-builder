@@ -7,7 +7,10 @@ namespace Zing\QueryBuilder\Tests;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 
-class CustomBuilderTest extends TestCase
+/**
+ * @internal
+ */
+final class CustomBuilderTest extends TestCase
 {
     public function testScope(): void
     {

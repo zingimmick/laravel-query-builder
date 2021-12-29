@@ -8,7 +8,10 @@ use Zing\QueryBuilder\Paginator;
 use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class PaginatorTest extends TestCase
+/**
+ * @internal
+ */
+final class PaginatorTest extends TestCase
 {
     public function testPerPage(): void
     {

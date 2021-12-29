@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Zing\QueryBuilder\Samples\SampleCollector;
 
-class SampleTest extends TestCase
+/**
+ * @internal
+ */
+final class SampleTest extends TestCase
 {
     /**
      * @return \Zing\QueryBuilder\Samples\Sample[]

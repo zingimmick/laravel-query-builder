@@ -11,7 +11,10 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class SearchableTest extends TestCase
+/**
+ * @internal
+ */
+final class SearchableTest extends TestCase
 {
     use WithFaker;
 

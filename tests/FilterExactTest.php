@@ -12,7 +12,10 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 use Zing\QueryBuilder\Tests\Models\User;
 
-class FilterExactTest extends TestCase
+/**
+ * @internal
+ */
+final class FilterExactTest extends TestCase
 {
     use WithFaker;
 

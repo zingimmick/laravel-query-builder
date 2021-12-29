@@ -14,7 +14,7 @@ class CodeSample
     public $code;
 
     /**
-     * @var \Illuminate\Support\Collection|\Zing\QueryBuilder\Samples\IOSample[]
+     * @var \Illuminate\Support\Collection
      */
     public $ioSamples;
 
