@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             PrivatizeLocalGetterToPropertyRector::class,
 
             // bug
+            // pull: https://github.com/rectorphp/rector-src/pull/1575
             \Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector::class,
         ]
     );
