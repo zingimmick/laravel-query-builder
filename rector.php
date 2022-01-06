@@ -29,10 +29,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             FinalizeClassesWithoutChildrenRector::class,
             RepeatedLiteralToClassConstantRector::class,
             PrivatizeLocalGetterToPropertyRector::class,
-
-            // bug
-            // pull: https://github.com/rectorphp/rector-src/pull/1575
-            \Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector::class,
         ]
     );
     $parameters->set(
