@@ -16,8 +16,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PARALLEL, true);
     $parameters->set(Option::SKIP, [
-        YodaStyleFixer::class => null,
-        PhpUnitTestClassRequiresCoversFixer::class,
         // Will be removed in a future major version.
         \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
     ]);
