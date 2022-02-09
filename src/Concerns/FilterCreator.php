@@ -34,7 +34,7 @@ trait FilterCreator
     protected $column;
 
     /**
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int, mixed>
      */
     protected $ignored;
 

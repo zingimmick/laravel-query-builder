@@ -78,6 +78,9 @@ class Filter
         return $this;
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, mixed>
+     */
     public function getIgnored(): Collection
     {
         return $this->ignored;
