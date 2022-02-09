@@ -61,7 +61,7 @@ trait WithSorts
     }
 
     /**
-     * @param mixed $sorts
+     * @phpstan-param array<(string|\Zing\QueryBuilder\Sort)> $sorts
      *
      * @return \Illuminate\Support\Collection
      */

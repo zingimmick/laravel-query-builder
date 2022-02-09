@@ -331,7 +331,11 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
+                /**
+                 * @param array<int> $value
+                 * @param mixed $query
+                 */
+                function ($query, array $value): \Illuminate\Database\Eloquent\Builder {
                     return $query->where(
                         function ($query) use ($value) {
                             collect($value)->each(
