@@ -19,7 +19,7 @@ class Sample
     public $subtitle;
 
     /**
-     * @var \Illuminate\Support\Collection
+     * @var \Illuminate\Support\Collection<int|string, \Zing\QueryBuilder\Samples\CodeSample>
      */
     public $codeSamples;
 

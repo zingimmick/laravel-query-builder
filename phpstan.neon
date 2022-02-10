@@ -1,6 +1,5 @@
-
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - vendor/nunomaduro/larastan/extension.neon
 
 parameters:
     level: 8
@@ -10,11 +9,13 @@ parameters:
         - config
         - src
         - tests
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Class Laravel\\Lumen\\Application not found.#'
         - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
         - '#Parameter \#1 \$column of method Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>::where(.*)\(\) expects string, Illuminate\\Database\\Query\\Expression(\|string)? given.#'
         - '#Parameter \#1 \$column of method (.*)::orderBy\(\) expects (.*) given.#'
+        - '#Unable to resolve the template type (.*) in call to function collect#'
         - message: '#Variable \$request might not be defined.#'
           paths:
               - samples/**/*.php
