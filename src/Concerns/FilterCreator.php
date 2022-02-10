@@ -34,7 +34,7 @@ trait FilterCreator
     protected $column;
 
     /**
-     * @var \Illuminate\Support\Collection<int|string, mixed>
+     * @var \Illuminate\Support\Collection<int, mixed>|null
      */
     protected $ignored;
 
@@ -64,7 +64,6 @@ trait FilterCreator
         $this->property = $property;
 
         $this->filter = $filter;
-        $this->ignored = collect();
         $this->column = $column ?? $property;
         $this->delimiter = QueryConfiguration::getDelimiter();
     }
