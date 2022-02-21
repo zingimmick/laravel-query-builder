@@ -75,7 +75,7 @@ trait WithSorts
                     return $sort;
                 }
 
-                if (is_string($key)) {
+                if (\is_string($key)) {
                     return Sort::field($key, $sort);
                 }
 

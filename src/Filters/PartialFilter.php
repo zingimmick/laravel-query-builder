@@ -14,7 +14,7 @@ class PartialFilter extends ExactFilter
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $query->where(
                 function ($query) use ($value, $property): void {
                     foreach ($value as $singleValue) {

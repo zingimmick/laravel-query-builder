@@ -133,7 +133,7 @@ class Filter
             return explode($this->delimiter, $value);
         }
 
-        if (in_array(strtolower($value), ['true', 'false'], true)) {
+        if (\in_array(strtolower($value), ['true', 'false'], true)) {
             $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
         }
 
@@ -151,11 +151,11 @@ class Filter
      */
     protected function resolveValueForFiltering($value)
     {
-        if (is_string($value)) {
+        if (\is_string($value)) {
             $value = $this->castValue($value);
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
 
             return empty($remainingProperties) ? null : $remainingProperties;

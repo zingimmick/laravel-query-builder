@@ -15,7 +15,7 @@ class BetweenFilter extends ExactFilter
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
-        if (! is_array($value) || count($value) !== 2) {
+        if (! \is_array($value) || \count($value) !== 2) {
             throw ParameterException::tooFewElementsForBetweenExpression();
         }
 
