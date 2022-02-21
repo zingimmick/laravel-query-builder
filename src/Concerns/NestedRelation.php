@@ -18,7 +18,7 @@ trait NestedRelation
             ->pipe(
                 function (Collection $parts): array {
                     return [
-                        $parts->except([count($parts) - 1])
+                        $parts->except([\count($parts) - 1])
                             ->map(function (string $value): string {
                                 return Str::camel($value);
                             })->implode('.'),

@@ -20,13 +20,13 @@ trait WithSearchable
      */
     public function searchable($searchable)
     {
-        $searchable = is_array($searchable) ? $searchable : func_get_args();
+        $searchable = \is_array($searchable) ? $searchable : \func_get_args();
         $search = $this->request->input('search');
         if ($search === null) {
             return $this;
         }
 
-        if (is_string($search) && trim($search) === '') {
+        if (\is_string($search) && trim($search) === '') {
             return $this;
         }
 

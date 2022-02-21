@@ -52,7 +52,7 @@ class ExactFilter implements Filter
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $query->whereIn($property, $value);
         }
 
@@ -65,7 +65,7 @@ class ExactFilter implements Filter
             return false;
         }
 
-        if (in_array($property, $this->relationConstraints, true)) {
+        if (\in_array($property, $this->relationConstraints, true)) {
             return false;
         }
 

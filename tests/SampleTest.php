@@ -47,7 +47,7 @@ final class SampleTest extends TestCase
             self::assertSame(
                 $sql,
                 sprintf(str_replace('?', '%s', $queryExecuted->sql), ...array_map(function ($value): string {
-                    if (is_bool($value)) {
+                    if (\is_bool($value)) {
                         return $value ? 'true' : 'false';
                     }
 

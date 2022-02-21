@@ -21,13 +21,13 @@ use Zing\QueryBuilder\Concerns\WithTypedFilter;
  */
 class QueryBuilder
 {
+    use ForwardsCalls;
+    use Pageable;
     use WithFilters;
+    use WithFlaggedFilter;
     use WithSearchable;
     use WithSorts;
-    use Pageable;
-    use ForwardsCalls;
     use WithTypedFilter;
-    use WithFlaggedFilter;
 
     /**
      * @var \Illuminate\Http\Request

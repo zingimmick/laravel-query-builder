@@ -746,14 +746,14 @@ final class BuilderTest extends TestCase
                     ->input('created_between'),
                 function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     [$min, $max] = explode(',', $value);
-                    if (is_string($min)) {
+                    if (\is_string($min)) {
                         $startAt = Carbon::parse($min);
                         if ($startAt->toDateString() === $min) {
                             $startAt->startOfDay();
                         }
                     }
 
-                    if (is_string($max)) {
+                    if (\is_string($max)) {
                         $endAt = Carbon::parse($max);
                         if ($endAt->toDateString() === $max) {
                             $endAt->endOfDay();
@@ -780,7 +780,7 @@ final class BuilderTest extends TestCase
                     ->input('created_between'),
                 function ($query, $value): \Illuminate\Database\Eloquent\Builder {
                     [$min, $max] = $value;
-                    if (is_string($min)) {
+                    if (\is_string($min)) {
                         $startAt = Carbon::parse($min);
                         if ($startAt->toDateString() === $min) {
                             $startAt->startOfDay();
@@ -789,7 +789,7 @@ final class BuilderTest extends TestCase
                         $startAt = $min;
                     }
 
-                    if (is_string($max)) {
+                    if (\is_string($max)) {
                         $endAt = Carbon::parse($max);
                         if ($endAt->toDateString() === $max) {
                             $endAt->endOfDay();
@@ -823,7 +823,7 @@ final class BuilderTest extends TestCase
                         'created_at',
                         array_map(
                             function ($dateTime) {
-                                if (is_string($dateTime)) {
+                                if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
                             },
@@ -854,7 +854,7 @@ final class BuilderTest extends TestCase
                         'created_at',
                         array_map(
                             function ($dateTime) {
-                                if (is_string($dateTime)) {
+                                if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
 
@@ -889,7 +889,7 @@ final class BuilderTest extends TestCase
                         'created_at',
                         array_map(
                             function ($dateTime) {
-                                if (is_string($dateTime)) {
+                                if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
 

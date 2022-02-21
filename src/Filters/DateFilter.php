@@ -19,7 +19,7 @@ class DateFilter extends ExactFilter
         $formatter = function ($value) {
             return $value instanceof DateTimeInterface ? $value->format('Y-m-d') : $value;
         };
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $value = array_map($formatter, $value);
 
             return $query->whereIn(DB::raw(sprintf('date(%s)', $property)), $value);
