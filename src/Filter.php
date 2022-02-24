@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Zing\QueryBuilder\Concerns\FilterCreator;
 use Zing\QueryBuilder\Enums\CastType;
-use function in_array;
 
 class Filter
 {
@@ -117,8 +116,10 @@ class Filter
     protected function castValue($value)
     {
         $cast = $this->getCast();
-
-        if (! is_string($value) || $cast === CastType::STRING) {
+        if (! \is_string($value)) {
+            return $value;
+        }
+        if ($cast === CastType::STRING) {
             return $value;
         }
         $callback = function ($value) use ($cast) {
@@ -133,7 +134,7 @@ class Filter
                     return filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
                 default:
-                    if (in_array(strtolower($value), ['true', 'false'], true)) {
+                    if (\in_array(strtolower($value), ['true', 'false'], true)) {
                         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
                     }
 
