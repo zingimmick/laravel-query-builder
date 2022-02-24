@@ -125,25 +125,30 @@ class Filter
         }
 
         return collect(explode($this->delimiter, $value))
-            ->map(function ($value) use ($cast) {
-                if ($cast === CastType::STRING) {
-                    return (string) $value;
-                }
-                if ($cast === CastType::INTEGER) {
-                    return (int) $value;
-                }
-                if ($cast === CastType::BOOLEAN) {
-                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                }
-                if (\in_array(strtolower($value), ['true', 'false'], true)) {
-                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                }
-
-                return $value;
-            })
+            ->map($this->castUsing($cast))
             ->whenNotEmpty(function (Collection $collection) {
                 return $collection->count() === 1 ? $collection->first() : $collection->all();
             });
+    }
+
+    protected function castUsing(string $cast): \Closure
+    {
+        return function ($value) use ($cast) {
+            if ($cast === CastType::STRING) {
+                return (string) $value;
+            }
+            if ($cast === CastType::INTEGER) {
+                return (int) $value;
+            }
+            if ($cast === CastType::BOOLEAN) {
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            }
+            if (\in_array(strtolower($value), ['true', 'false'], true)) {
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            }
+
+            return $value;
+        };
     }
 
     /**
