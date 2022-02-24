@@ -119,37 +119,30 @@ class Filter
         if (! \is_string($value)) {
             return $value;
         }
+
         if ($cast === CastType::STRING) {
             return $value;
         }
-        $callback = function ($value) use ($cast) {
-            switch ($cast) {
-                case CastType::STRING:
-                    return (string) $value;
-
-                case CastType::INTEGER:
-                    return (int) $value;
-
-                case CastType::BOOLEAN:
-                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-
-                default:
-                    if (\in_array(strtolower($value), ['true', 'false'], true)) {
-                        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-                    }
-
-                    return $value;
-            }
-        };
 
         return collect(explode($this->delimiter, $value))
-            ->map($callback)
-            ->whenNotEmpty(function (Collection $collection) {
-                if ($collection->count() === 1) {
-                    return $collection->first();
+            ->map(function ($value) use ($cast) {
+                if ($cast === CastType::STRING) {
+                    return (string) $value;
+                }
+                if ($cast === CastType::INTEGER) {
+                    return (int) $value;
+                }
+                if ($cast === CastType::BOOLEAN) {
+                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                }
+                if (\in_array(strtolower($value), ['true', 'false'], true)) {
+                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
                 }
 
-                return $collection->all();
+                return $value;
+            })
+            ->whenNotEmpty(function (Collection $collection) {
+                return $collection->count() === 1 ? $collection->first() : $collection->all();
             });
     }
 
