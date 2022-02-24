@@ -6,7 +6,6 @@ namespace Zing\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Zing\QueryBuilder\Concerns\FilterCreator;
 use Zing\QueryBuilder\Enums\CastType;
 
@@ -117,31 +116,42 @@ class Filter
     protected function castValue($value)
     {
         $cast = $this->getCast();
+        if (! \is_string($value)) {
+            return $value;
+        }
+
         if ($cast === CastType::STRING) {
             return $value;
         }
 
-        if ($cast === CastType::BOOLEAN) {
-            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-        }
+        return collect(explode($this->delimiter, $value))
+            ->map($this->castUsing($cast))
+            ->whenNotEmpty(function (Collection $collection) {
+                return $collection->count() === 1 ? $collection->first() : $collection->all();
+            });
+    }
 
-        if ($cast === CastType::INTEGER) {
-            return filter_var($value, FILTER_VALIDATE_INT);
-        }
+    protected function castUsing(?string $cast): \Closure
+    {
+        return function ($value) use ($cast) {
+            if ($cast === CastType::STRING) {
+                return (string) $value;
+            }
 
-        if ($cast === CastType::ARRAY) {
-            return explode($this->delimiter, $value);
-        }
+            if ($cast === CastType::INTEGER) {
+                return (int) $value;
+            }
 
-        if (\in_array(strtolower($value), ['true', 'false'], true)) {
-            $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-        }
+            if ($cast === CastType::BOOLEAN) {
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            }
 
-        if (Str::contains($value, $this->delimiter)) {
-            $value = explode($this->delimiter, $value);
-        }
+            if (\in_array(strtolower($value), ['true', 'false'], true)) {
+                return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+            }
 
-        return $value;
+            return $value;
+        };
     }
 
     /**
