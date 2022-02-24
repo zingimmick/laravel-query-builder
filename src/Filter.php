@@ -131,7 +131,7 @@ class Filter
             });
     }
 
-    protected function castUsing(string $cast): \Closure
+    protected function castUsing(?string $cast): \Closure
     {
         return function ($value) use ($cast) {
             if ($cast === CastType::STRING) {
