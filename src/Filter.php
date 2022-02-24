@@ -120,6 +120,7 @@ class Filter
             return $value;
         }
 
+        // TODO: should be original
         if ($cast === CastType::STRING) {
             return $value;
         }

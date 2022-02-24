@@ -12,5 +12,9 @@ return new CodeSample(
             '/api/users?is_visible=true',
             'select * from "users" where "is_visible" = true limit 16 offset 0'
         ),
+        new IOSample(
+            '/api/users?is_visible=true,false',
+            'select * from "users" where "is_visible" in (true, false) limit 16 offset 0'
+        ),
     ]
 );

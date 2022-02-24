@@ -163,6 +163,8 @@ use Zing\QueryBuilder\Tests\Models\User;
 
 // uri: /api/users?is_visible=true
 // sql: select * from "users" where "is_visible" = true limit 16 offset 0
+// uri: /api/users?is_visible=true,false
+// sql: select * from "users" where "is_visible" = true limit 16 offset 0
 QueryBuilder::fromBuilder(User::class, $request)
     ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
     ->simplePaginate();
