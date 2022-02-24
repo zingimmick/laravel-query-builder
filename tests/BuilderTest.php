@@ -970,4 +970,88 @@ final class BuilderTest extends TestCase
                 ->toSql()
         );
     }
+
+    public function testCastTypedArray(): void
+    {
+        array_map(
+            function (): void {
+                User::query()->create([
+                    'name' => $this->faker->name(),
+                    'is_visible' => true,
+                ]);
+            },
+            range(1, 2)
+        );
+        array_map(
+            function (): void {
+                User::query()->create([
+                    'name' => $this->faker->name(),
+                    'is_visible' => false,
+                ]);
+            },
+            range(1, 3)
+        );
+        request()
+            ->merge([
+                'is_visible' => 'true,false',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
+            ->count();
+
+        self::assertSame(5, $actual);
+        request()
+            ->merge([
+                'is_visible' => 'true',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible'))
+            ->count();
+
+        self::assertSame(2, $actual);
+        request()
+            ->merge([
+                'is_visible' => 'false',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
+            ->count();
+        self::assertSame(3, $actual);
+        request()
+            ->merge([
+                'is_visible' => 'false',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible'))
+            ->count();
+        self::assertSame(3, $actual);
+
+        request()
+            ->merge([
+                'is_visible' => '0,1',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
+            ->count();
+
+        self::assertSame(5, $actual);
+
+        request()
+            ->merge([
+                'is_visible' => '1',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
+            ->count();
+
+        self::assertSame(2, $actual);
+        request()
+            ->merge([
+                'is_visible' => '0',
+            ]);
+        $actual = QueryBuilder::fromBuilder(User::class, request())
+            ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
+            ->count();
+        self::assertSame(3, $actual);
+    }
 }

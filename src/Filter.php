@@ -6,9 +6,9 @@ namespace Zing\QueryBuilder;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Zing\QueryBuilder\Concerns\FilterCreator;
 use Zing\QueryBuilder\Enums\CastType;
+use function in_array;
 
 class Filter
 {
@@ -117,31 +117,39 @@ class Filter
     protected function castValue($value)
     {
         $cast = $this->getCast();
-        if ($cast === CastType::STRING) {
+
+        if (! is_string($value) || $cast === CastType::STRING) {
             return $value;
         }
+        $callback = function ($value) use ($cast) {
+            switch ($cast) {
+                case CastType::STRING:
+                    return (string) $value;
 
-        if ($cast === CastType::BOOLEAN) {
-            return filter_var($value, FILTER_VALIDATE_BOOLEAN);
-        }
+                case CastType::INTEGER:
+                    return (int) $value;
 
-        if ($cast === CastType::INTEGER) {
-            return filter_var($value, FILTER_VALIDATE_INT);
-        }
+                case CastType::BOOLEAN:
+                    return filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
-        if ($cast === CastType::ARRAY) {
-            return explode($this->delimiter, $value);
-        }
+                default:
+                    if (in_array(strtolower($value), ['true', 'false'], true)) {
+                        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+                    }
 
-        if (\in_array(strtolower($value), ['true', 'false'], true)) {
-            $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
-        }
+                    return $value;
+            }
+        };
 
-        if (Str::contains($value, $this->delimiter)) {
-            $value = explode($this->delimiter, $value);
-        }
+        return collect(explode($this->delimiter, $value))
+            ->map($callback)
+            ->whenNotEmpty(function (Collection $collection) {
+                if ($collection->count() === 1) {
+                    return $collection->first();
+                }
 
-        return $value;
+                return $collection->all();
+            });
     }
 
     /**
