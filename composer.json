@@ -1,6 +1,7 @@
 {
     "name": "zing/laravel-query-builder",
     "description": "Build Eloquent query from request.",
+    "keywords": ["query-builder", "request", "laravel"],
     "license": "MIT",
     "homepage": "https://github.com/zingimmick/laravel-query-builder",
     "support": {
