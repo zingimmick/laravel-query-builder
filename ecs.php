@@ -12,10 +12,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::PARALLEL, true);
-    $parameters->set(Option::SKIP, [
-        // Will be removed in a future major version.
-        \SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSniff::class,
-    ]);
     $parameters->set(
         Option::PATHS,
         [

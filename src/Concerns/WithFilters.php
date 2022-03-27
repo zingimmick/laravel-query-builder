@@ -24,10 +24,8 @@ trait WithFilters
 
     /**
      * @param array<(string|\Zing\QueryBuilder\Filter)> $filters
-     *
-     * @return \Illuminate\Support\Collection
      */
-    protected function formatFilters(array $filters)
+    protected function formatFilters(array $filters): Collection
     {
         return collect($filters)->map(
             function ($filter): Filter {
@@ -58,10 +56,7 @@ trait WithFilters
         );
     }
 
-    /**
-     * @return bool
-     */
-    protected function isRequestedFilter(Filter $filter)
+    protected function isRequestedFilter(Filter $filter): bool
     {
         return $this->request->has($filter->getProperty());
     }

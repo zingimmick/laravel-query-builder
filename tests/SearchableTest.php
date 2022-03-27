@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
@@ -32,7 +33,7 @@ final class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                function ($query, $search): \Illuminate\Database\Eloquent\Builder {
+                function ($query, $search): Builder {
                     return $query->where(
                         function ($query) use ($search) {
                             return $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
@@ -41,7 +42,7 @@ final class SearchableTest extends TestCase
                     );
                 }
             )
-            ->when(request()->input('a'), function ($query, $value): \Illuminate\Database\Eloquent\Builder {
+            ->when(request()->input('a'), function ($query, $value): Builder {
                 return $query->where('a', $value);
             })
             ->toSql();
@@ -173,7 +174,7 @@ final class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                function ($query, $search): \Illuminate\Database\Eloquent\Builder {
+                function ($query, $search): Builder {
                     return $query->where(
                         function ($query) use ($search) {
                             return $query->orWhere(function ($query) use ($search) {

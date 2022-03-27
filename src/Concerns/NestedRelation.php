@@ -12,7 +12,7 @@ trait NestedRelation
     /**
      * @return array{string, string}
      */
-    protected function resolveNestedRelation(string $property)
+    protected function resolveNestedRelation(string $property): array
     {
         return collect(explode('.', $property))
             ->pipe(

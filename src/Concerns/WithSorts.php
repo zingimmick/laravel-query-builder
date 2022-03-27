@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Concerns;
 
+use Illuminate\Support\Collection;
 use Zing\QueryBuilder\Sort;
 
 trait WithSorts
@@ -36,10 +37,7 @@ trait WithSorts
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    protected function isRequestedSort(Sort $sort)
+    protected function isRequestedSort(Sort $sort): bool
     {
         if ($this->request->input('asc') === $sort->getProperty()) {
             return true;
@@ -48,10 +46,7 @@ trait WithSorts
         return $this->request->input('desc') === $sort->getProperty();
     }
 
-    /**
-     * @return string
-     */
-    protected function getSortValue(Sort $sort)
+    protected function getSortValue(Sort $sort): string
     {
         if ($this->request->input('desc') === $sort->getProperty()) {
             return 'desc';
@@ -64,10 +59,8 @@ trait WithSorts
      * @phpstan-param array<(string|\Zing\QueryBuilder\Sort)> $sorts
      *
      * @param mixed $sorts
-     *
-     * @return \Illuminate\Support\Collection
      */
-    protected function formatSorts($sorts)
+    protected function formatSorts($sorts): Collection
     {
         return collect($sorts)->map(
             function ($sort, $key): Sort {
