@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
+use Illuminate\Database\Eloquent\Builder;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
@@ -33,7 +34,7 @@ final class FilterTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): \Illuminate\Database\Eloquent\Builder {
+                function ($query, $value): Builder {
                     $value = explode('|', $value);
 
                     return $query->whereIn('name', $value);
