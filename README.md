@@ -13,7 +13,7 @@
 <a href="https://app.fossa.com/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder.svg?type=shield"/></a>
 </p>
 
-> **Requires [PHP 7.2.0+](https://php.net/releases/)**
+> **Requires [PHP 7.3.0+](https://php.net/releases/)**
 
 Require Laravel Query Builder using [Composer](https://getcomposer.org):
 
