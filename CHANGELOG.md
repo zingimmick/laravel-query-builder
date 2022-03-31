@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.7.1 - 2022-03-26
+
+## What's Changed
+
+- Bump shivammathur/setup-php from 2.17.0 to 2.17.1 by @dependabot in https://github.com/zingimmick/laravel-query-builder/pull/169
+- Bump actions/checkout from 2.4.0 to 3 by @dependabot in https://github.com/zingimmick/laravel-query-builder/pull/168
+- Enable parallel run for rector by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/170
+- Bump EndBug/add-and-commit from 8 to 9 by @dependabot in https://github.com/zingimmick/laravel-query-builder/pull/171
+
+**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/1.7.0...1.7.1
+
 ## 1.7.0 - 2022-02-24
 
 ## What's Changed
