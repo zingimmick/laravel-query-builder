@@ -28,8 +28,6 @@ trait WithSorts
 
                     if ($sort->hasDefaultDirection()) {
                         $sort->sort($this->getBuilder(), $sort->getDefaultDirection());
-
-                        return;
                     }
                 }
             );
