@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.7.2 - 2022-04-16
 
-**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/2.0.0...1.7.2
+**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/1.7.1...1.7.2
 
 ## 1.7.1 - 2022-03-26
 
