@@ -392,7 +392,7 @@ final class BuilderTest extends TestCase
             'name' => '1,2',
         ]);
         $actual = QueryBuilder::fromBuilder(User::class, request())
-            ->enableFilters(Filter::partial('name')->withCast(CastType::STRING))
+            ->enableFilters(Filter::partial('name')->withCast(CastType::ORIGINAL))
             ->toSql();
         $expected = User::query()
             ->when(

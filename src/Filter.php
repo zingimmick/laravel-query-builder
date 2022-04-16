@@ -120,8 +120,7 @@ class Filter
             return $value;
         }
 
-        // @todo: should be original
-        if ($cast === CastType::STRING) {
+        if ($cast === CastType::ORIGINAL) {
             return $value;
         }
 

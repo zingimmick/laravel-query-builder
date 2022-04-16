@@ -8,5 +8,5 @@ use Zing\QueryBuilder\QueryBuilder;
 use Zing\QueryBuilder\Tests\Models\Order;
 
 QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
+    ->enableFilters(Filter::partial('content')->withCast(CastType::ORIGINAL))
     ->simplePaginate();
