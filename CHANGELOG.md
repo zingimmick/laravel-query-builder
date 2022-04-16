@@ -9,17 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/2.0.0...1.7.2
 
-## 2.0.0 - 2022-04-15
-
-## What's Changed
-
-- Add return type hint by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/172
-- Bump minimum version of PHP to 7.3 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/173
-- Bump codecov/codecov-action from 2.1.0 to 3 by @dependabot in https://github.com/zingimmick/laravel-query-builder/pull/174
-- Bump shivammathur/setup-php from 2.18.0 to 2.18.1 by @dependabot in https://github.com/zingimmick/laravel-query-builder/pull/175
-
-**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/1.7.1...2.0.0
-
 ## 1.7.1 - 2022-03-26
 
 ## What's Changed
