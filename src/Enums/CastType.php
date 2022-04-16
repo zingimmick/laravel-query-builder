@@ -6,7 +6,11 @@ namespace Zing\QueryBuilder\Enums;
 
 class CastType
 {
-    public const ORIGINAL='original';
+    /**
+     * @var string
+     */
+    public const ORIGINAL = 'original';
+
     /**
      * @var string
      */
