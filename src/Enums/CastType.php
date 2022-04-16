@@ -9,6 +9,11 @@ class CastType
     /**
      * @var string
      */
+    public const ORIGINAL = 'original';
+
+    /**
+     * @var string
+     */
     public const STRING = 'string';
 
     /**

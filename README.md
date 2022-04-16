@@ -179,7 +179,7 @@ use Zing\QueryBuilder\Tests\Models\Order;
 // uri: /api/orders?content=code,and
 // sql: select * from "orders" where "content" like "%code,and%" limit 16 offset 0
 QueryBuilder::fromBuilder(Order::class, $request)
-    ->enableFilters(Filter::partial('content')->withCast(CastType::STRING))
+    ->enableFilters(Filter::partial('content')->withCast(CastType::ORIGINAL))
     ->simplePaginate();
 ```
 
