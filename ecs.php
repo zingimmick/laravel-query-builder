@@ -8,10 +8,9 @@ use Zing\CodingStandard\Set\ECSSetList;
 
 return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->sets([ECSSetList::PHP_73, ECSSetList::CUSTOM]);
-    $parameters = $ecsConfig->parameters();
     $ecsConfig->parallel();
-    $parameters->set(
-        Option::PATHS,
+    $ecsConfig->paths(
+        
         [
             __DIR__ . '/bin',
             __DIR__ . '/samples',
