@@ -1,5 +1,7 @@
 # Laravel Query Builder
 
+![Code snippet](./docs/snippet.png)
+
 <p align="center">
 <a href="https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml"><img src="https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml/badge.svg?branch=2.x" alt="Build Status"></a>
 <a href="https://codecov.io/gh/zingimmick/laravel-query-builder"><img src="https://codecov.io/gh/zingimmick/laravel-query-builder/branch/2.x/graph/badge.svg" alt="Code Coverage" /></a>
