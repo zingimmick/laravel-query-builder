@@ -137,12 +137,15 @@ class Filter
             if ($cast === CastType::STRING) {
                 return (string) $value;
             }
+
             if ($cast === CastType::INTEGER) {
                 return (int) $value;
             }
+
             if ($cast === CastType::BOOLEAN) {
                 return filter_var($value, FILTER_VALIDATE_BOOLEAN);
             }
+
             if (\in_array(strtolower($value), ['true', 'false'], true)) {
                 return filter_var($value, FILTER_VALIDATE_BOOLEAN);
             }

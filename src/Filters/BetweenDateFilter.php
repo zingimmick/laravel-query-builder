@@ -21,6 +21,7 @@ class BetweenDateFilter extends BetweenFilter
                 if (\is_string($dateTime)) {
                     return Carbon::parse($dateTime)->format('Y-m-d');
                 }
+
                 if ($dateTime instanceof DateTimeInterface) {
                     return $dateTime->format('Y-m-d');
                 }

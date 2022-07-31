@@ -50,6 +50,7 @@ final class SampleTest extends TestCase
                     if (\is_bool($value)) {
                         return $value ? 'true' : 'false';
                     }
+
                     if ($value !== '*') {
                         return '"' . str_replace('"', '""', $value) . '"';
                     }

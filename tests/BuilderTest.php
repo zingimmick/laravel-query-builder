@@ -751,6 +751,7 @@ final class BuilderTest extends TestCase
                     if ($startAt->toDateString() === $min) {
                         $startAt->startOfDay();
                     }
+
                     $endAt = Carbon::parse($max);
                     if ($endAt->toDateString() === $max) {
                         $endAt->endOfDay();
@@ -784,6 +785,7 @@ final class BuilderTest extends TestCase
                     } else {
                         $startAt = $min;
                     }
+
                     if (\is_string($max)) {
                         $endAt = Carbon::parse($max);
                         if ($endAt->toDateString() === $max) {
@@ -817,10 +819,8 @@ final class BuilderTest extends TestCase
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            static function ($dateTime) {
-                                if (\is_string($dateTime)) {
-                                    return Carbon::parse($dateTime)->format('Y-m-d');
-                                }
+                            static function ($dateTime): string {
+                                return Carbon::parse($dateTime)->format('Y-m-d');
                             },
                             $value
                         )
@@ -852,6 +852,7 @@ final class BuilderTest extends TestCase
                                 if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
+
                                 if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
@@ -886,6 +887,7 @@ final class BuilderTest extends TestCase
                                 if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
+
                                 if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
