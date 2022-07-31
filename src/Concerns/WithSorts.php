@@ -61,11 +61,10 @@ trait WithSorts
     protected function formatSorts($sorts): Collection
     {
         return collect($sorts)->map(
-            function ($sort, $key): Sort {
+            static function ($sort, $key): Sort {
                 if ($sort instanceof Sort) {
                     return $sort;
                 }
-
                 if (\is_string($key)) {
                     return Sort::field($key, $sort);
                 }

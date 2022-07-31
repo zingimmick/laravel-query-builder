@@ -52,7 +52,7 @@ trait WithSearchable
                                 throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
                             }
 
-                            $query->orWhere(function ($query) use ($value, $search): void {
+                            $query->orWhere(static function ($query) use ($value, $search): void {
                                 $value->filter($query, $search);
                             });
 
@@ -82,9 +82,9 @@ trait WithSearchable
     {
         return $query->orWhereHas(
             $relation,
-            function (Builder $query) use ($fields, $search): void {
+            static function (Builder $query) use ($fields, $search): void {
                 $query->where(
-                    function (Builder $query) use ($fields, $search): void {
+                    static function (Builder $query) use ($fields, $search): void {
                         foreach ($fields as $field) {
                             $query->orWhere($field, 'like', sprintf('%%%s%%', $search));
                         }

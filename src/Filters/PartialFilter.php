@@ -16,7 +16,7 @@ class PartialFilter extends ExactFilter
     {
         if (\is_array($value)) {
             return $query->where(
-                function ($query) use ($value, $property): void {
+                static function ($query) use ($value, $property): void {
                     foreach ($value as $singleValue) {
                         $query->orWhere($property, 'like', sprintf('%%%s%%', $singleValue));
                     }

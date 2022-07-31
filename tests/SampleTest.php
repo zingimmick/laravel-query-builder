@@ -43,14 +43,13 @@ final class SampleTest extends TestCase
     {
         $request = Request::create($uri);
         self::assertStringEndsWith($request->path(), (string) parse_url($uri, PHP_URL_PATH));
-        DB::listen(function (QueryExecuted $queryExecuted) use ($sql): void {
+        DB::listen(static function (QueryExecuted $queryExecuted) use ($sql): void {
             self::assertSame(
                 $sql,
-                sprintf(str_replace('?', '%s', $queryExecuted->sql), ...array_map(function ($value): string {
+                sprintf(str_replace('?', '%s', $queryExecuted->sql), ...array_map(static function ($value): string {
                     if (\is_bool($value)) {
                         return $value ? 'true' : 'false';
                     }
-
                     if ($value !== '*') {
                         return '"' . str_replace('"', '""', $value) . '"';
                     }

@@ -23,7 +23,7 @@ trait WithTypedFilter
         $property = $this->request->input($type);
         $filterValue = $this->request->input($value);
         $filter = $this->formatFilters($filters)
-            ->filter(function ($filter) use ($property): bool {
+            ->filter(static function ($filter) use ($property): bool {
                 if ($filter->getDefault() !== null) {
                     throw ParameterException::unsupportedFilterWithDefaultValueForTypedFilter();
                 }

@@ -33,7 +33,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), function ($query, $value): Builder {
+            ->when(request()->input('name'), static function ($query, $value): Builder {
                 return $query->where('name', $value);
             })
             ->toSql();
@@ -126,7 +126,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -146,7 +146,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -166,7 +166,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -278,7 +278,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     $value = explode(',', $value);
 
                     return $query->whereIn('name', $value);
@@ -300,13 +300,13 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     $value = explode(',', $value);
 
                     return $query->where(
-                        function ($query) use ($value) {
+                        static function ($query) use ($value) {
                             collect($value)->each(
-                                function ($item) use ($query): void {
+                                static function ($item) use ($query): void {
                                     $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
@@ -336,11 +336,11 @@ final class BuilderTest extends TestCase
                  * @param array<int> $value
                  * @param mixed $query
                  */
-                function ($query, array $value): Builder {
+                static function ($query, array $value): Builder {
                     return $query->where(
-                        function ($query) use ($value) {
+                        static function ($query) use ($value) {
                             collect($value)->each(
-                                function ($item) use ($query): void {
+                                static function ($item) use ($query): void {
                                     $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
@@ -366,13 +366,13 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     $value = explode(',', $value);
 
                     return $query->where(
-                        function ($query) use ($value) {
+                        static function ($query) use ($value) {
                             collect($value)->each(
-                                function ($item) use ($query): void {
+                                static function ($item) use ($query): void {
                                     $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
                                 }
                             );
@@ -398,7 +398,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->where('name', 'like', sprintf('%%%s%%', $value));
                 }
             )
@@ -566,7 +566,7 @@ final class BuilderTest extends TestCase
                 [
                     Filter::callback(
                         'id',
-                        function ($query, $value, string $property) {
+                        static function ($query, $value, string $property) {
                             return $query->where($property, '<', $value);
                         }
                     ),
@@ -579,7 +579,7 @@ final class BuilderTest extends TestCase
                 [
                     Filter::callback(
                         'id',
-                        function ($query, $value, string $property): void {
+                        static function ($query, $value, string $property): void {
                             $query->where($property, '<', $value);
                         }
                     ),
@@ -606,7 +606,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query): Builder {
+            ->when(request()->input('asc'), static function ($query): Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -637,7 +637,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query): Builder {
+            ->when(request()->input('asc'), static function ($query): Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -650,7 +650,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('desc'), function ($query): Builder {
+            ->when(request()->input('desc'), static function ($query): Builder {
                 return $query->orderBy('name', 'desc');
             })
             ->toSql();
@@ -668,7 +668,7 @@ final class BuilderTest extends TestCase
             ])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), function ($query): Builder {
+            ->when(request()->input('asc'), static function ($query): Builder {
                 return $query->orderBy('name');
             })
             ->toSql();
@@ -687,7 +687,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('id'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->whereBetween('id', explode(',', $value));
                 }
             )
@@ -717,11 +717,11 @@ final class BuilderTest extends TestCase
         $expected = Order::query()
             ->whereHas(
                 'user',
-                function ($query) {
+                static function ($query) {
                     return $query->when(
                         request()
                             ->input('user_id'),
-                        function ($query, $value) {
+                        static function ($query, $value) {
                             return $query->whereBetween(
                                 User::query()->getModel()->qualifyColumn('id'),
                                 explode(',', $value)
@@ -745,20 +745,15 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     [$min, $max] = explode(',', $value);
-                    if (\is_string($min)) {
-                        $startAt = Carbon::parse($min);
-                        if ($startAt->toDateString() === $min) {
-                            $startAt->startOfDay();
-                        }
+                    $startAt = Carbon::parse($min);
+                    if ($startAt->toDateString() === $min) {
+                        $startAt->startOfDay();
                     }
-
-                    if (\is_string($max)) {
-                        $endAt = Carbon::parse($max);
-                        if ($endAt->toDateString() === $max) {
-                            $endAt->endOfDay();
-                        }
+                    $endAt = Carbon::parse($max);
+                    if ($endAt->toDateString() === $max) {
+                        $endAt->endOfDay();
                     }
 
                     return $query->whereBetween('created_at', [$startAt, $endAt]);
@@ -779,7 +774,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     [$min, $max] = $value;
                     if (\is_string($min)) {
                         $startAt = Carbon::parse($min);
@@ -789,7 +784,6 @@ final class BuilderTest extends TestCase
                     } else {
                         $startAt = $min;
                     }
-
                     if (\is_string($max)) {
                         $endAt = Carbon::parse($max);
                         if ($endAt->toDateString() === $max) {
@@ -817,13 +811,13 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     $value = explode(',', $value);
 
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            function ($dateTime) {
+                            static function ($dateTime) {
                                 if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
@@ -850,15 +844,14 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            function ($dateTime) {
+                            static function ($dateTime) {
                                 if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
-
                                 if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
@@ -885,15 +878,14 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            function ($dateTime) {
+                            static function ($dateTime) {
                                 if (\is_string($dateTime)) {
                                     return Carbon::parse($dateTime)->format('Y-m-d');
                                 }
-
                                 if ($dateTime instanceof DateTimeInterface) {
                                     return $dateTime->format('Y-m-d');
                                 }
