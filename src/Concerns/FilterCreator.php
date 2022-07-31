@@ -163,7 +163,7 @@ trait FilterCreator
      */
     public static function boolean(string $property, callable $callback, ?callable $default = null): self
     {
-        return self::callback($property, function (Builder $query, $value, $property) use ($callback, $default) {
+        return self::callback($property, static function (Builder $query, $value, $property) use ($callback, $default) {
             return $query->when($value, $callback, $default);
         });
     }

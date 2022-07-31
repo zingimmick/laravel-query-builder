@@ -34,7 +34,7 @@ final class FilterTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                function ($query, $value): Builder {
+                static function ($query, $value): Builder {
                     $value = explode('|', $value);
 
                     return $query->whereIn('name', $value);
@@ -98,8 +98,8 @@ final class FilterTest extends TestCase
     {
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::exact('name')->default('foo')]);
-        $expected = User::query()->where(function ($query) {
-            return $query->where(function ($query) {
+        $expected = User::query()->where(static function ($query) {
+            return $query->where(static function ($query) {
                 return $query->where('name', 'foo');
             });
         });
@@ -113,10 +113,10 @@ final class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
-            ->where(function ($query) {
-                return $query->orWhere(function ($query) {
+            ->where(static function ($query) {
+                return $query->orWhere(static function ($query) {
                     return $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')));
-                })->orWhere(function ($query) {
+                })->orWhere(static function ($query) {
                     return $query->where('name', 'like', sprintf('%%%s%%', request()->input('name')));
                 });
             });

@@ -31,7 +31,7 @@ class CodeSample
     {
         return sprintf("```php\n%s```" . PHP_EOL, str_replace(
             PHP_EOL . PHP_EOL,
-            PHP_EOL . PHP_EOL . $this->ioSamples->map(function ($ioSample): string {
+            PHP_EOL . PHP_EOL . $this->ioSamples->map(static function ($ioSample): string {
                 return implode('', [
                     sprintf('// uri: %s' . PHP_EOL, $ioSample->uri),
                     sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),

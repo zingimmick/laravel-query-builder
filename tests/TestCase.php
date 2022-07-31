@@ -68,7 +68,7 @@ abstract class TestCase extends BaseTestCase
     {
         DB::connection()->getSchemaBuilder()->create(
             'users',
-            function (Blueprint $table): void {
+            static function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->string('name');
                 $table->boolean('is_visible')
@@ -78,7 +78,7 @@ abstract class TestCase extends BaseTestCase
         );
         DB::connection()->getSchemaBuilder()->create(
             'orders',
-            function (Blueprint $table): void {
+            static function (Blueprint $table): void {
                 $table->bigIncrements('id');
                 $table->unsignedBigInteger('user_id')
                     ->index();

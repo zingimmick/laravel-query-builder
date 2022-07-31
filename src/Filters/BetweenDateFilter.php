@@ -17,7 +17,7 @@ class BetweenDateFilter extends BetweenFilter
     public function apply(Builder $query, $value, $property): Builder
     {
         $value = array_map(
-            function ($dateTime) {
+            static function ($dateTime) {
                 if (\is_string($dateTime)) {
                     return Carbon::parse($dateTime)->format('Y-m-d');
                 }

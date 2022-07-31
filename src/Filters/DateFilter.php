@@ -16,7 +16,7 @@ class DateFilter extends ExactFilter
      */
     protected function withPropertyConstraint(Builder $query, $value, $property): Builder
     {
-        $formatter = function ($value) {
+        $formatter = static function ($value) {
             return $value instanceof DateTimeInterface ? $value->format('Y-m-d') : $value;
         };
         if (\is_array($value)) {

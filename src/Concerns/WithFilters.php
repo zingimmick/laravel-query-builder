@@ -28,7 +28,7 @@ trait WithFilters
     protected function formatFilters(array $filters): Collection
     {
         return collect($filters)->map(
-            function ($filter): Filter {
+            static function ($filter): Filter {
                 if ($filter instanceof Filter) {
                     return $filter;
                 }
