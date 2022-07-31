@@ -46,7 +46,7 @@ trait FilterCreator
     /**
      * @var string|null
      */
-    protected $cast;
+    protected $cast ;
 
     /**
      * @phpstan-var non-empty-string
