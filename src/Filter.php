@@ -11,7 +11,7 @@ use Zing\QueryBuilder\Enums\CastType;
 
 class Filter
 {
-    use FilterCreator;
+    use FilterCreator ;
 
     /**
      * @param mixed $value
