@@ -105,7 +105,8 @@ trait WithSearchable
         foreach ($searchable as $singleSearchable) {
             if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
-
+                $results[$relation] = $results[$relation] ?? [];
+                \assert(\is_array($results[$relation]));
                 $results[$relation][] = $property;
             } else {
                 $results[] = $singleSearchable;
