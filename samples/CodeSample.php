@@ -9,11 +9,6 @@ use function collect;
 class CodeSample
 {
     /**
-     * @var string
-     */
-    public $code;
-
-    /**
      * @var \Illuminate\Support\Collection<int|string, \Zing\QueryBuilder\Samples\IOSample>
      */
     public $ioSamples;
@@ -21,9 +16,10 @@ class CodeSample
     /**
      * @param \Zing\QueryBuilder\Samples\IOSample[] $ioSamples
      */
-    public function __construct(string $code, array $ioSamples)
-    {
-        $this->code = $code;
+    public function __construct(
+        public string $code,
+        array $ioSamples
+    ) {
         $this->ioSamples = collect($ioSamples);
     }
 
@@ -31,12 +27,10 @@ class CodeSample
     {
         return sprintf("```php\n%s```" . PHP_EOL, str_replace(
             PHP_EOL . PHP_EOL,
-            PHP_EOL . PHP_EOL . $this->ioSamples->map(static function ($ioSample): string {
-                return implode('', [
-                    sprintf('// uri: %s' . PHP_EOL, $ioSample->uri),
-                    sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),
-                ]);
-            })->implode(''),
+            PHP_EOL . PHP_EOL . $this->ioSamples->map(static fn ($ioSample): string => implode('', [
+                sprintf('// uri: %s' . PHP_EOL, $ioSample->uri),
+                sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),
+            ]))->implode(''),
             str_replace('<?php
 
 declare(strict_types=1);

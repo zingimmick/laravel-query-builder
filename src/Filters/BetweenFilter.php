@@ -11,10 +11,12 @@ class BetweenFilter extends ExactFilter
 {
     /**
      * @param mixed $value
-     * @param \Illuminate\Database\Query\Expression|string $property
      */
-    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
-    {
+    protected function withPropertyConstraint(
+        Builder $query,
+        $value,
+        \Illuminate\Database\Query\Expression|string $property
+    ): Builder {
         if (! \is_array($value) || \count($value) !== 2) {
             throw ParameterException::tooFewElementsForBetweenExpression();
         }

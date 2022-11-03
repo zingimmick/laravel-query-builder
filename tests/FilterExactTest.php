@@ -161,11 +161,12 @@ final class FilterExactTest extends TestCase
         self::assertSame(
             2,
             QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::boolean('is_today', static function ($query) {
-                    return $query->whereDate('created_at', Carbon::yesterday());
-                }, static function ($query) {
-                    return $query->whereDate('created_at', '!=', Carbon::yesterday());
-                }))
+                ->enableFilters(
+                    Filter::boolean('is_today', static fn ($query) => $query->whereDate(
+                        'created_at',
+                        Carbon::yesterday()
+                    ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
+                )
                 ->count()
         );
         request()
@@ -175,11 +176,12 @@ final class FilterExactTest extends TestCase
         self::assertSame(
             3,
             QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::boolean('is_today', static function ($query) {
-                    return $query->whereDate('created_at', Carbon::yesterday());
-                }, static function ($query) {
-                    return $query->whereDate('created_at', '!=', Carbon::yesterday());
-                }))
+                ->enableFilters(
+                    Filter::boolean('is_today', static fn ($query) => $query->whereDate(
+                        'created_at',
+                        Carbon::yesterday()
+                    ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
+                )
                 ->count()
         );
     }

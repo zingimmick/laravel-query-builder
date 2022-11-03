@@ -18,7 +18,7 @@ trait WithSearchable
      *
      * @return $this
      */
-    public function searchable($searchable)
+    public function searchable(string|Filter|array $searchable)
     {
         $searchable = \is_array($searchable) ? $searchable : \func_get_args();
         $search = $this->request->input('search');
@@ -36,12 +36,11 @@ trait WithSearchable
     }
 
     /**
-     * @param mixed $search
      * @param array<(int|string), (string|array<string>|\Zing\QueryBuilder\Filter)> $searchable
      *
      * @return $this
      */
-    protected function applySearchable($search, array $searchable = [])
+    protected function applySearchable(mixed $search, array $searchable = [])
     {
         $this->where(
             function (Builder $query) use ($search, $searchable): void {
@@ -76,9 +75,8 @@ trait WithSearchable
 
     /**
      * @param array<string> $fields
-     * @param mixed $search
      */
-    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, $search): Builder
+    protected function applyRelationSearchable(Builder $query, string $relation, array $fields, mixed $search): Builder
     {
         return $query->orWhereHas(
             $relation,
@@ -105,7 +103,7 @@ trait WithSearchable
         foreach ($searchable as $singleSearchable) {
             if (! $singleSearchable instanceof Filter && Str::contains($singleSearchable, '.')) {
                 [$relation, $property] = $this->resolveNestedRelation($singleSearchable);
-                $results[$relation] = $results[$relation] ?? [];
+                $results[$relation] ??= [];
                 \assert(\is_array($results[$relation]));
                 $results[$relation][] = $property;
             } else {

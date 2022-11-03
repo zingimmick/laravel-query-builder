@@ -14,7 +14,7 @@ trait WithFilters
      *
      * @return $this
      */
-    public function enableFilters($filters)
+    public function enableFilters(array|string|Filter $filters)
     {
         $filters = \is_array($filters) ? $filters : \func_get_args();
         $this->applyFilters($this->formatFilters($filters));
@@ -61,10 +61,7 @@ trait WithFilters
         return $this->request->has($filter->getProperty());
     }
 
-    /**
-     * @return mixed
-     */
-    protected function getFilterValue(Filter $filter)
+    protected function getFilterValue(Filter $filter): mixed
     {
         return $this->request->input($filter->getProperty());
     }

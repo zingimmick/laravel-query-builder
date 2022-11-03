@@ -19,14 +19,8 @@ class ExactFilter implements Filter
      */
     protected $relationConstraints = [];
 
-    /**
-     * @var bool
-     */
-    protected $autoRelationConstraints = true;
-
-    public function __construct(bool $autoRelationConstraints = true)
+    public function __construct(protected bool $autoRelationConstraints = true)
     {
-        $this->autoRelationConstraints = $autoRelationConstraints;
     }
 
     /**
@@ -48,9 +42,8 @@ class ExactFilter implements Filter
 
     /**
      * @param mixed $value
-     * @param \Illuminate\Database\Query\Expression|string $property
      */
-    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
+    protected function withPropertyConstraint(Builder $query, $value, Expression|string $property): Builder
     {
         if (\is_array($value)) {
             return $query->whereIn($property, $value);
@@ -72,10 +65,7 @@ class ExactFilter implements Filter
         return ! Str::startsWith($property, $query->getModel()->getTable() . '.');
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function withRelationConstraint(Builder $query, $value, string $property): Builder
+    protected function withRelationConstraint(Builder $query, mixed $value, string $property): Builder
     {
         [$relation, $property] = $this->resolveNestedRelation($property);
 

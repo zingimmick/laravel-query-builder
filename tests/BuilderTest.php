@@ -33,9 +33,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('name'))
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('name'), static function ($query, $value): Builder {
-                return $query->where('name', $value);
-            })
+            ->when(request()->input('name'), static fn ($query, $value): Builder => $query->where('name', $value))
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -126,9 +124,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static function ($query, $value): Builder {
-                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
-                }
+                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -146,9 +142,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static function ($query, $value): Builder {
-                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
-                }
+                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -166,9 +160,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static function ($query, $value): Builder {
-                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
-                }
+                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -336,19 +328,17 @@ final class BuilderTest extends TestCase
                  * @param array<int> $value
                  * @param mixed $query
                  */
-                static function ($query, array $value): Builder {
-                    return $query->where(
-                        static function ($query) use ($value) {
-                            collect($value)->each(
-                                static function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
-                                }
-                            );
+                static fn (mixed $query, array $value): Builder => $query->where(
+                    static function ($query) use ($value) {
+                        collect($value)->each(
+                            static function ($item) use ($query): void {
+                                $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
+                            }
+                        );
 
-                            return $query;
-                        }
-                    );
-                }
+                        return $query;
+                    }
+                )
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -398,9 +388,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static function ($query, $value): Builder {
-                    return $query->where('name', 'like', sprintf('%%%s%%', $value));
-                }
+                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -566,9 +554,7 @@ final class BuilderTest extends TestCase
                 [
                     Filter::callback(
                         'id',
-                        static function ($query, $value, string $property) {
-                            return $query->where($property, '<', $value);
-                        }
+                        static fn ($query, $value, string $property) => $query->where($property, '<', $value)
                     ),
                 ]
             )
@@ -606,9 +592,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), static function ($query): Builder {
-                return $query->orderBy('name');
-            })
+            ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -637,9 +621,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), static function ($query): Builder {
-                return $query->orderBy('name');
-            })
+            ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
         self::assertSame($expected, $actual);
         request()
@@ -650,9 +632,7 @@ final class BuilderTest extends TestCase
             ->enableSorts(['name'])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('desc'), static function ($query): Builder {
-                return $query->orderBy('name', 'desc');
-            })
+            ->when(request()->input('desc'), static fn ($query): Builder => $query->orderBy('name', 'desc'))
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -668,9 +648,7 @@ final class BuilderTest extends TestCase
             ])
             ->toSql();
         $expected = User::query()
-            ->when(request()->input('asc'), static function ($query): Builder {
-                return $query->orderBy('name');
-            })
+            ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -687,9 +665,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('id'),
-                static function ($query, $value): Builder {
-                    return $query->whereBetween('id', explode(',', $value));
-                }
+                static fn ($query, $value): Builder => $query->whereBetween('id', explode(',', $value))
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -717,18 +693,14 @@ final class BuilderTest extends TestCase
         $expected = Order::query()
             ->whereHas(
                 'user',
-                static function ($query) {
-                    return $query->when(
-                        request()
-                            ->input('user_id'),
-                        static function ($query, $value) {
-                            return $query->whereBetween(
-                                User::query()->getModel()->qualifyColumn('id'),
-                                explode(',', $value)
-                            );
-                        }
-                    );
-                }
+                static fn ($query) => $query->when(
+                    request()
+                        ->input('user_id'),
+                    static fn ($query, $value) => $query->whereBetween(
+                        User::query()->getModel()->qualifyColumn('id'),
+                        explode(',', $value)
+                    )
+                )
             )
             ->toSql();
         self::assertSame($expected, $actual);
@@ -819,9 +791,7 @@ final class BuilderTest extends TestCase
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            static function ($dateTime): string {
-                                return Carbon::parse($dateTime)->format('Y-m-d');
-                            },
+                            static fn ($dateTime): string => Carbon::parse($dateTime)->format('Y-m-d'),
                             $value
                         )
                     );
@@ -844,25 +814,23 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                static function ($query, $value): Builder {
-                    return $query->whereBetween(
-                        'created_at',
-                        array_map(
-                            static function ($dateTime) {
-                                if (\is_string($dateTime)) {
-                                    return Carbon::parse($dateTime)->format('Y-m-d');
-                                }
+                static fn ($query, $value): Builder => $query->whereBetween(
+                    'created_at',
+                    array_map(
+                        static function ($dateTime) {
+                            if (\is_string($dateTime)) {
+                                return Carbon::parse($dateTime)->format('Y-m-d');
+                            }
 
-                                if ($dateTime instanceof DateTimeInterface) {
-                                    return $dateTime->format('Y-m-d');
-                                }
+                            if ($dateTime instanceof DateTimeInterface) {
+                                return $dateTime->format('Y-m-d');
+                            }
 
-                                return $dateTime;
-                            },
-                            $value
-                        )
-                    );
-                }
+                            return $dateTime;
+                        },
+                        $value
+                    )
+                )
             );
         self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
         self::assertSame($expected->toSql(), $actual->toSql());
@@ -879,25 +847,23 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('created_between'),
-                static function ($query, $value): Builder {
-                    return $query->whereBetween(
-                        'created_at',
-                        array_map(
-                            static function ($dateTime) {
-                                if (\is_string($dateTime)) {
-                                    return Carbon::parse($dateTime)->format('Y-m-d');
-                                }
+                static fn ($query, $value): Builder => $query->whereBetween(
+                    'created_at',
+                    array_map(
+                        static function ($dateTime) {
+                            if (\is_string($dateTime)) {
+                                return Carbon::parse($dateTime)->format('Y-m-d');
+                            }
 
-                                if ($dateTime instanceof DateTimeInterface) {
-                                    return $dateTime->format('Y-m-d');
-                                }
+                            if ($dateTime instanceof DateTimeInterface) {
+                                return $dateTime->format('Y-m-d');
+                            }
 
-                                return $dateTime;
-                            },
-                            $value
-                        )
-                    );
-                }
+                            return $dateTime;
+                        },
+                        $value
+                    )
+                )
             );
         self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
         self::assertSame($expected->toSql(), $actual->toSql());

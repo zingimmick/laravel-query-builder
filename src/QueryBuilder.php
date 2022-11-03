@@ -30,29 +30,16 @@ class QueryBuilder
     use WithTypedFilter;
 
     /**
-     * @var \Illuminate\Http\Request
-     */
-    protected $request;
-
-    /**
-     * @var \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation
-     */
-    protected $builder;
-
-    /**
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
      * @param \Illuminate\Http\Request $request
      */
-    public function __construct($builder, $request)
-    {
-        $this->builder = $builder;
-        $this->request = $request;
+    public function __construct(
+        protected $builder,
+        protected $request
+    ) {
     }
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation|string $baseQuery
-     */
-    public static function fromBuilder($baseQuery, Request $request): self
+    public static function fromBuilder(Builder|Relation|string $baseQuery, Request $request): self
     {
         if (is_subclass_of($baseQuery, Model::class)) {
             $baseQuery = forward_static_call([$baseQuery, 'query']);
@@ -72,10 +59,8 @@ class QueryBuilder
 
     /**
      * @param string $name
-     *
-     * @return \Illuminate\Database\Eloquent\HigherOrderBuilderProxy|mixed
      */
-    public function __get($name)
+    public function __get($name): mixed
     {
         return $this->builder->{$name};
     }

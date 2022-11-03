@@ -98,11 +98,9 @@ final class FilterTest extends TestCase
     {
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::exact('name')->default('foo')]);
-        $expected = User::query()->where(static function ($query) {
-            return $query->where(static function ($query) {
-                return $query->where('name', 'foo');
-            });
-        });
+        $expected = User::query()->where(
+            static fn ($query) => $query->where(static fn ($query) => $query->where('name', 'foo'))
+        );
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
         request()
@@ -113,13 +111,15 @@ final class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFlaggedFilter([Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
-            ->where(static function ($query) {
-                return $query->orWhere(static function ($query) {
-                    return $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')));
-                })->orWhere(static function ($query) {
-                    return $query->where('name', 'like', sprintf('%%%s%%', request()->input('name')));
-                });
-            });
+            ->where(
+                static fn ($query) => $query->orWhere(
+                    static fn ($query) => $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')))
+                )->orWhere(static fn ($query) => $query->where(
+                    'name',
+                    'like',
+                    sprintf('%%%s%%', request()->input('name'))
+                ))
+            );
         self::assertSame($expected->toSql(), $actual->toSql());
         self::assertSame($expected->getBindings(), $actual->getBindings());
     }

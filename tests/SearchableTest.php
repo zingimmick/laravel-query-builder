@@ -33,18 +33,12 @@ final class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                static function ($query, $search): Builder {
-                    return $query->where(
-                        static function ($query) use ($search) {
-                            return $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
-                                ->orWhere('c', 'like', sprintf('%%%s%%', $search));
-                        }
-                    );
-                }
+                static fn ($query, $search): Builder => $query->where(
+                    static fn ($query) => $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
+                        ->orWhere('c', 'like', sprintf('%%%s%%', $search))
+                )
             )
-            ->when(request()->input('a'), static function ($query, $value): Builder {
-                return $query->where('a', $value);
-            })
+            ->when(request()->input('a'), static fn ($query, $value): Builder => $query->where('a', $value))
             ->toSql();
         self::assertSame($expected, $actual);
     }
@@ -174,16 +168,10 @@ final class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                static function ($query, $search): Builder {
-                    return $query->where(
-                        static function ($query) use ($search) {
-                            return $query->orWhere(static function ($query) use ($search) {
-                                return $query->where('b', $search);
-                            })
-                                ->orWhere('c', 'like', sprintf('%%%s%%', $search));
-                        }
-                    );
-                }
+                static fn ($query, $search): Builder => $query->where(
+                    static fn ($query) => $query->orWhere(static fn ($query) => $query->where('b', $search))
+                        ->orWhere('c', 'like', sprintf('%%%s%%', $search))
+                )
             )
             ->toSql();
         self::assertSame($expected, $actual);

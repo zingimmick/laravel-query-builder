@@ -8,20 +8,12 @@ class QueryConfiguration
 {
     /**
      * @phpstan-var non-empty-string
-     *
-     * @var string
      */
-    private static $delimiter = ',';
+    private static string $delimiter = ',';
 
-    /**
-     * @var int
-     */
-    private static $perPage = 15;
+    private static int $perPage = 15;
 
-    /**
-     * @var string
-     */
-    private static $pageName = 'per_page';
+    private static string $pageName = 'per_page';
 
     /**
      * @phpstan-return non-empty-string

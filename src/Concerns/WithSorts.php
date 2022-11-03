@@ -55,10 +55,8 @@ trait WithSorts
 
     /**
      * @phpstan-param array<(string|\Zing\QueryBuilder\Sort)> $sorts
-     *
-     * @param mixed $sorts
      */
-    protected function formatSorts($sorts): Collection
+    protected function formatSorts(mixed $sorts): Collection
     {
         return collect($sorts)->map(
             static function ($sort, $key): Sort {

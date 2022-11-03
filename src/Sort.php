@@ -9,35 +9,20 @@ use Zing\QueryBuilder\Sorts\FieldSort;
 
 class Sort
 {
-    /**
-     * @var string
-     */
-    protected $property;
+    protected \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column;
 
-    /**
-     * @var \Zing\QueryBuilder\Contracts\Sort
-     */
-    protected $sort;
-
-    /**
-     * @var \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
-     */
-    protected $column;
-
-    /**
-     * @var string
-     */
-    protected $defaultDirection;
+    protected string $defaultDirection;
 
     /**
      * Sort constructor.
      *
      * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
-    public function __construct(string $property, Contracts\Sort $sort, $column)
-    {
-        $this->property = $property;
-        $this->sort = $sort;
+    public function __construct(
+        protected string $property,
+        protected Contracts\Sort $sort,
+        $column
+    ) {
         $this->column = $column ?? $property;
     }
 
@@ -59,10 +44,7 @@ class Sort
         return $this->property === $property;
     }
 
-    /**
-     * @return \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
-     */
-    public function getColumn()
+    public function getColumn(): \Closure|Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
     {
         return $this->column;
     }

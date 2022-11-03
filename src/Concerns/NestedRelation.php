@@ -16,15 +16,11 @@ trait NestedRelation
     {
         return collect(explode('.', $property))
             ->pipe(
-                static function (Collection $parts): array {
-                    return [
-                        $parts->except([\count($parts) - 1])
-                            ->map(static function (string $value): string {
-                                return Str::camel($value);
-                            })->implode('.'),
-                        $parts->last(),
-                    ];
-                }
+                static fn (Collection $parts): array => [
+                    $parts->except([\count($parts) - 1])
+                        ->map(static fn (string $value): string => Str::camel($value))->implode('.'),
+                    $parts->last(),
+                ]
             );
     }
 }

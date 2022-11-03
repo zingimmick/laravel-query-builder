@@ -12,13 +12,13 @@ class DateFilter extends ExactFilter
 {
     /**
      * @param mixed $value
-     * @param \Illuminate\Database\Query\Expression|string $property
      */
-    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
-    {
-        $formatter = static function ($value) {
-            return $value instanceof DateTimeInterface ? $value->format('Y-m-d') : $value;
-        };
+    protected function withPropertyConstraint(
+        Builder $query,
+        $value,
+        \Illuminate\Database\Query\Expression|string $property
+    ): Builder {
+        $formatter = static fn ($value) => $value instanceof DateTimeInterface ? $value->format('Y-m-d') : $value;
         if (\is_array($value)) {
             $value = array_map($formatter, $value);
 

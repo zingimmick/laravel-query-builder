@@ -6,15 +6,9 @@ namespace Zing\QueryBuilder;
 
 class Paginator
 {
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
-    /**
-     * @var int
-     */
-    private $default;
+    private int $default;
 
     public function __construct(?string $name = null, ?int $default = null)
     {

@@ -13,10 +13,7 @@ class Filter
 {
     use FilterCreator;
 
-    /**
-     * @param mixed $value
-     */
-    public function filter(Builder $query, $value): Builder
+    public function filter(Builder $query, mixed $value): Builder
     {
         $value = $this->resolveValueForFiltering($value);
         if ($value === null) {
@@ -40,10 +37,7 @@ class Filter
         return $this->property === $property;
     }
 
-    /**
-     * @return \Illuminate\Database\Query\Expression|string
-     */
-    public function getColumn()
+    public function getColumn(): \Illuminate\Database\Query\Expression|string
     {
         return $this->column;
     }
@@ -85,20 +79,14 @@ class Filter
         return $this->ignored ?: collect();
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function default($value): self
+    public function default(mixed $value): self
     {
         $this->default = $value;
 
         return $this;
     }
 
-    /**
-     * @return mixed|null
-     */
-    public function getDefault()
+    public function getDefault(): mixed
     {
         return $this->default;
     }
@@ -108,12 +96,7 @@ class Filter
         return $this->default !== null;
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return false|mixed|string[]
-     */
-    protected function castValue($value)
+    protected function castValue(mixed $value): mixed
     {
         $cast = $this->getCast();
         if (! \is_string($value)) {
@@ -126,9 +109,9 @@ class Filter
 
         return collect(explode($this->delimiter, $value))
             ->map($this->castUsing($cast))
-            ->whenNotEmpty(static function (Collection $collection) {
-                return $collection->count() === 1 ? $collection->first() : $collection->all();
-            });
+            ->whenNotEmpty(
+                static fn (Collection $collection) => $collection->count() === 1 ? $collection->first() : $collection->all()
+            );
     }
 
     protected function castUsing(?string $cast): \Closure
@@ -154,12 +137,7 @@ class Filter
         };
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @return mixed[]|mixed|null
-     */
-    protected function resolveValueForFiltering($value)
+    protected function resolveValueForFiltering(mixed $value): mixed
     {
         if (\is_string($value)) {
             $value = $this->castValue($value);

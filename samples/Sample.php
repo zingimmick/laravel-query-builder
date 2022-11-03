@@ -9,32 +9,20 @@ use function collect;
 class Sample
 {
     /**
-     * @var string
-     */
-    public $title;
-
-    /**
-     * @var string
-     */
-    public $subtitle;
-
-    /**
      * @var \Illuminate\Support\Collection<int|string, \Zing\QueryBuilder\Samples\CodeSample>
      */
     public $codeSamples;
 
-    /**
-     * @var string
-     */
-    private $description = '';
+    private string $description = '';
 
     /**
      * @param \Zing\QueryBuilder\Samples\CodeSample[] $codeSamples
      */
-    public function __construct(string $title, string $subtitle, array $codeSamples)
-    {
-        $this->title = $title;
-        $this->subtitle = $subtitle;
+    public function __construct(
+        public string $title,
+        public string $subtitle,
+        array $codeSamples
+    ) {
         $this->codeSamples = collect($codeSamples);
     }
 

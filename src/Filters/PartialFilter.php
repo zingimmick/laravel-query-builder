@@ -10,10 +10,12 @@ class PartialFilter extends ExactFilter
 {
     /**
      * @param mixed $value
-     * @param \Illuminate\Database\Query\Expression|string $property
      */
-    protected function withPropertyConstraint(Builder $query, $value, $property): Builder
-    {
+    protected function withPropertyConstraint(
+        Builder $query,
+        $value,
+        \Illuminate\Database\Query\Expression|string $property
+    ): Builder {
         if (\is_array($value)) {
             return $query->where(
                 static function ($query) use ($value, $property): void {
