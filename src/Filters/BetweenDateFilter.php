@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Filters;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
@@ -22,7 +21,7 @@ class BetweenDateFilter extends BetweenFilter
                     return Carbon::parse($dateTime)->format('Y-m-d');
                 }
 
-                if ($dateTime instanceof DateTimeInterface) {
+                if ($dateTime instanceof \DateTimeInterface) {
                     return $dateTime->format('Y-m-d');
                 }
 

@@ -19,8 +19,9 @@ class ExactFilter implements Filter
      */
     protected $relationConstraints = [];
 
-    public function __construct(protected bool $autoRelationConstraints = true)
-    {
+    public function __construct(
+        protected bool $autoRelationConstraints = true
+    ) {
     }
 
     /**

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Samples;
 
-use function collect;
-
 class CodeSample
 {
     /**
@@ -20,7 +18,7 @@ class CodeSample
         public string $code,
         array $ioSamples
     ) {
-        $this->ioSamples = collect($ioSamples);
+        $this->ioSamples = \collect($ioSamples);
     }
 
     public function print(): string

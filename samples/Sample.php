@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Samples;
 
-use function collect;
-
 class Sample
 {
     /**
@@ -23,7 +21,7 @@ class Sample
         public string $subtitle,
         array $codeSamples
     ) {
-        $this->codeSamples = collect($codeSamples);
+        $this->codeSamples = \collect($codeSamples);
     }
 
     public function description(string $description): self

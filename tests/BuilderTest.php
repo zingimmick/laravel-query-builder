@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Zing\QueryBuilder\Tests;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
-use ReflectionClass;
 use Zing\QueryBuilder\Enums\CastType;
 use Zing\QueryBuilder\Exceptions\ParameterException;
 use Zing\QueryBuilder\Filter;
@@ -578,7 +576,7 @@ final class BuilderTest extends TestCase
     public function testCastInteger(): void
     {
         $filter = Filter::scope('name')->withCast(CastType::INTEGER);
-        $method = (new ReflectionClass($filter))->getMethod('resolveValueForFiltering');
+        $method = (new \ReflectionClass($filter))->getMethod('resolveValueForFiltering');
         $method->setAccessible(true);
         self::assertSame(1, $method->invokeArgs($filter, ['1']));
     }
@@ -822,7 +820,7 @@ final class BuilderTest extends TestCase
                                 return Carbon::parse($dateTime)->format('Y-m-d');
                             }
 
-                            if ($dateTime instanceof DateTimeInterface) {
+                            if ($dateTime instanceof \DateTimeInterface) {
                                 return $dateTime->format('Y-m-d');
                             }
 
@@ -855,7 +853,7 @@ final class BuilderTest extends TestCase
                                 return Carbon::parse($dateTime)->format('Y-m-d');
                             }
 
-                            if ($dateTime instanceof DateTimeInterface) {
+                            if ($dateTime instanceof \DateTimeInterface) {
                                 return $dateTime->format('Y-m-d');
                             }
 
