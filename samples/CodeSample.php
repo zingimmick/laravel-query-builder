@@ -18,7 +18,7 @@ class CodeSample
         public string $code,
         array $ioSamples
     ) {
-        $this->ioSamples = \collect($ioSamples);
+        $this->ioSamples = collect($ioSamples);
     }
 
     public function print(): string

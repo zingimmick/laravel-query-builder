@@ -21,7 +21,7 @@ class Sample
         public string $subtitle,
         array $codeSamples
     ) {
-        $this->codeSamples = \collect($codeSamples);
+        $this->codeSamples = collect($codeSamples);
     }
 
     public function description(string $description): self
