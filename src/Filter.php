@@ -146,7 +146,7 @@ class Filter
         if (\is_array($value)) {
             $remainingProperties = array_diff($value, $this->getIgnored()->toArray());
 
-            return empty($remainingProperties) ? null : $remainingProperties;
+            return $remainingProperties === [] ? null : $remainingProperties;
         }
 
         return $this->getIgnored()
