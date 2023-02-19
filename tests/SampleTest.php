@@ -17,7 +17,7 @@ final class SampleTest extends TestCase
     /**
      * @return \Zing\QueryBuilder\Samples\Sample[]
      */
-    public function samples(): array
+    public static function samples(): array
     {
         return (new SampleCollector())->samples();
     }
@@ -25,9 +25,9 @@ final class SampleTest extends TestCase
     /**
      * @return \Iterator<array{string, string, string}>
      */
-    public function provideCases(): \Iterator
+    public static function provideCases(): \Iterator
     {
-        foreach ($this->samples() as $sample) {
+        foreach (self::samples() as $sample) {
             foreach ($sample->codeSamples as $codeSample) {
                 foreach ($codeSample->ioSamples as $case) {
                     yield [$case->uri, $case->sql, $codeSample->code];
@@ -42,7 +42,10 @@ final class SampleTest extends TestCase
     public function testSample(string $uri, string $sql, string $code): void
     {
         $request = Request::create($uri);
-        self::assertStringEndsWith($request->path(), (string) parse_url($uri, PHP_URL_PATH));
+
+        /** @var non-empty-string $path */
+        $path = $request->path();
+        self::assertStringEndsWith($path, (string) parse_url($uri, PHP_URL_PATH));
         DB::listen(static function (QueryExecuted $queryExecuted) use ($sql): void {
             self::assertSame(
                 $sql,
