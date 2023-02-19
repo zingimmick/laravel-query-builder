@@ -53,6 +53,7 @@ final class FilterExactTest extends TestCase
             ->merge([
                 'created_date' => Carbon::yesterday()->toDateString(),
             ]);
+
         /** @var \Illuminate\Database\Query\Expression $raw */
         $raw = DB::raw('date(created_at)');
         self::assertSame(

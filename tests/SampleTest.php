@@ -42,6 +42,7 @@ final class SampleTest extends TestCase
     public function testSample(string $uri, string $sql, string $code): void
     {
         $request = Request::create($uri);
+
         /** @var non-empty-string $path */
         $path = $request->path();
         self::assertStringEndsWith($path, (string) parse_url($uri, PHP_URL_PATH));
