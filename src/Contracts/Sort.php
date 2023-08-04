@@ -11,6 +11,6 @@ interface Sort
     public function apply(
         Builder $query,
         bool $descending,
-        \Closure|Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $property
+        Builder|\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $property
     ): Builder;
 }

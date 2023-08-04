@@ -14,7 +14,7 @@ trait WithFilters
      *
      * @return $this
      */
-    public function enableFilters(array|string|Filter $filters)
+    public function enableFilters(array|Filter|string $filters)
     {
         $filters = \is_array($filters) ? $filters : \func_get_args();
         $this->applyFilters($this->formatFilters($filters));
