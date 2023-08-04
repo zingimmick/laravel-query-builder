@@ -25,7 +25,7 @@ final class SampleTest extends TestCase
     /**
      * @return \Iterator<array{string, string, string}>
      */
-    public static function provideCases(): \Iterator
+    public static function provideSampleCases(): \Iterator
     {
         foreach (self::samples() as $sample) {
             foreach ($sample->codeSamples as $codeSample) {
@@ -37,7 +37,7 @@ final class SampleTest extends TestCase
     }
 
     /**
-     * @dataProvider provideCases
+     * @dataProvider provideSampleCases
      */
     public function testSample(string $uri, string $sql, string $code): void
     {

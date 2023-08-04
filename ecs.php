@@ -7,7 +7,8 @@ use Zing\CodingStandard\Set\ECSSetList;
 
 return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->sets([ECSSetList::PHP_80, ECSSetList::CUSTOM]);
-    $ecsConfig->parallel();$ecsConfig->paths(
+    $ecsConfig->parallel();
+    $ecsConfig->paths(
         [
             __DIR__ . '/bin',
             __DIR__ . '/samples',

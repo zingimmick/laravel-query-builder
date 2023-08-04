@@ -44,7 +44,7 @@ class Sort
         return $this->property === $property;
     }
 
-    public function getColumn(): \Closure|Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
+    public function getColumn(): Builder|\Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string
     {
         return $this->column;
     }

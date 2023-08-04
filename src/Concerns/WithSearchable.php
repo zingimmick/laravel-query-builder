@@ -18,7 +18,7 @@ trait WithSearchable
      *
      * @return $this
      */
-    public function searchable(string|Filter|array $searchable)
+    public function searchable(array|Filter|string $searchable)
     {
         $searchable = \is_array($searchable) ? $searchable : \func_get_args();
         $search = $this->request->input('search');
