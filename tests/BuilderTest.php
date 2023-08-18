@@ -902,8 +902,11 @@ final class BuilderTest extends TestCase
         $query = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $this->assertSame(
-            $query->clone()->whereNotNull('test')->toSql(),
-            (clone $query)->whereNotNull('test')->toSql()
+            $query->clone()
+                ->whereNotNull('test')
+                ->toSql(),
+            (clone $query)->whereNotNull('test')
+                ->toSql()
         );
         $this->assertNotSame($query->clone()
             ->whereNotNull('test1')
