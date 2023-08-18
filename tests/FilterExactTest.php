@@ -56,24 +56,15 @@ final class FilterExactTest extends TestCase
 
         /** @var \Illuminate\Database\Query\Expression $raw */
         $raw = DB::raw('date(created_at)');
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::exact('created_date', $raw))
-                ->count()
-        );
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::date('created_date', 'created_at'))
-                ->count()
-        );
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::date('created_date', $raw))
-                ->count()
-        );
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::exact('created_date', $raw))
+            ->count());
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::date('created_date', 'created_at'))
+            ->count());
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::date('created_date', $raw))
+            ->count());
     }
 
     public function testDate(): void
@@ -111,32 +102,23 @@ final class FilterExactTest extends TestCase
             ->merge([
                 'created_date' => Carbon::yesterday()->toDateString(),
             ]);
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::date('created_date', 'created_at'))
-                ->count()
-        );
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::date('created_date', 'created_at'))
+            ->count());
         request()
             ->merge([
                 'created_date' => Carbon::yesterday(),
             ]);
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::date('created_date', 'created_at'))
-                ->count()
-        );
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::date('created_date', 'created_at'))
+            ->count());
         request()
             ->merge([
                 'created_date' => [Carbon::yesterday(), today()->toDateString()],
             ]);
-        self::assertSame(
-            5,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(Filter::date('created_date', 'created_at'))
-                ->count()
-        );
+        $this->assertSame(5, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(Filter::date('created_date', 'created_at'))
+            ->count());
     }
 
     public function testBoolean(): void
@@ -173,31 +155,25 @@ final class FilterExactTest extends TestCase
             ->merge([
                 'is_today' => 1,
             ]);
-        self::assertSame(
-            2,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(
-                    Filter::boolean('is_today', static fn ($query) => $query->whereDate(
-                        'created_at',
-                        Carbon::yesterday()
-                    ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
-                )
-                ->count()
-        );
+        $this->assertSame(2, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(
+                Filter::boolean('is_today', static fn ($query) => $query->whereDate(
+                    'created_at',
+                    Carbon::yesterday()
+                ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
+            )
+            ->count());
         request()
             ->merge([
                 'is_today' => 0,
             ]);
-        self::assertSame(
-            3,
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->enableFilters(
-                    Filter::boolean('is_today', static fn ($query) => $query->whereDate(
-                        'created_at',
-                        Carbon::yesterday()
-                    ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
-                )
-                ->count()
-        );
+        $this->assertSame(3, QueryBuilder::fromBuilder(Order::class, request())
+            ->enableFilters(
+                Filter::boolean('is_today', static fn ($query) => $query->whereDate(
+                    'created_at',
+                    Carbon::yesterday()
+                ), static fn ($query) => $query->whereDate('created_at', '!=', Carbon::yesterday()))
+            )
+            ->count());
     }
 }

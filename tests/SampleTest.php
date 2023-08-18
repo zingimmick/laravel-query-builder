@@ -45,7 +45,7 @@ final class SampleTest extends TestCase
 
         /** @var non-empty-string $path */
         $path = $request->path();
-        self::assertStringEndsWith($path, (string) parse_url($uri, PHP_URL_PATH));
+        $this->assertStringEndsWith($path, (string) parse_url($uri, PHP_URL_PATH));
         DB::listen(static function (QueryExecuted $queryExecuted) use ($sql): void {
             self::assertSame(
                 $sql,

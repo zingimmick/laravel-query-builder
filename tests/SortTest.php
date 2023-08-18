@@ -20,8 +20,8 @@ final class SortTest extends TestCase
     public function test(): void
     {
         $filter = Sort::field('order_number', 'number');
-        self::assertTrue($filter->isForProperty('order_number'));
-        self::assertSame('number', $filter->getColumn());
+        $this->assertTrue($filter->isForProperty('order_number'));
+        $this->assertSame('number', $filter->getColumn());
     }
 
     public function testSortExpression(): void
@@ -50,6 +50,6 @@ final class SortTest extends TestCase
             )
             ->toSql();
 
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 }

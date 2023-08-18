@@ -33,7 +33,7 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('name'), static fn ($query, $value): Builder => $query->where('name', $value))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testCast(): void
@@ -64,7 +64,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => 'true',
@@ -73,7 +73,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
 
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => 'false',
@@ -81,7 +81,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
         request()
             ->merge([
                 'is_visible' => 'false',
@@ -89,7 +89,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
 
         request()
             ->merge([
@@ -99,7 +99,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => '0',
@@ -107,7 +107,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
     }
 
     public function testPartial(): void
@@ -125,7 +125,7 @@ final class BuilderTest extends TestCase
                 static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialNull(): void
@@ -143,7 +143,7 @@ final class BuilderTest extends TestCase
                 static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialBlank(): void
@@ -161,7 +161,7 @@ final class BuilderTest extends TestCase
                 static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testExactRelation(): void
@@ -199,7 +199,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::exact('name', 'user.name'))
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testExactQualified(): void
@@ -214,7 +214,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name', 'users.name'))
             ->count();
-        self::assertSame(1, $actual);
+        $this->assertSame(1, $actual);
     }
 
     public function testScope(): void
@@ -244,7 +244,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => 'false',
@@ -253,7 +253,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::scope('is_visible', 'visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
     }
 
     public function testExactArray(): void
@@ -275,7 +275,7 @@ final class BuilderTest extends TestCase
                 }
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialArray(): void
@@ -307,7 +307,7 @@ final class BuilderTest extends TestCase
                 }
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialCastArray(): void
@@ -339,7 +339,7 @@ final class BuilderTest extends TestCase
                 )
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialCastStringToArray(): void
@@ -371,7 +371,7 @@ final class BuilderTest extends TestCase
                 }
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testSkipCastStringToArray(): void
@@ -389,7 +389,7 @@ final class BuilderTest extends TestCase
                 static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testPartialRelation(): void
@@ -427,12 +427,12 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::partial('name', 'user.name'))
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(Filter::partial('name', 'users.name', false))
             ->leftJoin('users', 'orders.user_id', 'users.id')
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testCustom(): void
@@ -457,7 +457,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters([Filter::custom('id', new LessThan())])
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testCustomDefault(): void
@@ -478,13 +478,13 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters([Filter::custom('id', new LessThan())->default(3)])
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         $actual = QueryBuilder::fromBuilder(Order::class, request()->merge([
             'id' => 2,
         ]))
             ->enableFilters([Filter::custom('id', new LessThan())->default(3)])
             ->count();
-        self::assertSame(1, $actual);
+        $this->assertSame(1, $actual);
     }
 
     public function testIgnore(): void
@@ -509,7 +509,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters([Filter::exact('id')])
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
         request()
             ->merge([
                 'id' => [1, 2, 3],
@@ -517,7 +517,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters([Filter::exact('id')->ignore([1])])
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'id' => '1,2,3',
@@ -525,7 +525,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters([Filter::exact('id')->ignore([1])])
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testCallback(): void
@@ -557,7 +557,7 @@ final class BuilderTest extends TestCase
                 ]
             )
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->enableFilters(
                 [
@@ -570,7 +570,7 @@ final class BuilderTest extends TestCase
                 ]
             )
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testCastInteger(): void
@@ -578,7 +578,7 @@ final class BuilderTest extends TestCase
         $filter = Filter::scope('name')->withCast(CastType::INTEGER);
         $method = (new \ReflectionClass($filter))->getMethod('resolveValueForFiltering');
         $method->setAccessible(true);
-        self::assertSame(1, $method->invokeArgs($filter, ['1']));
+        $this->assertSame(1, $method->invokeArgs($filter, ['1']));
     }
 
     public function testSort(): void
@@ -592,7 +592,7 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testSortWithDefault(): void
@@ -603,14 +603,14 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->orderBy('name')
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableSorts([Sort::field('name')->desc()])
             ->toSql();
         $expected = User::query()
             ->orderByDesc('name')
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         request()
             ->merge([
                 'asc' => 'name',
@@ -621,7 +621,7 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         request()
             ->merge([
                 'desc' => 'name',
@@ -632,7 +632,7 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('desc'), static fn ($query): Builder => $query->orderBy('name', 'desc'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testSortCustom(): void
@@ -648,7 +648,7 @@ final class BuilderTest extends TestCase
         $expected = User::query()
             ->when(request()->input('asc'), static fn ($query): Builder => $query->orderBy('name'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testBetween(): void
@@ -666,7 +666,7 @@ final class BuilderTest extends TestCase
                 static fn ($query, $value): Builder => $query->whereBetween('id', explode(',', $value))
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testBetweenException(): void
@@ -701,7 +701,7 @@ final class BuilderTest extends TestCase
                 )
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testBetweenDateTime(): void
@@ -730,8 +730,8 @@ final class BuilderTest extends TestCase
                     return $query->whereBetween('created_at', [$startAt, $endAt]);
                 }
             );
-        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
-        self::assertSame($expected->toSql(), $actual->toSql());
+        $this->assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
     }
 
     public function testBetweenDateTimeInstance(): void
@@ -768,8 +768,8 @@ final class BuilderTest extends TestCase
                     return $query->whereBetween('created_at', [$startAt, $endAt]);
                 }
             );
-        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
-        self::assertSame($expected->toSql(), $actual->toSql());
+        $this->assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
     }
 
     public function testBetweenDate(): void
@@ -795,8 +795,8 @@ final class BuilderTest extends TestCase
                     );
                 }
             );
-        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
-        self::assertSame($expected->toSql(), $actual->toSql());
+        $this->assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
     }
 
     public function testBetweenDateMixed(): void
@@ -830,8 +830,8 @@ final class BuilderTest extends TestCase
                     )
                 )
             );
-        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
-        self::assertSame($expected->toSql(), $actual->toSql());
+        $this->assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
     }
 
     public function testBetweenDateInstance(): void
@@ -863,8 +863,8 @@ final class BuilderTest extends TestCase
                     )
                 )
             );
-        self::assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
-        self::assertSame($expected->toSql(), $actual->toSql());
+        $this->assertEqualsCanonicalizing($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
     }
 
     public function testRelation(): void
@@ -884,50 +884,44 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder($user->orders(), request())
             ->enableFilters([Filter::partial('number')])
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testClone(): void
     {
         $query = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
-        self::assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
-        self::assertNotSame(
-            (clone $query)->whereNotNull('test1')
-                ->toSql(),
-            (clone $query)->whereNotNull('test2')
-                ->toSql()
-        );
+        $this->assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
+        $this->assertNotSame((clone $query)->whereNotNull('test1')
+            ->toSql(), (clone $query)->whereNotNull('test2')
+            ->toSql());
     }
 
     public function testCloneMethod(): void
     {
         $query = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
-        self::assertSame($query->clone()->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
-        self::assertNotSame(
-            $query->clone()
-                ->whereNotNull('test1')
-                ->toSql(),
-            (clone $query)->whereNotNull('test2')
-                ->toSql()
+        $this->assertSame(
+            $query->clone()->whereNotNull('test')->toSql(),
+            (clone $query)->whereNotNull('test')->toSql()
         );
+        $this->assertNotSame($query->clone()
+            ->whereNotNull('test1')
+            ->toSql(), (clone $query)->whereNotNull('test2')
+            ->toSql());
     }
 
     public function testOrWhere(): void
     {
-        self::assertSame(
-            Order::query()
-                ->where('user_id', 0)
-                ->orWhere
-                ->whereNotNull('user_id')
-                ->toSql(),
-            QueryBuilder::fromBuilder(Order::class, request())
-                ->where('user_id', 0)
-                ->orWhere
-                ->whereNotNull('user_id')
-                ->toSql()
-        );
+        $this->assertSame(Order::query()
+            ->where('user_id', 0)
+            ->orWhere
+            ->whereNotNull('user_id')
+            ->toSql(), QueryBuilder::fromBuilder(Order::class, request())
+            ->where('user_id', 0)
+            ->orWhere
+            ->whereNotNull('user_id')
+            ->toSql());
     }
 
     public function testCastTypedArray(): void
@@ -958,7 +952,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(5, $actual);
+        $this->assertSame(5, $actual);
         request()
             ->merge([
                 'is_visible' => 'true',
@@ -967,7 +961,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
 
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => 'false',
@@ -975,7 +969,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
         request()
             ->merge([
                 'is_visible' => 'false',
@@ -983,7 +977,7 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible'))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
 
         request()
             ->merge([
@@ -993,7 +987,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(5, $actual);
+        $this->assertSame(5, $actual);
 
         request()
             ->merge([
@@ -1003,7 +997,7 @@ final class BuilderTest extends TestCase
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
 
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
         request()
             ->merge([
                 'is_visible' => '0',
@@ -1011,6 +1005,6 @@ final class BuilderTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('is_visible')->withCast(CastType::BOOLEAN))
             ->count();
-        self::assertSame(3, $actual);
+        $this->assertSame(3, $actual);
     }
 }
