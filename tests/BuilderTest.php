@@ -894,8 +894,10 @@ final class BuilderTest extends TestCase
         $this->assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
         $this->assertNotSame(
             (clone $query)->whereNotNull('test1')
-            ->toSql(), (clone $query)->whereNotNull('test2')
-            ->toSql());
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
+        );
     }
 
     public function testCloneMethod(): void
@@ -911,24 +913,27 @@ final class BuilderTest extends TestCase
         );
         $this->assertNotSame(
             $query->clone()
-            ->whereNotNull('test1')
-            ->toSql(), (clone $query)->whereNotNull('test2')
-            ->toSql());
+                ->whereNotNull('test1')
+                ->toSql(),
+            (clone $query)->whereNotNull('test2')
+                ->toSql()
+        );
     }
 
     public function testOrWhere(): void
     {
         $this->assertSame(
             Order::query()
-            ->where('user_id', 0)
-            ->orWhere
-            ->whereNotNull('user_id')
-            ->toSql(),
+                ->where('user_id', 0)
+                ->orWhere
+                ->whereNotNull('user_id')
+                ->toSql(),
             QueryBuilder::fromBuilder(Order::class, request())
-            ->where('user_id', 0)
-            ->orWhere
-            ->whereNotNull('user_id')
-            ->toSql());
+                ->where('user_id', 0)
+                ->orWhere
+                ->whereNotNull('user_id')
+                ->toSql()
+        );
     }
 
     public function testCastTypedArray(): void
