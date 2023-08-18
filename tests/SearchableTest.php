@@ -40,7 +40,7 @@ final class SearchableTest extends TestCase
             )
             ->when(request()->input('a'), static fn ($query, $value): Builder => $query->where('a', $value))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testSearchableRelation(): void
@@ -77,7 +77,7 @@ final class SearchableTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
-        self::assertSame(2, $actual);
+        $this->assertSame(2, $actual);
     }
 
     public function testSearchableForBlank(): void
@@ -115,7 +115,7 @@ final class SearchableTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
-        self::assertSame(5, $actual);
+        $this->assertSame(5, $actual);
     }
 
     public function testSearchableForNull(): void
@@ -153,7 +153,7 @@ final class SearchableTest extends TestCase
         $actual = QueryBuilder::fromBuilder(Order::class, request())
             ->searchable('user.name')
             ->count();
-        self::assertSame(5, $actual);
+        $this->assertSame(5, $actual);
     }
 
     public function testSearchableFilters(): void
@@ -174,7 +174,7 @@ final class SearchableTest extends TestCase
                 )
             )
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         $this->expectException(ParameterException::class);
         $this->expectExceptionMessage('unsupported filter with default value for search');
         QueryBuilder::fromBuilder(User::class, request())

@@ -20,9 +20,9 @@ final class FilterTest extends TestCase
     public function testFilter(): void
     {
         $filter = Filter::exact('order_number', 'number')->withCast(CastType::BOOLEAN);
-        self::assertTrue($filter->hasCast());
-        self::assertTrue($filter->isForProperty('order_number'));
-        self::assertSame('number', $filter->getColumn());
+        $this->assertTrue($filter->hasCast());
+        $this->assertTrue($filter->isForProperty('order_number'));
+        $this->assertSame('number', $filter->getColumn());
     }
 
     public function testDelimiter(): void
@@ -44,12 +44,12 @@ final class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name')->delimiter('|'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         QueryConfiguration::setDelimiter('|');
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::exact('name'))
             ->toSql();
-        self::assertSame($expected, $actual);
+        $this->assertSame($expected, $actual);
         QueryConfiguration::setDelimiter(',');
     }
 
@@ -58,8 +58,8 @@ final class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::exact('name')]);
         $expected = User::query();
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         request()
             ->merge([
                 'search_type' => 'name',
@@ -69,25 +69,25 @@ final class FilterTest extends TestCase
             ->enableTypedFilter('search_type', 'search', [Filter::exact('name')]);
         $expected = User::query()
             ->where(request()->input('search_type'), request()->input('search'));
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::partial('name')]);
         $expected = User::query()
             ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
             ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::exact('email')]);
         $expected = User::query();
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         $this->expectException(ParameterException::class);
 
         QueryBuilder::fromBuilder(User::class, request())
@@ -101,8 +101,8 @@ final class FilterTest extends TestCase
         $expected = User::query()->where(
             static fn ($query) => $query->where(static fn ($query) => $query->where('name', 'foo'))
         );
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
         request()
             ->merge([
                 'name' => '1',
@@ -120,7 +120,7 @@ final class FilterTest extends TestCase
                     sprintf('%%%s%%', request()->input('name'))
                 ))
             );
-        self::assertSame($expected->toSql(), $actual->toSql());
-        self::assertSame($expected->getBindings(), $actual->getBindings());
+        $this->assertSame($expected->toSql(), $actual->toSql());
+        $this->assertSame($expected->getBindings(), $actual->getBindings());
     }
 }
