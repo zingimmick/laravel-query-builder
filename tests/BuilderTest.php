@@ -892,7 +892,8 @@ final class BuilderTest extends TestCase
         $query = QueryBuilder::fromBuilder(User::class, request())
             ->enableFilters(Filter::betweenDate('created_between', 'created_at'));
         $this->assertSame((clone $query)->whereNotNull('test')->toSql(), (clone $query)->whereNotNull('test')->toSql());
-        $this->assertNotSame((clone $query)->whereNotNull('test1')
+        $this->assertNotSame(
+            (clone $query)->whereNotNull('test1')
             ->toSql(), (clone $query)->whereNotNull('test2')
             ->toSql());
     }
@@ -908,7 +909,8 @@ final class BuilderTest extends TestCase
             (clone $query)->whereNotNull('test')
                 ->toSql()
         );
-        $this->assertNotSame($query->clone()
+        $this->assertNotSame(
+            $query->clone()
             ->whereNotNull('test1')
             ->toSql(), (clone $query)->whereNotNull('test2')
             ->toSql());
@@ -916,11 +918,13 @@ final class BuilderTest extends TestCase
 
     public function testOrWhere(): void
     {
-        $this->assertSame(Order::query()
+        $this->assertSame(
+            Order::query()
             ->where('user_id', 0)
             ->orWhere
             ->whereNotNull('user_id')
-            ->toSql(), QueryBuilder::fromBuilder(Order::class, request())
+            ->toSql(),
+            QueryBuilder::fromBuilder(Order::class, request())
             ->where('user_id', 0)
             ->orWhere
             ->whereNotNull('user_id')
