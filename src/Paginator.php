@@ -12,7 +12,7 @@ class Paginator
 
     public function __construct(?string $name = null, ?int $default = null)
     {
-        $this->name = $name ?: QueryConfiguration::getPageName();
+        $this->name = $name?: QueryConfiguration::getPageName();
         $this->default = $default ?: QueryConfiguration::getPerPage();
     }
 
