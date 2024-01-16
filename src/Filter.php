@@ -64,7 +64,7 @@ class Filter
      */
     public function ignore(array $values): self
     {
-        $this->ignored = ($this->ignored instanceof \Illuminate\Support\Collection ? $this->ignored
+        $this->ignored = ($this->ignored instanceof Collection ? $this->ignored
             ->merge($values) : collect($values))
             ->flatten();
 
