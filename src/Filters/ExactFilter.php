@@ -25,7 +25,6 @@ class ExactFilter implements Filter
     }
 
     /**
-     * @param mixed $value
      * @param string|\Illuminate\Database\Query\Expression $property
      */
     public function apply(Builder $query, mixed $value, $property): Builder
@@ -41,10 +40,7 @@ class ExactFilter implements Filter
         return $this->withPropertyConstraint($query, $value, $property);
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function withPropertyConstraint(Builder $query, $value, Expression|string $property): Builder
+    protected function withPropertyConstraint(Builder $query, mixed $value, Expression|string $property): Builder
     {
         if (\is_array($value)) {
             return $query->whereIn($property, $value);

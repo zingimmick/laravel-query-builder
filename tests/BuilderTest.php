@@ -323,7 +323,6 @@ final class BuilderTest extends TestCase
                 request()
                     ->input('name'),
                 /**
-                 * @param mixed $query
                  * @param array<int> $value
                  */
                 static fn (mixed $query, array $value): Builder => $query->where(

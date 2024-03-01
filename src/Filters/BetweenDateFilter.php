@@ -10,10 +10,9 @@ use Illuminate\Support\Carbon;
 class BetweenDateFilter extends BetweenFilter
 {
     /**
-     * @param mixed $value
      * @param string $property
      */
-    public function apply(Builder $query, $value, $property): Builder
+    public function apply(Builder $query, mixed $value, $property): Builder
     {
         $value = array_map(
             static function ($dateTime) {
