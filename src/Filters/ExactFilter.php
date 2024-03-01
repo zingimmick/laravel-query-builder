@@ -28,7 +28,7 @@ class ExactFilter implements Filter
      * @param mixed $value
      * @param string|\Illuminate\Database\Query\Expression $property
      */
-    public function apply(Builder $query, $value, $property): Builder
+    public function apply(Builder $query, mixed $value, $property): Builder
     {
         if ($property instanceof Expression) {
             return $this->withPropertyConstraint($query, $value, $property);
