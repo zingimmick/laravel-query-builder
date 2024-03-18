@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 class BetweenDateTimeFilter extends BetweenFilter
 {
     /**
-     * @param mixed $value
+     * @param array<string> $value
      * @param string $property
      */
     public function apply(Builder $query, $value, $property): Builder
