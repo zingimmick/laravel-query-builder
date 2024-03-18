@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.2.0 - 2024-03-18
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other Changes
+
+* Allow PHPUnit 10 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/201
+* Rename skipped rules on $rectorConfig->skip() are changed to different namespace by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/211
+* Support for PHP 8.3 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/215
+* Update license copyright year(s) by @github-actions in https://github.com/zingimmick/laravel-query-builder/pull/220
+* Support for Laravel 11 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/225
+
+**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/3.1.0...3.2.0
+
 ## 3.1.0 - 2023-02-16
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
