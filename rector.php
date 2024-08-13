@@ -18,7 +18,6 @@ return static function (\Rector\Config\RectorConfig $rectorConfig): void {
         RenameVariableToMatchMethodCallReturnTypeRector::class,
         RenameParamToMatchTypeRector::class,
         AddSeeTestAnnotationRector::class,
-        FinalizeClassesWithoutChildrenRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
     ]);
     $rectorConfig->paths([
