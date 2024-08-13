@@ -2,14 +2,14 @@
 
 ![Code snippet](./docs/snippet.png)
 
-[![Build Status](https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml/badge.svg?branch=2.x)](https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml)
-[![Code Coverage](https://codecov.io/gh/zingimmick/laravel-query-builder/branch/2.x/graph/badge.svg)](https://codecov.io/gh/zingimmick/laravel-query-builder)
+[![Build Status](https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml/badge.svg?branch=3.x)](https://github.com/zingimmick/laravel-query-builder/actions/workflows/tests.yml)
+[![Code Coverage](https://codecov.io/gh/zingimmick/laravel-query-builder/branch/3.x/graph/badge.svg)](https://codecov.io/gh/zingimmick/laravel-query-builder)
 [![Latest Stable Version](https://poser.pugx.org/zing/laravel-query-builder/v/stable.svg)](https://packagist.org/packages/zing/laravel-query-builder)
 [![Total Downloads](https://poser.pugx.org/zing/laravel-query-builder/downloads)](https://packagist.org/packages/zing/laravel-query-builder)
 [![Latest Unstable Version](https://poser.pugx.org/zing/laravel-query-builder/v/unstable.svg)](https://packagist.org/packages/zing/laravel-query-builder)
 [![License](https://poser.pugx.org/zing/laravel-query-builder/license)](https://packagist.org/packages/zing/laravel-query-builder)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zingimmick/laravel-query-builder/badges/quality-score.png)](https://scrutinizer-ci.com/g/zingimmick/laravel-query-builder)
-[![StyleCI Shield](https://github.styleci.io/repos/255621279/shield?branch=2.x)](https://github.styleci.io/repos/255621279)
+[![StyleCI Shield](https://github.styleci.io/repos/255621279/shield?branch=3.x)](https://github.styleci.io/repos/255621279)
 [![Code Climate](https://api.codeclimate.com/v1/badges/6bd3cbd5bd75b6ec5b2e/maintainability)](https://codeclimate.com/github/zingimmick/laravel-query-builder/maintainability)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fzingimmick%2Flaravel-query-builder?ref=badge_shield)
 
