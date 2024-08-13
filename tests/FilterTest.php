@@ -74,13 +74,13 @@ final class FilterTest extends TestCase
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::partial('name')]);
         $expected = User::query()
-            ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
+            ->where(request()->input('search_type'), 'like', \sprintf('%%%s%%', request()->input('search')));
         $this->assertSame($expected->toSql(), $actual->toSql());
         $this->assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
             ->enableTypedFilter('search_type', 'search', [Filter::partial('email'), Filter::partial('name')]);
         $expected = User::query()
-            ->where(request()->input('search_type'), 'like', sprintf('%%%s%%', request()->input('search')));
+            ->where(request()->input('search_type'), 'like', \sprintf('%%%s%%', request()->input('search')));
         $this->assertSame($expected->toSql(), $actual->toSql());
         $this->assertSame($expected->getBindings(), $actual->getBindings());
         $actual = QueryBuilder::fromBuilder(User::class, request())
@@ -113,11 +113,11 @@ final class FilterTest extends TestCase
         $expected = User::query()
             ->where(
                 static fn ($query) => $query->orWhere(
-                    static fn ($query) => $query->where('email', 'like', sprintf('%%%s%%', request()->input('email')))
+                    static fn ($query) => $query->where('email', 'like', \sprintf('%%%s%%', request()->input('email')))
                 )->orWhere(static fn ($query) => $query->where(
                     'name',
                     'like',
-                    sprintf('%%%s%%', request()->input('name'))
+                    \sprintf('%%%s%%', request()->input('name'))
                 ))
             );
         $this->assertSame($expected->toSql(), $actual->toSql());

@@ -23,11 +23,11 @@ class CodeSample
 
     public function print(): string
     {
-        return sprintf("```php\n%s```" . PHP_EOL, str_replace(
+        return \sprintf("```php\n%s```" . PHP_EOL, str_replace(
             PHP_EOL . PHP_EOL,
             PHP_EOL . PHP_EOL . $this->ioSamples->map(static fn ($ioSample): string => implode('', [
-                sprintf('// uri: %s' . PHP_EOL, $ioSample->uri),
-                sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),
+                \sprintf('// uri: %s' . PHP_EOL, $ioSample->uri),
+                \sprintf('// sql: %s' . PHP_EOL, $ioSample->sql),
             ]))->implode(''),
             str_replace('<?php
 

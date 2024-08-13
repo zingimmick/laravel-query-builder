@@ -9,11 +9,12 @@ parameters:
         - config
         - src
         - tests
-    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
+        - identifier: missingType.generics
         - '#Class Laravel\\Lumen\\Application not found.#'
         - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
         - '#Parameter \#2 ...\$values of function sprintf expects bool\|float\|int\|string\|null, Illuminate\\Database\\Query\\Expression\|string given.#'
+        - '#Method (.*?)::resolveNestedRelation\(\) should return array{string, string} but returns array{string, string\|null}.#'
         - message: '#Variable \$request might not be defined.#'
           paths:
               - samples/**/*.php

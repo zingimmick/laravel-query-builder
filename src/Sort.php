@@ -14,8 +14,6 @@ class Sort
     protected string $defaultDirection;
 
     /**
-     * Sort constructor.
-     *
      * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
      */
     public function __construct(

@@ -122,7 +122,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
+                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -140,7 +140,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
+                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -158,7 +158,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
+                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -294,10 +294,10 @@ final class BuilderTest extends TestCase
                     $value = explode(',', $value);
 
                     return $query->where(
-                        static function ($query) use ($value) {
+                        static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
                             collect($value)->each(
                                 static function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
+                                    $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                                 }
                             );
 
@@ -326,10 +326,10 @@ final class BuilderTest extends TestCase
                  * @param array<int> $value
                  */
                 static fn (mixed $query, array $value): Builder => $query->where(
-                    static function ($query) use ($value) {
+                    static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
                         collect($value)->each(
                             static function ($item) use ($query): void {
-                                $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
+                                $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                             }
                         );
 
@@ -357,10 +357,10 @@ final class BuilderTest extends TestCase
                     $value = explode(',', $value);
 
                     return $query->where(
-                        static function ($query) use ($value) {
+                        static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
                             collect($value)->each(
                                 static function ($item) use ($query): void {
-                                    $query->orWhere('name', 'like', sprintf('%%%s%%', $item));
+                                    $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                                 }
                             );
 
@@ -385,7 +385,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', sprintf('%%%s%%', $value))
+                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -878,7 +878,7 @@ final class BuilderTest extends TestCase
         $expected = Order::query()
             ->where(Order::query()->qualifyColumn('user_id'), $user->getKey())->whereNotNull(
                 Order::query()->qualifyColumn('user_id')
-            )->where('number', 'like', sprintf('%%%s%%', '2021'))
+            )->where('number', 'like', \sprintf('%%%s%%', '2021'))
             ->toSql();
         $actual = QueryBuilder::fromBuilder($user->orders(), request())
             ->enableFilters([Filter::partial('number')])

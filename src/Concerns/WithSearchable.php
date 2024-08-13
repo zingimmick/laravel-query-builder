@@ -59,7 +59,7 @@ trait WithSearchable
                         }
 
                         if (is_numeric($key)) {
-                            $query->orWhere($value, 'like', sprintf('%%%s%%', $search));
+                            $query->orWhere($value, 'like', \sprintf('%%%s%%', $search));
 
                             return;
                         }
@@ -84,7 +84,7 @@ trait WithSearchable
                 $query->where(
                     static function (Builder $query) use ($fields, $search): void {
                         foreach ($fields as $field) {
-                            $query->orWhere($field, 'like', sprintf('%%%s%%', $search));
+                            $query->orWhere($field, 'like', \sprintf('%%%s%%', $search));
                         }
                     }
                 );

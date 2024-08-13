@@ -49,7 +49,7 @@ final class SampleTest extends TestCase
         DB::listen(static function (QueryExecuted $queryExecuted) use ($sql): void {
             self::assertSame(
                 $sql,
-                sprintf(str_replace('?', '%s', $queryExecuted->sql), ...array_map(static function ($value): string {
+                \sprintf(str_replace('?', '%s', $queryExecuted->sql), ...array_map(static function ($value): string {
                     if (\is_bool($value)) {
                         return $value ? 'true' : 'false';
                     }

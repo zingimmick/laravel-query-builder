@@ -35,7 +35,7 @@ class Sample
     {
         $lines = [];
         if ($this->description !== '' && $this->description !== '0') {
-            $lines[] = sprintf('**%s**' . PHP_EOL, $this->description);
+            $lines[] = \sprintf('**%s**' . PHP_EOL, $this->description);
         }
 
         $lines[] = $this->codeSamples->map->print()->implode(PHP_EOL);
