@@ -15,6 +15,6 @@ class OrderBuilder extends Builder
 {
     public function whereNumberLike(string $number): self
     {
-        return $this->where('number', 'like', sprintf('%%%s%%', $number));
+        return $this->where('number', 'like', \sprintf('%%%s%%', $number));
     }
 }

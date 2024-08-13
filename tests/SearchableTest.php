@@ -34,8 +34,8 @@ final class SearchableTest extends TestCase
                 request()
                     ->input('search'),
                 static fn ($query, $search): Builder => $query->where(
-                    static fn ($query) => $query->orWhere('b', 'like', sprintf('%%%s%%', $search))
-                        ->orWhere('c', 'like', sprintf('%%%s%%', $search))
+                    static fn ($query) => $query->orWhere('b', 'like', \sprintf('%%%s%%', $search))
+                        ->orWhere('c', 'like', \sprintf('%%%s%%', $search))
                 )
             )
             ->when(request()->input('a'), static fn ($query, $value): Builder => $query->where('a', $value))
@@ -170,7 +170,7 @@ final class SearchableTest extends TestCase
                     ->input('search'),
                 static fn ($query, $search): Builder => $query->where(
                     static fn ($query) => $query->orWhere(static fn ($query) => $query->where('b', $search))
-                        ->orWhere('c', 'like', sprintf('%%%s%%', $search))
+                        ->orWhere('c', 'like', \sprintf('%%%s%%', $search))
                 )
             )
             ->toSql();

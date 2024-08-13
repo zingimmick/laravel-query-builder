@@ -20,12 +20,12 @@ class PartialFilter extends ExactFilter
             return $query->where(
                 static function ($query) use ($value, $property): void {
                     foreach ($value as $singleValue) {
-                        $query->orWhere($property, 'like', sprintf('%%%s%%', $singleValue));
+                        $query->orWhere($property, 'like', \sprintf('%%%s%%', $singleValue));
                     }
                 }
             );
         }
 
-        return $query->where($property, 'like', sprintf('%%%s%%', $value));
+        return $query->where($property, 'like', \sprintf('%%%s%%', $value));
     }
 }

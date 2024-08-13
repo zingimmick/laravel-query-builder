@@ -21,7 +21,7 @@ class DateFilter extends ExactFilter
         if (\is_array($value)) {
             $value = array_map($formatter, $value);
 
-            return $query->whereIn(DB::raw(sprintf('date(%s)', $property)), $value);
+            return $query->whereIn(DB::raw(\sprintf('date(%s)', $property)), $value);
         }
 
         $value = $formatter($value);
