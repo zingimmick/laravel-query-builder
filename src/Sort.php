@@ -11,7 +11,7 @@ class Sort
 {
     protected \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column;
 
-    protected string $defaultDirection;
+    protected ?string $defaultDirection=null;
 
     /**
      * @param \Closure|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string|null $column
@@ -68,7 +68,7 @@ class Sort
 
     public function getDefaultDirection(): string
     {
-        return $this->defaultDirection;
+        return (string)$this->defaultDirection;
     }
 
     public function sort(Builder $query, string $direction): Builder
