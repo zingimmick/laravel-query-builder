@@ -294,7 +294,7 @@ final class BuilderTest extends TestCase
                     $value = explode(',', $value);
 
                     return $query->where(
-                        static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
+                        static function ($query) use ($value): Builder {
                             collect($value)->each(
                                 static function ($item) use ($query): void {
                                     $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
@@ -326,7 +326,7 @@ final class BuilderTest extends TestCase
                  * @param array<int> $value
                  */
                 static fn (mixed $query, array $value): Builder => $query->where(
-                    static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
+                    static function ($query) use ($value): Builder {
                         collect($value)->each(
                             static function ($item) use ($query): void {
                                 $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
@@ -357,7 +357,7 @@ final class BuilderTest extends TestCase
                     $value = explode(',', $value);
 
                     return $query->where(
-                        static function ($query) use ($value): \Illuminate\Database\Eloquent\Builder {
+                        static function ($query) use ($value): Builder {
                             collect($value)->each(
                                 static function ($item) use ($query): void {
                                     $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
