@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.3.0 - 2025-02-24
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other Changes
+
+* Remove rules that were never registered by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/235
+* Support for PHP 8.4 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/237
+* Allow orchestra/testbench 9.0 and nesbot/carbon 3.4 in tests action by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/239
+* Update license copyright year(s) by @github-actions in https://github.com/zingimmick/laravel-query-builder/pull/242
+* Use larastan/larastan instead of nunomaduro/larastan by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/243
+* Support for Laravel 12 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/244
+
+**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/3.2.0...3.3.0
+
 ## 3.2.0 - 2024-03-18
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
