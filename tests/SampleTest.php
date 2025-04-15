@@ -7,6 +7,7 @@ namespace Zing\QueryBuilder\Tests;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Zing\QueryBuilder\Samples\SampleCollector;
 
 /**
@@ -25,6 +26,7 @@ final class SampleTest extends TestCase
     /**
      * @dataProvider provideSampleCases
      */
+    #[DataProvider('provideSampleCases')]
     public function testSample(string $uri, string $sql, string $code): void
     {
         $request = Request::create($uri);
