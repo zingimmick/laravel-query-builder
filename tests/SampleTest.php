@@ -7,6 +7,7 @@ namespace Zing\QueryBuilder\Tests;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Zing\QueryBuilder\Samples\SampleCollector;
 
 /**
@@ -23,22 +24,9 @@ final class SampleTest extends TestCase
     }
 
     /**
-     * @return \Iterator<array{string, string, string}>
-     */
-    public static function provideSampleCases(): \Iterator
-    {
-        foreach (self::samples() as $sample) {
-            foreach ($sample->codeSamples as $codeSample) {
-                foreach ($codeSample->ioSamples as $case) {
-                    yield [$case->uri, $case->sql, $codeSample->code];
-                }
-            }
-        }
-    }
-
-    /**
      * @dataProvider provideSampleCases
      */
+    #[DataProvider('provideSampleCases')]
     public function testSample(string $uri, string $sql, string $code): void
     {
         $request = Request::create($uri);
@@ -64,5 +52,19 @@ final class SampleTest extends TestCase
         });
 
         require $code;
+    }
+
+    /**
+     * @return \Iterator<array{string, string, string}>
+     */
+    public static function provideSampleCases(): \Iterator
+    {
+        foreach (self::samples() as $sample) {
+            foreach ($sample->codeSamples as $codeSample) {
+                foreach ($codeSample->ioSamples as $case) {
+                    yield [$case->uri, $case->sql, $codeSample->code];
+                }
+            }
+        }
     }
 }
