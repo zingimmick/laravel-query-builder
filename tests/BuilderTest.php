@@ -788,7 +788,7 @@ final class BuilderTest extends TestCase
                     return $query->whereBetween(
                         'created_at',
                         array_map(
-                            static fn ($dateTime): string => Carbon::parse($dateTime)->format('Y-m-d'),
+                            static fn (string $dateTime): string => Carbon::parse($dateTime)->format('Y-m-d'),
                             $value
                         )
                     );
