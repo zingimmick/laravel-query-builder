@@ -18,7 +18,7 @@ final class SampleTest extends TestCase
     /**
      * @return \Zing\QueryBuilder\Samples\Sample[]
      */
-    public static function samples(): array 
+    public static function samples(): array
     {
         return (new SampleCollector())->samples();
     }
