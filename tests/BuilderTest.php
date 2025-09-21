@@ -20,7 +20,7 @@ use Zing\QueryBuilder\Tests\Models\User;
  */
 final class BuilderTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker; 
 
     public function testExact(): void
     {
