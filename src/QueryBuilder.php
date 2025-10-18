@@ -57,21 +57,17 @@ class QueryBuilder
         return $this->builder;
     }
 
-    /**
-     * @param string $name
-     */
-    public function __get($name): mixed
+    public function __get(string $name): mixed
     {
         return $this->builder->{$name};
     }
 
     /**
-     * @param string $name
      * @param mixed[] $arguments
      *
      * @return $this|mixed
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
         $result = $this->forwardCallTo($this->builder, $name, $arguments);
 
