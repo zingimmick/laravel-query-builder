@@ -10,7 +10,7 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->parallel();
     $ecsConfig->paths(
         [
-            __DIR__ . '/bin',
+            __DIR__ . '/bin', 
             __DIR__ . '/samples',
             __DIR__ . '/config',
             __DIR__ . '/src',
