@@ -122,7 +122,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
+                static fn ($query, string $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -140,7 +140,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
+                static fn ($query, string $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -158,7 +158,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
+                static fn ($query, string $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
@@ -296,7 +296,7 @@ final class BuilderTest extends TestCase
                     return $query->where(
                         static function ($query) use ($value): Builder {
                             collect($value)->each(
-                                static function ($item) use ($query): void {
+                                static function (string $item) use ($query): void {
                                     $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                                 }
                             );
@@ -328,7 +328,7 @@ final class BuilderTest extends TestCase
                 static fn (mixed $query, array $value): Builder => $query->where(
                     static function ($query) use ($value): Builder {
                         collect($value)->each(
-                            static function ($item) use ($query): void {
+                            static function (string $item) use ($query): void {
                                 $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                             }
                         );
@@ -359,7 +359,7 @@ final class BuilderTest extends TestCase
                     return $query->where(
                         static function ($query) use ($value): Builder {
                             collect($value)->each(
-                                static function ($item) use ($query): void {
+                                static function (string $item) use ($query): void {
                                     $query->orWhere('name', 'like', \sprintf('%%%s%%', $item));
                                 }
                             );
@@ -385,7 +385,7 @@ final class BuilderTest extends TestCase
             ->when(
                 request()
                     ->input('name'),
-                static fn ($query, $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
+                static fn ($query, string $value): Builder => $query->where('name', 'like', \sprintf('%%%s%%', $value))
             )
             ->toSql();
         $this->assertSame($expected, $actual);
