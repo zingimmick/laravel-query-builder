@@ -68,7 +68,7 @@ class ExactFilter implements Filter
 
         return $query->whereHas(
             $relation,
-            function ($query) use ($value, $property): void {
+            function (Builder $query) use ($value, $property): void {
                 $property = $query->getModel()
                     ->getTable() . '.' . $property;
                 $this->relationConstraints[] = $property;

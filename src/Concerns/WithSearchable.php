@@ -51,7 +51,7 @@ trait WithSearchable
                                 throw ParameterException::unsupportedFilterWithDefaultValueForSearch();
                             }
 
-                            $query->orWhere(static function ($query) use ($value, $search): void {
+                            $query->orWhere(static function (Builder $query) use ($value, $search): void {
                                 $value->filter($query, $search);
                             });
 

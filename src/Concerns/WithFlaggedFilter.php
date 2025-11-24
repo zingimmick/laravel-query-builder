@@ -21,7 +21,7 @@ trait WithFlaggedFilter
                 $this->formatFilters($filters)
                     ->each(
                         function (Filter $filter) use ($query): void {
-                            $query->orWhere(function ($query) use ($filter): void {
+                            $query->orWhere(function (Builder $query) use ($filter): void {
                                 $thisIsRequestedFilter = $this->isRequestedFilter($filter);
                                 if ($thisIsRequestedFilter) {
                                     $filter->filter($query, $this->getFilterValue($filter));
