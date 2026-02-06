@@ -168,7 +168,7 @@ final class SearchableTest extends TestCase
             ->when(
                 request()
                     ->input('search'),
-                static fn ($query, $search): Builder => $query->where(
+                static fn ($query, string $search): Builder => $query->where(
                     static fn ($query) => $query->orWhere(static fn ($query) => $query->where('b', $search))
                         ->orWhere('c', 'like', \sprintf('%%%s%%', $search))
                 )
