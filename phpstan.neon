@@ -15,7 +15,7 @@ parameters:
         - '#Call to method configure\(\) on an unknown class Laravel\\Lumen\\Application.#'
         - '#Parameter \#2 ...\$values of function sprintf expects bool\|float\|int\|string\|null, Illuminate\\Database\\Query\\Expression\|string given.#'
         - '#Method (.*?)::resolveNestedRelation\(\) should return array{string, string} but returns array{string, string\|null}.#'
-        - '#Parameter \#1 \$column of method Illuminate\\Database\\Eloquent\\Model::qualifyColumn\(\) expects string, string\|null given.#'
+        - '#Parameter \#1 \$value of static method Illuminate\\Database\\Connection::raw\(\) expects float\|int\|literal-string, non-falsy-string given.#'
         - message: '#Variable \$request might not be defined.#'
           paths:
               - samples/**/*.php
