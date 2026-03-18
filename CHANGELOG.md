@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.4.0 - 2026-03-18
+
+<!-- Release notes generated using configuration in .github/release.yml at 3.x -->
+### What's Changed
+
+#### Other Changes
+
+* Support for PHPUnit 12 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/246
+* Bump shivammathur/setup-php from 2.32.0 to 2.33.0 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/247
+* Bump shivammathur/setup-php from 2.33.0 to 2.34.0 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/248
+* Bump shivammathur/setup-php from 2.34.0 to 2.34.1 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/249
+* Bump shivammathur/setup-php from 2.34.1 to 2.35.2 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/251
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/252
+* Bump shivammathur/setup-php from 2.35.2 to 2.35.3 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/253
+* Bump shivammathur/setup-php from 2.35.3 to 2.35.4 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/254
+* Bump shivammathur/setup-php from 2.35.4 to 2.35.5 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/255
+* Support for PHP 8.5 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/257
+* Bump github/codeql-action from 3 to 4 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/256
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/258
+* Bump shivammathur/setup-php from 2.35.5 to 2.36.0 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/259
+* Update license copyright year(s) by @github-actions[bot] in https://github.com/zingimmick/laravel-query-builder/pull/260
+* Update orchestra/testbench version constraint by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/261
+* Bump ramsey/composer-install from 3 to 4 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/262
+* Bump shivammathur/setup-php from 2.36.0 to 2.37.0 by @dependabot[bot] in https://github.com/zingimmick/laravel-query-builder/pull/263
+* Support for Laravel 13 by @zingimmick in https://github.com/zingimmick/laravel-query-builder/pull/264
+
+**Full Changelog**: https://github.com/zingimmick/laravel-query-builder/compare/3.3.0...3.4.0
+
 ## 3.3.0 - 2025-02-24
 
 <!-- Release notes generated using configuration in .github/release.yml at 3.x -->
