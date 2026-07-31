@@ -11,8 +11,6 @@ trait WithFlaggedFilter
 {
     /**
      * @param array<string|\Zing\QueryBuilder\Filter> $filters
-     *
-     * @return $this
      */
     public function enableFlaggedFilter(array $filters): self
     {
