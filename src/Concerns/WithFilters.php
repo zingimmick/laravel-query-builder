@@ -11,8 +11,6 @@ trait WithFilters
 {
     /**
      * @param array<(string|\Zing\QueryBuilder\Filter)>|string|\Zing\QueryBuilder\Filter $filters
-     *
-     * @return $this
      */
     public function enableFilters(array|Filter|string $filters)
     {
