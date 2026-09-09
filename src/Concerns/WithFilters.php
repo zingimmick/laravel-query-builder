@@ -12,7 +12,7 @@ trait WithFilters
     /**
      * @param array<(string|\Zing\QueryBuilder\Filter)>|string|\Zing\QueryBuilder\Filter $filters
      */
-    public function enableFilters(array|Filter|string $filters)
+    public function enableFilters(array|Filter|string $filters): self
     {
         $filters = \is_array($filters) ? $filters : \func_get_args();
         $this->applyFilters($this->formatFilters($filters));
