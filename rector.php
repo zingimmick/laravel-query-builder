@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
-use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Privatization\Rector\MethodCall\PrivatizeLocalGetterToPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
@@ -13,8 +11,6 @@ return static function (\Rector\Config\RectorConfig $rectorConfig): void {
     $rectorConfig->sets([LevelSetList::UP_TO_PHP_80, PHPUnitSetList::PHPUNIT_CODE_QUALITY, RectorSetList::CUSTOM]);
     $rectorConfig->parallel();
     $rectorConfig->skip([
-        RenameVariableToMatchMethodCallReturnTypeRector::class,
-        RenameParamToMatchTypeRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
     ]);
     $rectorConfig->paths([
