@@ -13,8 +13,6 @@ return static function (\Rector\Config\RectorConfig $rectorConfig): void {
     $rectorConfig->sets([LevelSetList::UP_TO_PHP_80, PHPUnitSetList::PHPUNIT_CODE_QUALITY, RectorSetList::CUSTOM]);
     $rectorConfig->parallel();
     $rectorConfig->skip([
-        RenameVariableToMatchMethodCallReturnTypeRector::class,
-        RenameParamToMatchTypeRector::class,
         PrivatizeLocalGetterToPropertyRector::class,
     ]);
     $rectorConfig->paths([
