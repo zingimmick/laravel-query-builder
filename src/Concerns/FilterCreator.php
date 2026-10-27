@@ -49,9 +49,7 @@ trait FilterCreator
     protected $cast;
 
     /**
-     * @phpstan-var non-empty-string
-     *
-     * @var string
+     * @var non-empty-string
      */
     private $delimiter = ',';
 

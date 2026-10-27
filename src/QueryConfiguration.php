@@ -7,7 +7,7 @@ namespace Zing\QueryBuilder;
 class QueryConfiguration
 {
     /**
-     * @phpstan-var non-empty-string
+     * @var non-empty-string
      */
     private static string $delimiter = ',';
 
@@ -16,7 +16,7 @@ class QueryConfiguration
     private static string $pageName = 'per_page';
 
     /**
-     * @phpstan-return non-empty-string
+     * @return non-empty-string
      */
     public static function getDelimiter(): string
     {
@@ -24,7 +24,7 @@ class QueryConfiguration
     }
 
     /**
-     * @phpstan-param non-empty-string $delimiter
+     * @param non-empty-string $delimiter
      */
     public static function setDelimiter(string $delimiter): void
     {
